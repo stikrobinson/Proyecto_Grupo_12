@@ -14,4 +14,11 @@ public class Accident {
     private LocalDate fecha;
     private String descripcion;
     private Double costoRepa;
+
+    public Accident(LocalDate fecha, String descripcion, Double costoRepa) {
+        this.fecha = fecha;
+        this.descripcion = descripcion;
+        this.costoRepa = costoRepa;
+    }
+    
 }

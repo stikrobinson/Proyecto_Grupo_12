@@ -15,4 +15,13 @@ public class Servicio {
     private String tipo;
     private double costo;
     private String detalles;
+
+    public Servicio(LocalDate fecha, String tipo, double costo, String detalles) {
+        this.fecha = fecha;
+        this.tipo = tipo;
+        this.costo = costo;
+        this.detalles = detalles;
+    }
+    
+    
 }

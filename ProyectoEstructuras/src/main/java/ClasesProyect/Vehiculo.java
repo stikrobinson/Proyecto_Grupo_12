@@ -8,7 +8,7 @@ package ClasesProyect;
  *
  * @author alexo
  */
-public class Carro implements Saveable, SearchFilter{
+public class Vehiculo implements Saveable, SearchFilter{
     private String id;
     private double precio; //Precio puede cambiar si el salesman lo requiere
     private String marca;
@@ -23,7 +23,7 @@ public class Carro implements Saveable, SearchFilter{
     private String histAccident; //Utilizar un TDA de Strings senialando  accidentes (Tipo dato Accident),,,
     private String histService; //Utilizar un TDA de Strings senialando reparaciones, procesos de mantenimiento, accidentes,,,
 
-    public Carro(String id, double precio, String marca, String modelo, String foto, String anio, int kilometraje, String motor, String trasmision, String peso, String ubiActual, String histAccident, String histService) {
+    public Vehiculo(String id, double precio, String marca, String modelo, String foto, String anio, int kilometraje, String motor, String trasmision, String peso, String ubiActual, String histAccident, String histService) {
         this.id = id;
         this.precio = precio;
         this.marca = marca;
