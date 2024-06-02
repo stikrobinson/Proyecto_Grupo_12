@@ -80,17 +80,15 @@ public class LinkedList<E> implements List<E>{
 	}
 
 	public boolean remove(Object o) {
+                int contador = 0;
 		for(NodeList<E> puntero = head;puntero!=null;puntero = puntero.getSiguiente()){
 			if(puntero.getElemento().equals(o)){
-				NodeList<E> anterior = puntero.getAnterior();
-				NodeList<E> siguiente = puntero.getSiguiente();
-				anterior.setSiguiente(siguiente);
-				siguiente.setAnterior(anterior);
-				puntero = null;
-				size--;
+				remove(contador);
 				return true;
 			}
-		}
+		contador++;
+                }
+                
 		return false;
 	}
 
@@ -194,21 +192,40 @@ public class LinkedList<E> implements List<E>{
 		if(!(index>=0 && index<size) && !(index==0 && size==0)){
 			throw new IndexOutOfBoundsException();
 		}
-		
+                if(index==0 && size==1){
+                    E elemento = head.getElemento();
+                    clear();
+                    return elemento;
+                }
+                else if(index==0){
+                    E elemento = head.getElemento();
+                    head = head.getSiguiente();
+                    size--;
+                    return elemento;
+                }
+              
 		int contador = 0;
 		for(NodeList<E> puntero = head;puntero!=null;puntero = puntero.getSiguiente()){
 			if(contador==index){
 				E valor = puntero.getElemento();
-				NodeList<E> anterior = puntero.getAnterior();
-				NodeList<E> siguiente = puntero.getSiguiente();
-				anterior.setSiguiente(siguiente);
-				siguiente.setAnterior(anterior);
-				puntero = null;
+                                if(index!=size-1){
+                                    NodeList<E> anterior = puntero.getAnterior();
+                                    NodeList<E> siguiente = puntero.getSiguiente();
+                                    puntero.getAnterior().setSiguiente(siguiente);
+                                    siguiente.setAnterior(anterior);
+                                    puntero = null;
+                                }else{
+                                    NodeList<E> anterior = puntero.getAnterior();
+                                    puntero = null;
+                                    tail = anterior;
+                                    tail.setSiguiente(null);
+                                }
+				
 				size--;
 				return valor;
 			}
 			contador++;
-	}
+                }
 		return null;
 	}
 
@@ -234,8 +251,22 @@ public class LinkedList<E> implements List<E>{
 		return -1;
 	}
 
-	public ListIterator<E> listIterator() {
-		ListIterator<E> it = new ListIterator<E>(){
+	public String toString(){
+		String string = "{";
+		int contador = 1;
+		for(E i: this){
+			if(contador!=size){
+				string = string + i + ", ";
+			}else{
+				string = string + i;
+			}
+			contador++;
+		}
+		return string+"}";
+	}
+	
+        public ListIterator<E> listIterator() {
+             ListIterator<E> it = new ListIterator<E>(){
 			NodeList<E> puntero = head;
 			int indice = 0;
 			boolean arranque = false;
@@ -282,28 +313,14 @@ public class LinkedList<E> implements List<E>{
 			public void set(E e){
 				LinkedList.this.set(indice,e);
 			}
-			
-		};
-		return it;
-	}
 
-	public String toString(){
-		String string = "{";
-		int contador = 1;
-		for(E i: this){
-			if(contador!=size){
-				string = string + i + ", ";
-			}else{
-				string = string + i;
-			}
-			contador++;
-		}
-		return string+"}";
-	}
+	};
+        return it;
+        }
 
-	//métodos sin implementar
-	
-	public Object[] toArray() {
+        //métodos sin implementar
+        
+        public Object[] toArray() {
 		// TODO Auto-generated method stub
 		return null;
 	}
