@@ -16,46 +16,26 @@ import javafx.geometry.Pos;
 
 import java.io.IOException;
 
-/**
- * JavaFX App
- */
+import Estructuras.*;
+import ClasesProyect.*;
+
+
 public class App extends Application {
 
     private static Scene MENU;
     public static Stage STAGE;
+    public static ArrayList<User> USUARIOS;
+    public static User USUARIOACTUAL;
+    public static ArrayList<Vehiculo> VEHICULOS;
 
     @Override
     public void start(Stage s) throws IOException {
         STAGE = s;
-        BorderPane rootPrincipal = new BorderPane();
+        USUARIOS = cargarUsuarios();
+        VEHICULOS = cargarVehiculos();
         Escenas escenas = new Escenas();
-        
-        Label lblTitulo = new Label("Administracion de Vehiculos");
-        lblTitulo.setStyle("-fx-text-fill: #000000; -fx-font-size: 60;");
-        lblTitulo.setAlignment(Pos.CENTER);
-        VBox vbTitulo = new VBox(); vbTitulo.setAlignment(Pos.CENTER);
-        vbTitulo.getChildren().add(lblTitulo);
-        
-        Button btnVER = new Button("Visualizar Vehiculos");
-        btnVER.setStyle("-fx-background-color: #ffffff; -fx-text-fill: #000000; -fx-font-size: 40px;");
-        btnVER.setOnMouseClicked(e -> {
-            STAGE.setScene(escenas.VER);        
-            });
-        
-        Button btNCREAR = new Button("Crear Nuevo Vehiculo");
-        btNCREAR.setStyle("-fx-background-color: #5167b0; -fx-text-fill: #ffffff; -fx-font-size: 40px;");
-        btNCREAR.setOnMouseClicked(e -> {
-            STAGE.setScene(escenas.CREAR);        
-            });
-        
-        VBox vbPrincipal = new VBox();vbPrincipal.setAlignment(Pos.CENTER);
-        vbPrincipal.setSpacing(40);
-        vbPrincipal.getChildren().addAll(btnVER, btNCREAR);
-       
-        rootPrincipal.setCenter(vbPrincipal);
-        rootPrincipal.setTop(vbTitulo);
-        MENU = new Scene(rootPrincipal, 800, 600);
-        STAGE.setScene(MENU);
+        MENU = escenas.MENU;
+        STAGE.setScene(escenas.INICIOSESION);
         STAGE.show();
     }
 
@@ -75,5 +55,20 @@ public class App extends Application {
     public static void main(String[] args) {
         launch();
     }
-
+    
+    private static ArrayList<User> cargarUsuarios(){
+        ArrayList<User> usuarios = new ArrayList<>();
+        usuarios.add(new User("a", "b", "c"));
+        usuarios.add(new User("sebsm1234", ".getContrasena()", "Sebastian Manzanilla"));
+        return usuarios;
+    }
+    
+    private static ArrayList<Vehiculo> cargarVehiculos(){
+        ArrayList<Vehiculo> vehiculos = new ArrayList<>();
+        vehiculos.add(new Vehiculo("1", 20000, "Toyota", "Corola", "", "2000", 0, "a", "","","","",""));
+        vehiculos.add(new Vehiculo("1", 20000, "Toyota", "a", "", "2000", 0, "a", "","","","",""));
+        vehiculos.add(new Vehiculo("1", 20000, "Toyota", "b", "", "2000", 0, "a", "","","","",""));
+        vehiculos.add(new Vehiculo("1", 20000, "Toyota", "c", "", "2000", 0, "a", "","","","",""));
+        return vehiculos;
+    }
 }
