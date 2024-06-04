@@ -22,6 +22,7 @@ public class Vehiculo implements Saveable, SearchFilter{
     private String ubiActual; //puede ser cambiada
     private String histAccident; //Utilizar un TDA de Strings senialando  accidentes (Tipo dato Accident),,,
     private String histService; //Utilizar un TDA de Strings senialando reparaciones, procesos de mantenimiento, accidentes,,,
+    private TipoVehiculo tipovehiculo; 
 
     public Vehiculo(String id, double precio, String marca, String modelo, String foto, String anio, int kilometraje, String motor, String trasmision, String peso, String ubiActual, String histAccident, String histService) {
         this.id = id;
