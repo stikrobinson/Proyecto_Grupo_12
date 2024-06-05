@@ -1,5 +1,7 @@
 package ClasesProyect;
 
+import Estructuras.ArrayList;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -14,9 +16,9 @@ public class User {
     private String usuario;
     private String contrasena;
     private String nombre;
-    private String numeroCel; // Cambiarlo por una TDA propio tipo ArrayList
-    private String carrosComprados; //Cambiarlo por una TDA
-    private String carrosEnVenta; //Lista de carros que el Salesman tiene en su catalogo, cambiar tipo de dato a TDA propio
+    private ArrayList numeroCel; // Cambiarlo por una TDA propio tipo ArrayList
+    private ArrayList carrosComprados; //Cambiarlo por una TDA
+    private ArrayList carrosEnVenta; //Lista de carros que el Salesman tiene en su catalogo, cambiar tipo de dato a TDA propio
     
     public User(String u, String p, String n){
         usuario = u; contrasena = p; nombre = n; numeroCel = null; carrosComprados = null; carrosEnVenta  = null;

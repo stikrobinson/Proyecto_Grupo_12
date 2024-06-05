@@ -8,7 +8,7 @@ package ClasesProyect;
  *
  * @author alexo
  */
-public interface SearchFilter<E> { //Implementacion de filtros
+public interface SearchFilter<E> {  //Implementacion de filtros
 
 //    public TDAList<E> ordenarPorKilometraje();
 //    public TDAList <E> filtrarPorMarcaModelo(String marca, String modelo);
