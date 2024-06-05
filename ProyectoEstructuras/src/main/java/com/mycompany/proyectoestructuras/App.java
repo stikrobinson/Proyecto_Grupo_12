@@ -59,10 +59,10 @@ public class App extends Application {
     
     private static ArrayList<Vehiculo> cargarVehiculos(){
         ArrayList<Vehiculo> vehiculos = new ArrayList<>();
-        vehiculos.add(new Vehiculo("1", 20000, "Toyota", "Corola", "", 2000, 0, "a", "","","","",""));
-        vehiculos.add(new Vehiculo("1", 20000, "Toyota", "a", "", 1999, 0, "a", "","","","",""));
-        vehiculos.add(new Vehiculo("1", 20000, "Toyota", "b", "", 2012, 0, "a", "","","","",""));
-        vehiculos.add(new Vehiculo("1", 20000, "Toyota", "c", "", 1992, 0, "a", "","","","",""));
+        vehiculos.add(new Vehiculo("1", 20000, "Toyota", "Corola", "", 1999, 0, "a", "","","","",""));
+        vehiculos.add(new Vehiculo("1", 20000, "Toyota", "a", "", 2012, 0, "a", "","","","",""));
+        vehiculos.add(new Vehiculo("1", 20000, "Toyota", "b", "", 1988, 0, "a", "","","","",""));
+        vehiculos.add(new Vehiculo("1", 20000, "Toyota", "c", "", 2020, 0, "a", "","","","",""));
         return vehiculos;
     }
 }
