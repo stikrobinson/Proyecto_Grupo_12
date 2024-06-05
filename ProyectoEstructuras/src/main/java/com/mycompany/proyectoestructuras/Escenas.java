@@ -148,8 +148,8 @@ public class Escenas extends Stage {
         //Ahora creamos una lista circular doblemente enlazada para mostrar los vehículos
         CircularLinkedList<Vehiculo> vehiculosMostrados = new CircularLinkedList<>();
         //Añadimos los vehiculos ya ordenados de la cola de prioridad a la nueva lista
-        for ( Vehiculo v : vehiculosPorAnio ){
-            vehiculosMostrados.add(v);
+        while ( !vehiculosPorAnio.isEmpty() ){
+            vehiculosMostrados.add(vehiculosPorAnio.poll());
         }
         
         //Mostramos el cursor de la lista
