@@ -14,7 +14,7 @@ public class Vehiculo implements Saveable, SearchFilter{
     private String marca;
     private String modelo;
     private String foto; //Direccion de la foto del carro, se puede actualizar la foto
-    private String anio;
+    private int anio;
     private int kilometraje; //Atributo que puede cambiar si el duenio sigue usando el coche hasta que sea vendido
     private String motor;
     private String trasmision;
@@ -24,7 +24,7 @@ public class Vehiculo implements Saveable, SearchFilter{
     private String histService; //Utilizar un TDA de Strings senialando reparaciones, procesos de mantenimiento, accidentes,,,
     private TipoVehiculo tipovehiculo; 
 
-    public Vehiculo(String id, double precio, String marca, String modelo, String foto, String anio, int kilometraje, String motor, String trasmision, String peso, String ubiActual, String histAccident, String histService) {
+    public Vehiculo(String id, double precio, String marca, String modelo, String foto, int anio, int kilometraje, String motor, String trasmision, String peso, String ubiActual, String histAccident, String histService) {
         this.id = id;
         this.precio = precio;
         this.marca = marca;
@@ -60,7 +60,7 @@ public class Vehiculo implements Saveable, SearchFilter{
         return foto;
     }
 
-    public String getAnio() {
+    public int getAnio() {
         return anio;
     }
 
@@ -92,8 +92,4 @@ public class Vehiculo implements Saveable, SearchFilter{
         return histService;
     }
 
-    
-    
-    
-    
 }

@@ -6,13 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
-
-import javafx.scene.control.Label;
-import javafx.scene.control.Button;
-
-import javafx.geometry.Pos;
+import java.util.HashMap;
 
 import java.io.IOException;
 
@@ -24,7 +18,7 @@ public class App extends Application {
 
     private static Scene MENU;
     public static Stage STAGE;
-    public static ArrayList<User> USUARIOS;
+    public static HashMap<String, User> USUARIOS;
     public static User USUARIOACTUAL;
     public static ArrayList<Vehiculo> VEHICULOS;
 
@@ -56,19 +50,19 @@ public class App extends Application {
         launch();
     }
     
-    private static ArrayList<User> cargarUsuarios(){
-        ArrayList<User> usuarios = new ArrayList<>();
-        usuarios.add(new User("a", "b", "c"));
-        usuarios.add(new User("sebsm1234", ".getContrasena()", "Sebastian Manzanilla"));
+    private static HashMap<String, User> cargarUsuarios(){
+        HashMap<String, User> usuarios = new HashMap<>();
+        usuarios.put("a", new User("a", "b", "c"));
+        usuarios.put("sebsm1234", new User("sebsm1234", ".getContrasena()", "Sebastian Manzanilla"));
         return usuarios;
     }
     
     private static ArrayList<Vehiculo> cargarVehiculos(){
         ArrayList<Vehiculo> vehiculos = new ArrayList<>();
-        vehiculos.add(new Vehiculo("1", 20000, "Toyota", "Corola", "", "2000", 0, "a", "","","","",""));
-        vehiculos.add(new Vehiculo("1", 20000, "Toyota", "a", "", "2000", 0, "a", "","","","",""));
-        vehiculos.add(new Vehiculo("1", 20000, "Toyota", "b", "", "2000", 0, "a", "","","","",""));
-        vehiculos.add(new Vehiculo("1", 20000, "Toyota", "c", "", "2000", 0, "a", "","","","",""));
+        vehiculos.add(new Vehiculo("1", 20000, "Toyota", "Corola", "", 2000, 0, "a", "","","","",""));
+        vehiculos.add(new Vehiculo("1", 20000, "Toyota", "a", "", 1999, 0, "a", "","","","",""));
+        vehiculos.add(new Vehiculo("1", 20000, "Toyota", "b", "", 2012, 0, "a", "","","","",""));
+        vehiculos.add(new Vehiculo("1", 20000, "Toyota", "c", "", 1992, 0, "a", "","","","",""));
         return vehiculos;
     }
 }
