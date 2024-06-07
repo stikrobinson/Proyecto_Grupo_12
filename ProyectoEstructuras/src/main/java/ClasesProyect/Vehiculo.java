@@ -4,6 +4,8 @@
  */
 package ClasesProyect;
 
+import Estructuras.ArrayList;
+
 /**
  *
  * @author alexo
@@ -18,13 +20,14 @@ public class Vehiculo implements Comparable{
     private int kilometraje; //Atributo que puede cambiar si el duenio sigue usando el coche hasta que sea vendido
     private String motor;
     private String trasmision;
-    private String peso;
+    private int peso;
     private String ubiActual; //puede ser cambiada
-    private String histAccident; //Utilizar un TDA de Strings senialando  accidentes (Tipo dato Accident),,,
-    private String histService; //Utilizar un TDA de Strings senialando reparaciones, procesos de mantenimiento, accidentes,,,
+    private ArrayList<Accident> histAccident; //Utilizar un TDA de Strings senialando  accidentes (Tipo dato Accident),,,
+    private ArrayList<Servicio> histService; //Utilizar un TDA de Strings senialando reparaciones, procesos de mantenimiento, accidentes,,,
     private TipoVehiculo tipovehiculo; 
+    private String duenio;
 
-    public Vehiculo(String id, double precio, String marca, String modelo, String foto, int anio, int kilometraje, String motor, String trasmision, String peso, String ubiActual, String histAccident, String histService, TipoVehiculo tipovehiculo) {
+    public Vehiculo(String id, double precio, String marca, String modelo, String foto, int anio, int kilometraje, String motor, String trasmision, int peso, String ubiActual, ArrayList<Accident> histAccident, ArrayList<Servicio> histService, TipoVehiculo tipovehiculo, String duenio) {
         this.id = id;
         this.precio = precio;
         this.marca = marca;
@@ -39,6 +42,7 @@ public class Vehiculo implements Comparable{
         this.histAccident = histAccident;
         this.histService = histService;
         this.tipovehiculo = tipovehiculo;
+        this.duenio = duenio;
     }
 
     public String getId() {
@@ -77,7 +81,7 @@ public class Vehiculo implements Comparable{
         return trasmision;
     }
 
-    public String getPeso() {
+    public int getPeso() {
         return peso;
     }
 
@@ -85,11 +89,11 @@ public class Vehiculo implements Comparable{
         return ubiActual;
     }
 
-    public String getHistAccident() {
+    public ArrayList<Accident> getHistAccident() {
         return histAccident;
     }
 
-    public String getHistService() {
+    public ArrayList<Servicio> getHistService() {
         return histService;
     }
 

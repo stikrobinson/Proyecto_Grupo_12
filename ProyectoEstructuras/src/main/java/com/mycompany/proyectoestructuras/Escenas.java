@@ -14,6 +14,7 @@ import javafx.geometry.Pos;
 
 import ClasesProyect.*;
 import Estructuras.CircularLinkedList;
+import java.util.ListIterator;
 import java.util.PriorityQueue;
 
 public class Escenas extends Stage {
@@ -151,8 +152,8 @@ public class Escenas extends Stage {
         while ( !vehiculosPorAnio.isEmpty() ){
             vehiculosMostrados.add(vehiculosPorAnio.poll());
         }
-        
         //Mostramos el cursor de la lista
+        //ListIterator<Vehiculo> it = vehiculosMostrados.listIterator();
         VBox vbVehiculoCursor = new VBox(); vbVehiculoCursor.setAlignment(Pos.CENTER);
         mostrarVehiculo(vbVehiculoCursor, vehiculosMostrados);
         //Colocamos los botones siguiente y anterior
