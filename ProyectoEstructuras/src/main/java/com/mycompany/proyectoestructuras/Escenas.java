@@ -71,7 +71,7 @@ public class Escenas extends Stage {
         
         Label usuarioEjemplo = new Label("""
                                          Usuario de ejemplo:
-                                         Usuario: a. Contrasena: b; Nombre: c;
+                                         Usuario: evaluador. Contrasena: martes11; Nombre: Luis Gabriel Canarte Lucio;
                                          """);
         usuarioEjemplo.setStyle("-fx-text-fill: #c2c2c2; -fx-font-size: 20px;");
         VBox vbUsuarioEjemplo = new VBox(); vbUsuarioEjemplo.setAlignment(Pos.CENTER_RIGHT);
@@ -90,7 +90,7 @@ public class Escenas extends Stage {
         vbTtMENU.getChildren().add(lblTtMENU);
         
         Button btnVER = new Button("Vehiculos Disponibles");
-        btnVER.setStyle("-fx-background-color: #ffffff; -fx-text-fill: #000000; -fx-font-size: 40px;");
+        btnVER.setStyle("-fx-background-color: #f5ff9e; -fx-text-fill: #000000; -fx-font-size: 40px;");
         btnVER.setOnMouseClicked(e -> {
             App.STAGE.setScene(VER);        
             });
@@ -275,7 +275,7 @@ public class Escenas extends Stage {
         switch (filtro.getValue()){
                 case "Carro":                    
                     break;
-                case "Camión":
+                case "Camion":
                     tipo = TipoVehiculo.CAMION;
                     break;
                 case "Moto":
@@ -303,8 +303,8 @@ public class Escenas extends Stage {
         switch ( orden.getValue() ){
             case "Marca y modelo(alfabetico)":
                 pqOrden = new PriorityQueue<Vehiculo>( ( Vehiculo v1, Vehiculo v2 ) -> {
-                    if ( v2.getMarca().compareTo(v1.getMarca()) == 0) return v2.getModelo().compareTo(v1.getModelo());
-                    else return v2.getMarca().compareTo(v1.getMarca());
+                    if ( v1.getMarca().compareTo(v2.getMarca()) == 0) return v1.getModelo().compareTo(v2.getModelo());
+                    else return v1.getMarca().compareTo(v2.getMarca());
                 });
                 break;            
             case "Precio":
@@ -329,11 +329,10 @@ public class Escenas extends Stage {
                 break;
         }
         
-        for ( Vehiculo v : vehiculos ){
+        for ( Vehiculo v : vehiculos ){          
             if ( v != null )pqOrden.offer(v);
         }
         while ( !pqOrden.isEmpty() ){
-            
             vehiculosMostrados.add(pqOrden.poll());
         }
     }
