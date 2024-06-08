@@ -9,5 +9,5 @@ package ClasesProyect;
  * @author alexo
  */
 public enum TipoVehiculo {
-    car,motorcycle,truck;
+    CARRO,MOTO,CAMION;
 }

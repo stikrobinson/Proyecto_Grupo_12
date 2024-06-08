@@ -5,17 +5,22 @@ import javafx.stage.Stage;
 
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
 
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ComboBox;
 
 import javafx.geometry.Pos;
 
 import ClasesProyect.*;
 import Estructuras.CircularLinkedList;
+import Estructuras.ArrayList;
 import java.util.ListIterator;
 import java.util.PriorityQueue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class Escenas extends Stage {
     public Scene INICIOSESION, MENU, VER, CREAR, MISVEHICULOS;
@@ -136,46 +141,70 @@ public class Escenas extends Stage {
         lblTitulo.setStyle("-fx-text-fill: #000000; -fx-font-size: 60;");
         lblTitulo.setAlignment(Pos.CENTER);
         VBox vbTtVER = new VBox(); vbTtVER.setAlignment(Pos.CENTER);
+        
+        HBox hbFiltros = new HBox(); hbFiltros.setSpacing(40); hbFiltros.setAlignment(Pos.CENTER);
+        
         vbTtVER.getChildren().add(lblTitulo);        
         
-        //Creamos una cola de prioridad que tendra el orden de los vehiculos por año por defecto
-        PriorityQueue<Vehiculo> vehiculosPorAnio = new PriorityQueue<>( (Vehiculo v1, Vehiculo v2) -> {
-            return v2.getAnio() - v1.getAnio();
-        });
-        //Añadimos todos los vehiculos disponibles a la cola de prioridad
-        for( Vehiculo v : App.VEHICULOS ){
-            vehiculosPorAnio.offer(v);
-        }
+        //Creamos los ComboBox de los filtros y los ordenamientos
+        ComboBox filtros = new ComboBox();
+        ObservableList<String> itemsFiltro = FXCollections.observableArrayList(
+            "Carro", "Moto", "Camion", "Todos"
+        );
+        filtros.setItems(itemsFiltro);
+        filtros.setValue("Todos");
+        
+        ComboBox ordenamientos = new ComboBox();
+        ObservableList<String> itemsOrdenamiento = FXCollections.observableArrayList(
+            "Año (por defecto)", "Marca y modelo(alfabetico)", "Precio", "Kilometraje", "Peso"
+        );
+        ordenamientos.setItems(itemsOrdenamiento);
+        ordenamientos.setValue("Año");
+        
         //Ahora creamos una lista circular doblemente enlazada para mostrar los vehículos
         CircularLinkedList<Vehiculo> vehiculosMostrados = new CircularLinkedList<>();
-        //Añadimos los vehiculos ya ordenados de la cola de prioridad a la nueva lista
-        while ( !vehiculosPorAnio.isEmpty() ){
-            vehiculosMostrados.add(vehiculosPorAnio.poll());
-        }
-        //Mostramos el cursor de la lista
-        //ListIterator<Vehiculo> it = vehiculosMostrados.listIterator();
-        VBox vbVehiculoCursor = new VBox(); vbVehiculoCursor.setAlignment(Pos.CENTER);
-        mostrarVehiculo(vbVehiculoCursor, vehiculosMostrados);
+        
+        //Creamos un contenedor para mostrar la informacion
+        VBox vbVehiculoActualVER = new VBox(); vbVehiculoActualVER.setAlignment(Pos.CENTER);
+
+        //Creamos un Boton que aplique los ordenamientos y filtros y llene la lista
+        Button btnAplicarFiltro = new Button("Aplicar"); 
+        btnAplicarFiltro.setOnAction( e -> {
+            ordenarVehiculos(vehiculosMostrados, filtrarVehiculos(App.VEHICULOS, filtros), ordenamientos);
+            vehiculosMostrados.setListIterator();
+            mostrarVehiculo(vbVehiculoActualVER, vehiculosMostrados.getListIterator().next());
+        }); 
+        btnAplicarFiltro.fire();
+        
+        //Agregamos los ComboBox y el boton
+        Label lblFiltro = new Label("Filtro: ");
+        lblFiltro.setStyle("-fx-text-fill: #000000; -fx-font-size: 20px;");
+        Label lblOrdenamiento = new Label("Ordenamiento: ");
+        lblOrdenamiento.setStyle("-fx-text-fill: #000000; -fx-font-size: 20px;");
+        
+        hbFiltros.getChildren().addAll(lblFiltro, filtros, lblOrdenamiento, ordenamientos, btnAplicarFiltro);
+        
+        vbTtVER.getChildren().add(hbFiltros);
+                
         //Colocamos los botones siguiente y anterior
-        Button btnSiguiente = new Button("->"); btnSiguiente.setStyle("-fx-background-color: #abffa8; -fx-text-fill: #000000; -fx-font-size: 50px;");       
-        btnSiguiente.setOnAction( e -> {
-            vehiculosMostrados.cursorSiguiente();
-            mostrarVehiculo(vbVehiculoCursor, vehiculosMostrados);
+        Button btnSiguienteVER = new Button("->"); btnSiguienteVER.setStyle("-fx-background-color: #abffa8; -fx-text-fill: #000000; -fx-font-size: 50px;");       
+        btnSiguienteVER.setOnAction( e -> {
+            mostrarVehiculo(vbVehiculoActualVER, vehiculosMostrados.getListIterator().next() );
         });
         VBox vbSiguiente = new VBox(); vbSiguiente.setAlignment(Pos.CENTER);
-        vbSiguiente.getChildren().add(btnSiguiente);
+        vbSiguiente.getChildren().add(btnSiguienteVER);
+        btnSiguienteVER.fire();
         
-        Button btnAnterior = new Button("<-"); btnAnterior.setStyle("-fx-background-color: #ffa8b5; -fx-text-fill: #000000; -fx-font-size: 50px;");       
-        btnAnterior.setOnAction( e -> {
-            vehiculosMostrados.cursorAnterior();
-            mostrarVehiculo(vbVehiculoCursor, vehiculosMostrados);
+        Button btnAnteriorVER = new Button("<-"); btnAnteriorVER.setStyle("-fx-background-color: #ffa8b5; -fx-text-fill: #000000; -fx-font-size: 50px;");       
+        btnAnteriorVER.setOnAction( e -> {
+            mostrarVehiculo(vbVehiculoActualVER, vehiculosMostrados.getListIterator().previous() );
         });
         VBox vbAnterior = new VBox(); vbAnterior.setAlignment(Pos.CENTER);
-        vbAnterior.getChildren().add(btnAnterior);
+        vbAnterior.getChildren().add(btnAnteriorVER);
         
         BorderPane rootVER = new BorderPane();
         rootVER.setTop(vbTtVER);
-        rootVER.setCenter(vbVehiculoCursor);
+        rootVER.setCenter(vbVehiculoActualVER); 
         rootVER.setLeft(vbAnterior);
         rootVER.setRight(vbSiguiente);
         rootVER.setBottom(vbSalirVER);
@@ -221,16 +250,91 @@ public class Escenas extends Stage {
         
         MISVEHICULOS = new Scene(rootMISV, 800, 600);
     }
-    private static void mostrarVehiculo(VBox vbVehiculo, CircularLinkedList<Vehiculo> vehiculos){
+    private static void mostrarVehiculo(VBox vbVehiculo, Vehiculo v){
         vbVehiculo.getChildren().clear();
-        //String id, double precio, String marca, String modelo, String foto, int anio, int kilometraje, String motor, String trasmision, String peso, String ubiActual, String histAccident, String histService
-        Vehiculo v = vehiculos.getCursor();
+        
         Label lblMarca = new Label("Marca: " + v.getMarca()); lblMarca.setStyle("-fx-text-fill: #000000; -fx-font-size: 40;");
         Label lblModelo = new Label("Modelo: " + v.getModelo()); lblModelo.setStyle("-fx-text-fill: #000000; -fx-font-size: 40;");
         Label lblAnio = new Label("Año: " + v.getAnio()); lblAnio.setStyle("-fx-text-fill: #000000; -fx-font-size: 20;");
-        Label lblKilometraje = new Label("Kilometraje: " + v.getKilometraje() + "km"); lblKilometraje.setStyle("-fx-text-fill: #000000; -fx-font-size: 20;");
+        Label lblKm = new Label("Kilometraje: " + v.getKilometraje() + "km"); lblKm.setStyle("-fx-text-fill: #000000; -fx-font-size: 20;");
         Label lblPrecio = new Label("Precio: $" + v.getPrecio()); lblPrecio.setStyle("-fx-text-fill: #73ad71; -fx-font-size: 40;");
+        Label lblDuenio = new Label("Dueño: " + v.getDuenio().getNombre()); lblDuenio.setStyle("-fx-text-fill: #000000; -fx-font-size: 20;");
+        Label lblTelefonos = new Label("Teléfonos: "); lblTelefonos.setStyle("-fx-text-fill: #000000; -fx-font-size: 20;");
         
-        vbVehiculo.getChildren().addAll(lblMarca, lblModelo, lblAnio, lblKilometraje, lblPrecio);
+        vbVehiculo.getChildren().addAll(lblMarca, lblModelo, lblAnio, lblKm, lblPrecio, lblDuenio, lblTelefonos);
+        
+        for ( String numero : v.getDuenio().getTelefonos() ){
+            Label lblNumero = new Label(numero); lblNumero.setStyle("-fx-text-fill: #4287f5; -fx-font-size: 20; -fx-underline: true");
+            vbVehiculo.getChildren().add(lblNumero);
+        }         
+    }
+    private static ArrayList<Vehiculo> filtrarVehiculos(ArrayList<Vehiculo> vehiculos, ComboBox<String> filtro){
+        ArrayList<Vehiculo> vehiculosFiltrados= new ArrayList<>();
+        TipoVehiculo tipo = TipoVehiculo.CARRO;
+        
+        switch (filtro.getValue()){
+                case "Carro":                    
+                    break;
+                case "Camión":
+                    tipo = TipoVehiculo.CAMION;
+                    break;
+                case "Moto":
+                    tipo = TipoVehiculo.MOTO;
+                    break;
+                default:                    
+                    vehiculosFiltrados.addAll(vehiculos);                    
+                    return vehiculosFiltrados;
+        }
+        for ( Vehiculo v : vehiculos ){
+            if ( v.getTipoVehiculo() == tipo){
+                vehiculosFiltrados.add(v);
+            }
+        }
+        
+        return vehiculosFiltrados;
+    }
+    
+    public static void ordenarVehiculos
+        (CircularLinkedList<Vehiculo> vehiculosMostrados, ArrayList<Vehiculo> vehiculos, ComboBox<String> orden){
+                    
+        vehiculosMostrados.clear(); 
+        PriorityQueue<Vehiculo> pqOrden;
+        
+        switch ( orden.getValue() ){
+            case "Marca y modelo(alfabetico)":
+                pqOrden = new PriorityQueue<Vehiculo>( ( Vehiculo v1, Vehiculo v2 ) -> {
+                    if ( v2.getMarca().compareTo(v1.getMarca()) == 0) return v2.getModelo().compareTo(v1.getModelo());
+                    else return v2.getMarca().compareTo(v1.getMarca());
+                });
+                break;            
+            case "Precio":
+                pqOrden = new PriorityQueue<Vehiculo>( ( Vehiculo v1, Vehiculo v2 ) -> {
+                    return Double.compare(v2.getPrecio(), v1.getPrecio());
+                });
+                break;
+            case "Kilometraje":
+                pqOrden = new PriorityQueue<>( (Vehiculo v1, Vehiculo v2) -> {
+                    return v2.getKilometraje() - v1.getKilometraje();
+        });
+                break;            
+            case "Peso":
+                pqOrden = new PriorityQueue<Vehiculo>( ( Vehiculo v1, Vehiculo v2 ) -> {
+                    return v2.getPeso() - v1.getPeso();
+                });
+                break;
+            default:
+                pqOrden = new PriorityQueue<Vehiculo>( ( Vehiculo v1, Vehiculo v2 ) -> {
+                    return v2.getAnio() - v1.getAnio();
+                });
+                break;
+        }
+        
+        for ( Vehiculo v : vehiculos ){
+            if ( v != null )pqOrden.offer(v);
+        }
+        while ( !pqOrden.isEmpty() ){
+            
+            vehiculosMostrados.add(pqOrden.poll());
+        }
     }
 }

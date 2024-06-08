@@ -1,6 +1,9 @@
 package ClasesProyect;
 
 import Estructuras.ArrayList;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashMap;
 
 /*
@@ -17,13 +20,20 @@ public class User {
     private String usuario;
     private String contrasena;
     private String nombre;
-    private ArrayList numeroCel; // Cambiarlo por una TDA propio tipo ArrayList
-    private ArrayList carrosComprados; //Cambiarlo por una TDA
-    private ArrayList carrosEnVenta; //Lista de carros que el Salesman tiene en su catalogo, cambiar tipo de dato a TDA propio
+    private ArrayList<String> telefonos;
+    private ArrayList<Vehiculo> vehiculos;
     
-    public User(String u, String p, String n){
-        usuario = u; contrasena = p; nombre = n; numeroCel = null; 
-        carrosComprados = null; carrosEnVenta  = null;
+    public User(String u, String p, String n,  ArrayList<String> t){
+        usuario = u; contrasena = p; nombre = n; telefonos = t; 
+        vehiculos  = new ArrayList<Vehiculo>();
+    }
+    
+    public ArrayList<Vehiculo> getVehiculos(){
+        return vehiculos;
+    }
+    
+    public ArrayList<String> getTelefonos(){
+        return telefonos;
     }
     
     public String getNombre(){
@@ -61,10 +71,4 @@ public class User {
         
     }
     
-    public static HashMap<String, User> cargarUsuarios(){
-        HashMap<String, User> usuarios = new HashMap<>();
-        usuarios.put("a", new User("a", "b", "c"));
-        usuarios.put("sebsm1234", new User("sebsm1234", ".getContrasena()", "Sebastian Manzanilla"));
-        return usuarios;
-    }
 }

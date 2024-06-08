@@ -30,10 +30,10 @@ public class Vehiculo implements Comparable<Vehiculo>{
     private String ubiActual; //puede ser cambiada
     private ArrayList<Accident> histAccident; //Utilizar un TDA de Strings senialando  accidentes (Tipo dato Accident),,,
     private ArrayList<Servicio> histService; //Utilizar un TDA de Strings senialando reparaciones, procesos de mantenimiento, accidentes,,,
-    private TipoVehiculo tipovehiculo; 
-    private String duenio;
+    private TipoVehiculo tipoVehiculo; 
+    private User duenio;
 
-    public Vehiculo(String id, double precio, String marca, String modelo, String foto, int anio, int kilometraje, String motor, String trasmision, int peso, String ubiActual, ArrayList<Accident> histAccident, ArrayList<Servicio> histService, TipoVehiculo tipovehiculo, String duenio) {
+    public Vehiculo(String id, double precio, String marca, String modelo, String foto, int anio, int kilometraje, String motor, String trasmision, int peso, String ubiActual, ArrayList<Accident> histAccident, ArrayList<Servicio> histService, TipoVehiculo tipoVehiculo, User duenio) {
         this.id = id;
         this.precio = precio;
         this.marca = marca;
@@ -47,23 +47,23 @@ public class Vehiculo implements Comparable<Vehiculo>{
         this.ubiActual = ubiActual;
         this.histAccident = histAccident;
         this.histService = histService;
-        this.tipovehiculo = tipovehiculo;
+        this.tipoVehiculo = tipoVehiculo;
         this.duenio = duenio;
     }
 
-    public TipoVehiculo getTipovehiculo() {
-        return tipovehiculo;
+    public TipoVehiculo getTipoVehiculo() {
+        return tipoVehiculo;
     }
 
-    public void setTipovehiculo(TipoVehiculo tipovehiculo) {
-        this.tipovehiculo = tipovehiculo;
+    public void setTipoVehiculo(TipoVehiculo tipovehiculo) {
+        this.tipoVehiculo = tipovehiculo;
     }
 
-    public String getDuenio() {
+    public User getDuenio() {
         return duenio;
     }
 
-    public void setDuenio(String duenio) {
+    public void setDuenio(User duenio) {
         this.duenio = duenio;
     }
     
@@ -126,6 +126,8 @@ public class Vehiculo implements Comparable<Vehiculo>{
         return this.getAnio() - v.getAnio();
     }
     
+    
+    
     @Override
     public boolean equals (Object o) {
         if(o==this){
@@ -137,57 +139,6 @@ public class Vehiculo implements Comparable<Vehiculo>{
         }else{
             return false;
         }
-    }
-    
-    public static ArrayList<Vehiculo> cargarVehiculos(){
-    ArrayList<Vehiculo> vehiculos = new ArrayList<>();
-        try{
-            FileReader reader = new FileReader("src/main/resources/com/mycompany/proyectoestructuras/vehiculos.csv");
-            BufferedReader bf = new BufferedReader(reader);
-            String line;
-            bf.readLine();
-            while((line=bf.readLine())!=null){
-                String[] division = line.split(",");
-                String id = division[0];
-                double precio = Double.valueOf(division[1]);
-                String marca = division[2];
-                String modelo = division[3];
-                String foto = division[4]; 
-                int anio = Integer.valueOf(division[5]);
-                int kilometraje = Integer.valueOf(division[6]);
-                String motor = division[7];
-                String trasmision = division[8];
-                int peso = Integer.valueOf(division[9]);
-                String ubiActual = division[10];
-                ArrayList<Accident> histAccident = new ArrayList<>(); 
-                if(!division[11].equals("null")){
-                    String[] accidentes = division[11].split("/");
-                    for(String s: accidentes){
-                    String[] subdivision = s.split(";");
-                    String[] divisionFecha = subdivision[0].split("-");
-                    LocalDate fecha = LocalDate.of(Integer.valueOf(divisionFecha[2]),Integer.valueOf(divisionFecha[1]),Integer.valueOf(divisionFecha[0]));
-                    histAccident.add(new Accident(fecha,subdivision[1],Double.valueOf(subdivision[2])));
-                    }
-                }
-                ArrayList<Servicio> histService = new ArrayList<>(); 
-                String[] servicios = division[12].split("/");
-                for(String s: servicios){
-                    String[] subdivision = s.split(";");
-                    String[] divisionFecha = subdivision[0].split("-");
-                    LocalDate fecha = LocalDate.of(Integer.valueOf(divisionFecha[2]),Integer.valueOf(divisionFecha[1]),Integer.valueOf(divisionFecha[0]));
-                    histService.add(new Servicio(fecha,subdivision[1],Double.valueOf(subdivision[2]),subdivision[3]));
-                }
-                TipoVehiculo tipovehiculo = TipoVehiculo.valueOf(division[13]); 
-                String duenio = division[14];
-                Vehiculo vehiculo = new Vehiculo(id,precio,marca,modelo,foto,anio,kilometraje,motor,trasmision,peso,ubiActual,histAccident,histService,tipovehiculo,duenio);
-                vehiculos.add(vehiculo);
-            }
-            reader.close();
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-        return vehiculos;
     }
     
     public static void actualizarVehiculos(){
@@ -219,7 +170,7 @@ public class Vehiculo implements Comparable<Vehiculo>{
                 }
                 contador2++;
             }
-            bw.write(v.getId()+","+v.getPrecio()+","+v.getMarca()+","+v.getModelo()+","+v.getFoto()+","+v.getAnio()+","+v.getKilometraje()+","+v.getMotor()+","+v.getTrasmision()+","+v.getPeso()+","+v.getUbiActual()+","+histAccident+","+histService+","+v.getTipovehiculo()+","+v.getDuenio());
+            bw.write(v.getId()+","+v.getPrecio()+","+v.getMarca()+","+v.getModelo()+","+v.getFoto()+","+v.getAnio()+","+v.getKilometraje()+","+v.getMotor()+","+v.getTrasmision()+","+v.getPeso()+","+v.getUbiActual()+","+histAccident+","+histService+","+v.getTipoVehiculo()+","+v.getDuenio().getNombre());
             bw.newLine();
             }
             bw.close();

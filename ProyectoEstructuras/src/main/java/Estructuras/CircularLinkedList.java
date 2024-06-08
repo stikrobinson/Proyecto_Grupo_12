@@ -15,13 +15,13 @@ import java.util.ListIterator;
 
 public class CircularLinkedList<E> implements List<E>{//Lista Circular doblemente enlazada
 
-  private NodeList<E> tail, cursor;//cursor representa el elemento que se esta mostrando en el interfaz
+  private NodeList<E> tail;
   private int size;
+  private ListIterator listIterator;
 
   public CircularLinkedList(){
     tail = null;
     size = 0;
-    cursor = null;
   }
 
   public int size() {
@@ -67,7 +67,6 @@ public class CircularLinkedList<E> implements List<E>{//Lista Circular doblement
       tail = new NodeList<E>(e);
       tail.setAnterior(tail);
       tail.setSiguiente(tail);
-      cursor = tail;
     }else if(size==1){
       NodeList<E> nuevo = new NodeList<E>(e);
       nuevo.setAnterior(tail);
@@ -84,6 +83,7 @@ public class CircularLinkedList<E> implements List<E>{//Lista Circular doblement
       tail = nuevo;
     }
     size++;
+    listIterator = this.listIterator;
     return true;
 
 
@@ -94,7 +94,6 @@ public class CircularLinkedList<E> implements List<E>{//Lista Circular doblement
     for(NodeList<E> puntero = tail.getSiguiente();contador<size;puntero = puntero.getSiguiente()){
       if(puntero.getElemento().equals(o)){
           
-          if ( puntero == cursor ) cursor = cursor.getAnterior();
           NodeList<E> anterior = puntero.getAnterior();
           NodeList<E> siguiente = puntero.getSiguiente();
           anterior.setSiguiente(siguiente);
@@ -111,7 +110,7 @@ public class CircularLinkedList<E> implements List<E>{//Lista Circular doblement
   public void clear() {
     tail = null;
     size = 0;
-    cursor = null;
+    listIterator = null;
   }
 
   public boolean addFirst(E e){
@@ -123,7 +122,6 @@ public class CircularLinkedList<E> implements List<E>{//Lista Circular doblement
       tail = new NodeList<E>(e);
       tail.setAnterior(tail);
       tail.setSiguiente(tail);
-      cursor = tail;
     }else if(size==1){
       NodeList<E> nuevo = new NodeList<E>(e); 
       nuevo.setSiguiente(tail);
@@ -214,7 +212,6 @@ public class CircularLinkedList<E> implements List<E>{//Lista Circular doblement
     int contador = 0;
     for(NodeList<E> puntero = tail.getSiguiente();puntero!=null;puntero = puntero.getSiguiente()){
       if(contador==index){
-          if ( puntero == cursor ) cursor = cursor.getAnterior();
         E valor = puntero.getElemento();
         NodeList<E> anterior = puntero.getAnterior();
         NodeList<E> siguiente = puntero.getSiguiente();
@@ -253,7 +250,7 @@ public class CircularLinkedList<E> implements List<E>{//Lista Circular doblement
 
   public ListIterator<E> listIterator() {
     ListIterator<E> it = new ListIterator<E>(){
-      NodeList<E> puntero = tail.getSiguiente();
+      NodeList<E> puntero = tail;
       int indice = 0;
       boolean arranque = false;
 
@@ -358,13 +355,10 @@ public class CircularLinkedList<E> implements List<E>{//Lista Circular doblement
     // TODO Auto-generated method stub
     return null;
   }
-  public E getCursor(){
-      return cursor.getElemento();
+  public void setListIterator(){
+      listIterator = this.listIterator();
   }
-  public void cursorSiguiente(){
-      cursor = cursor.getSiguiente();
-  }
-  public void cursorAnterior(){
-      cursor = cursor.getAnterior();
+  public ListIterator<E> getListIterator(){
+      return listIterator;
   }
 }
