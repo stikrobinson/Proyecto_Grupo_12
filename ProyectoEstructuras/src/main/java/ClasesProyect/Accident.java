@@ -20,5 +20,31 @@ public class Accident {
         this.descripcion = descripcion;
         this.costoRepa = costoRepa;
     }
+
+    public LocalDate getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public Double getCostoRepa() {
+        return costoRepa;
+    }
+
+    public void setCostoRepa(Double costoRepa) {
+        this.costoRepa = costoRepa;
+    }
+    
+    
     
 }

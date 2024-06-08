@@ -8,15 +8,10 @@ import javafx.stage.Stage;
 
 import java.util.HashMap;
 
-import java.time.LocalDate;
 import java.io.IOException;
 
 import Estructuras.*;
 import ClasesProyect.*;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.InputStream;
-
 
 public class App extends Application {
 
@@ -29,8 +24,8 @@ public class App extends Application {
     @Override
     public void start(Stage s) throws IOException {
         STAGE = s;
-        USUARIOS = cargarUsuarios();
-        VEHICULOS = cargarVehiculos();
+        USUARIOS = User.cargarUsuarios();
+        VEHICULOS = Vehiculo.cargarVehiculos();
         Escenas escenas = new Escenas();
         MENU = escenas.MENU;
         STAGE.setScene(escenas.INICIOSESION);
@@ -54,61 +49,4 @@ public class App extends Application {
         launch();
     }
     
-    private static HashMap<String, User> cargarUsuarios(){
-        HashMap<String, User> usuarios = new HashMap<>();
-        usuarios.put("a", new User("a", "b", "c"));
-        usuarios.put("sebsm1234", new User("sebsm1234", ".getContrasena()", "Sebastian Manzanilla"));
-        return usuarios;
-    }
-    
-    private static ArrayList<Vehiculo> cargarVehiculos(){
-        ArrayList<Vehiculo> vehiculos = new ArrayList<>();
-        try{
-            FileReader reader = new FileReader("src/main/resources/com/mycompany/proyectoestructuras/vehiculos.csv");
-            BufferedReader bf = new BufferedReader(reader);
-            String line;
-            bf.readLine();
-            while((line=bf.readLine())!=null){
-                String[] division = line.split(",");
-                String id = division[0];
-                double precio = Double.valueOf(division[1]);
-                String marca = division[2];
-                String modelo = division[3];
-                String foto = division[4]; 
-                int anio = Integer.valueOf(division[5]);
-                int kilometraje = Integer.valueOf(division[6]);
-                String motor = division[7];
-                String trasmision = division[8];
-                int peso = Integer.valueOf(division[9]);
-                String ubiActual = division[10];
-                ArrayList<Accident> histAccident = new ArrayList<>(); 
-                if(!division[11].equals("null")){
-                    String[] accidentes = division[11].split("/");
-                    for(String s: accidentes){
-                    String[] subdivision = s.split(";");
-                    String[] divisionFecha = subdivision[0].split("-");
-                    LocalDate fecha = LocalDate.of(Integer.valueOf(divisionFecha[2]),Integer.valueOf(divisionFecha[1]),Integer.valueOf(divisionFecha[0]));
-                    histAccident.add(new Accident(fecha,subdivision[1],Double.valueOf(subdivision[2])));
-                    }
-                }
-                ArrayList<Servicio> histService = new ArrayList<>(); 
-                String[] servicios = division[12].split("/");
-                for(String s: servicios){
-                    String[] subdivision = s.split(";");
-                    String[] divisionFecha = subdivision[0].split("-");
-                    LocalDate fecha = LocalDate.of(Integer.valueOf(divisionFecha[2]),Integer.valueOf(divisionFecha[1]),Integer.valueOf(divisionFecha[0]));
-                    histService.add(new Servicio(fecha,subdivision[1],Double.valueOf(subdivision[2]),subdivision[3]));
-                }
-                TipoVehiculo tipovehiculo = TipoVehiculo.valueOf(division[13]); 
-                String duenio = division[14];
-                Vehiculo vehiculo = new Vehiculo(id,precio,marca,modelo,foto,anio,kilometraje,motor,trasmision,peso,ubiActual,histAccident,histService,tipovehiculo,duenio);
-                vehiculos.add(vehiculo);
-            }
-            reader.close();
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-        return vehiculos;
-    }
 }

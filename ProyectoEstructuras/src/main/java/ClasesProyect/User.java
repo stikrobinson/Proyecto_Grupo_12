@@ -1,6 +1,7 @@
 package ClasesProyect;
 
 import Estructuras.ArrayList;
+import java.util.HashMap;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -21,7 +22,8 @@ public class User {
     private ArrayList carrosEnVenta; //Lista de carros que el Salesman tiene en su catalogo, cambiar tipo de dato a TDA propio
     
     public User(String u, String p, String n){
-        usuario = u; contrasena = p; nombre = n; numeroCel = null; carrosComprados = null; carrosEnVenta  = null;
+        usuario = u; contrasena = p; nombre = n; numeroCel = null; 
+        carrosComprados = null; carrosEnVenta  = null;
     }
     
     public String getNombre(){
@@ -57,5 +59,12 @@ public class User {
     }
     public void eliminarCarro(Vehiculo car){
         
+    }
+    
+    public static HashMap<String, User> cargarUsuarios(){
+        HashMap<String, User> usuarios = new HashMap<>();
+        usuarios.put("a", new User("a", "b", "c"));
+        usuarios.put("sebsm1234", new User("sebsm1234", ".getContrasena()", "Sebastian Manzanilla"));
+        return usuarios;
     }
 }
