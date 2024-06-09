@@ -142,9 +142,7 @@ public class Vehiculo implements Comparable<Vehiculo>{
     }
     
     public static void actualizarVehiculos(){
-        try{
-            FileWriter writer = new FileWriter("src/main/resources/com/mycompany/proyectoestructuras/vehiculos.csv");
-            BufferedWriter bw = new BufferedWriter(writer);
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter("src/main/resources/com/mycompany/proyectoestructuras/vehiculos.csv"))){
             bw.write("id,precio,marca,modelo,foto,anio,kilometraje,motor,transmision,peso,ubiActual,histAccident,histService,tipoVehiculo,duenio");
             bw.newLine();
             for(Vehiculo v: App.VEHICULOS){
@@ -174,12 +172,10 @@ public class Vehiculo implements Comparable<Vehiculo>{
                 }
                 contador2++;
             }
+            }
             bw.write(v.getId()+","+v.getPrecio()+","+v.getMarca()+","+v.getModelo()+","+v.getFoto()+","+v.getAnio()+","+v.getKilometraje()+","+v.getMotor()+","+v.getTrasmision()+","+v.getPeso()+","+v.getUbiActual()+","+histAccident+","+histService+","+v.getTipoVehiculo()+","+v.getDuenio().getUsuario());
             bw.newLine();
             }
-            }
-            bw.close();
-            writer.close();
         }
         catch(Exception e){
             e.printStackTrace();
