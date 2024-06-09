@@ -101,7 +101,7 @@ public class Escenas extends Stage {
         Button btnVER = new Button("Vehiculos Disponibles");
         btnVER.setStyle("-fx-background-color: #f5ff9e; -fx-text-fill: #000000; -fx-font-size: 40px;");
         btnVER.setOnMouseClicked(e -> {
-            App.STAGE.setScene(VER);        
+            App.STAGE.setScene(VER);
             });
         
         //Creamos un contenedor para la creacion del vehiculo nuevo
@@ -197,7 +197,7 @@ public class Escenas extends Stage {
         
         //Creamos un contenedor para mostrar la informacion
         VBox vbVehiculoActualVER = new VBox(); vbVehiculoActualVER.setAlignment(Pos.CENTER);
-
+        
         //Creamos un Boton que aplique los ordenamientos y filtros y llene la lista
         Button btnAplicarFiltro = new Button("Aplicar"); 
         btnAplicarFiltro.setOnAction( e -> {
@@ -240,7 +240,7 @@ public class Escenas extends Stage {
         rootVER.setRight(vbSiguiente);
         rootVER.setBottom(vbSalirVER);
         VER = new Scene(rootVER, 800, 600);
-
+        
         //CREAR
         Label lblTtCREAR = new Label("Vender Vehiculo");
         lblTtCREAR.setStyle("-fx-text-fill: #000000; -fx-font-size: 60;");
@@ -551,7 +551,7 @@ public class Escenas extends Stage {
                 int kilometraje = Integer.parseInt(tfKilometraje.getText());
                 int peso = Integer.parseInt(tfPeso.getText());
                 TipoVehiculo tipo = TipoVehiculo.valueOf(cbTipo.getValue());
-                String id = String.valueOf(App.VEHICULOS.size());
+                String id = String.valueOf(Integer.valueOf(App.VEHICULOS.get((App.VEHICULOS.size()-1)).getId())+1);
                 Vehiculo nuevo;
                 nuevo = new Vehiculo(id, precio, tfMarca.getText(), tfModelo.getText(), "foto", anio, kilometraje, tfMotor.getText(), cbTransmision.getValue(), peso, tfUbicacion.getText(), accidentes, servicios, tipo, App.USUARIOACTUAL);
                 App.VEHICULOS.add(nuevo);

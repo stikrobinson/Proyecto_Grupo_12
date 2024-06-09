@@ -142,9 +142,7 @@ public class Vehiculo implements Comparable<Vehiculo>{
     }
     
     public static void actualizarVehiculos(){
-        try{
-            FileWriter writer = new FileWriter("src/main/resources/com/mycompany/proyectoestructuras/vehiculos.csv");
-            BufferedWriter bw = new BufferedWriter(writer);
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter("src/main/resources/com/mycompany/proyectoestructuras/vehiculos.csv"))){
             bw.write("id,precio,marca,modelo,foto,anio,kilometraje,motor,transmision,peso,ubiActual,histAccident,histService,tipoVehiculo,duenio");
             bw.newLine();
             for(Vehiculo v: App.VEHICULOS){
@@ -163,6 +161,10 @@ public class Vehiculo implements Comparable<Vehiculo>{
                 }
             }
             int contador2 = 0;
+            if(v.getHistService().isEmpty()){
+                histService = histService + "null";
+            }
+            else{
             for(Servicio s: v.getHistService()){
                 histService = histService + s.getFecha().getDayOfMonth()+"-"+s.getFecha().getMonthValue()+"-"+s.getFecha().getYear()+";"+s.getTipo()+";"+s.getCosto()+";"+s.getDetalles();
                 if(contador2<v.getHistService().size()-1){
@@ -170,11 +172,10 @@ public class Vehiculo implements Comparable<Vehiculo>{
                 }
                 contador2++;
             }
+            }
             bw.write(v.getId()+","+v.getPrecio()+","+v.getMarca()+","+v.getModelo()+","+v.getFoto()+","+v.getAnio()+","+v.getKilometraje()+","+v.getMotor()+","+v.getTrasmision()+","+v.getPeso()+","+v.getUbiActual()+","+histAccident+","+histService+","+v.getTipoVehiculo()+","+v.getDuenio().getUsuario());
             bw.newLine();
             }
-            bw.close();
-            writer.close();
         }
         catch(Exception e){
             e.printStackTrace();

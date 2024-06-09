@@ -84,12 +84,14 @@ public class App extends Application {
                     }
                 }
                 ArrayList<Servicio> histService = new ArrayList<>(); 
+                if(!division[12].equals("null")){
                 String[] servicios = division[12].split("/");
                 for(String s: servicios){
                     String[] subdivision = s.split(";");
                     String[] divisionFecha = subdivision[0].split("-");
                     LocalDate fecha = LocalDate.of(Integer.valueOf(divisionFecha[2]),Integer.valueOf(divisionFecha[1]),Integer.valueOf(divisionFecha[0]));
                     histService.add(new Servicio(fecha,subdivision[1],Double.valueOf(subdivision[2]),subdivision[3]));
+                }
                 }
                 TipoVehiculo tipovehiculo = TipoVehiculo.valueOf(division[13]); 
                 User duenio = USUARIOS.get(division[14]);
