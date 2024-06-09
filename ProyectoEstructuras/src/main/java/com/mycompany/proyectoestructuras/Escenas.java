@@ -11,19 +11,22 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+
+import java.time.LocalDate;
 
 import javafx.geometry.Pos;
 
 import ClasesProyect.*;
 import Estructuras.CircularLinkedList;
 import Estructuras.ArrayList;
-import java.util.ListIterator;
 import java.util.PriorityQueue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Escenas extends Stage {
     public Scene INICIOSESION, MENU, VER, CREAR, MISVEHICULOS;
+    private Stage ACCIDENTES, SERVICIOS;
     
     public Escenas(){
         //INICIOSESION
@@ -95,9 +98,31 @@ public class Escenas extends Stage {
             App.STAGE.setScene(VER);        
             });
         
+        //Creamos un contenedor para la creacion del vehiculo nuevo
+        VBox vbNuevoVehiculo = new VBox(); vbNuevoVehiculo.setSpacing(15); vbNuevoVehiculo.setAlignment(Pos.CENTER);
+        //Creamos las vegntanas para los historiales de accidentes y servicios, con sus respectivos contenedores y Labels
+        BorderPane rootACCIDENTES = new BorderPane();
+        Label lblTtACCIDENTES = new Label("Historial de Accidentes"); lblTtACCIDENTES.setStyle("-fx-text-fill: #000000; -fx-font-size: 40px;");
+        VBox vbTtACCIDENTES = new VBox(); vbTtACCIDENTES.setAlignment(Pos.CENTER);
+        vbTtACCIDENTES.getChildren().add(lblTtACCIDENTES);
+        VBox vbACCIDENTES = new VBox(); vbACCIDENTES.setSpacing(20); vbACCIDENTES.setAlignment(Pos.CENTER);
+                
+        rootACCIDENTES.setCenter(vbACCIDENTES); rootACCIDENTES.setTop(vbTtACCIDENTES);
+        ACCIDENTES = new Stage(); ACCIDENTES.setScene(new Scene(rootACCIDENTES, 600, 600));
+        
+        BorderPane rootSERVICIOS = new BorderPane();
+        Label lblTtSERVICIOS = new Label("Historial de Servicios"); lblTtSERVICIOS.setStyle("-fx-text-fill: #000000; -fx-font-size: 50px;");
+        VBox vbTtSERVICIOS = new VBox(); vbTtSERVICIOS.setAlignment(Pos.CENTER);
+        vbTtSERVICIOS.getChildren().add(lblTtSERVICIOS);
+        VBox vbSERVICIOS = new VBox(); vbSERVICIOS.setSpacing(20); vbSERVICIOS.setAlignment(Pos.CENTER);
+        
+        rootSERVICIOS.setTop(vbTtSERVICIOS); rootSERVICIOS.setCenter(vbSERVICIOS);
+        SERVICIOS = new Stage(); SERVICIOS.setScene(new Scene(rootSERVICIOS, 600, 600));  
+        
         Button btnCREAR = new Button("Poner en Venta un Vehiculo");
         btnCREAR.setStyle("-fx-background-color: #5167b0; -fx-text-fill: #ffffff; -fx-font-size: 40px;");
         btnCREAR.setOnMouseClicked(e -> {
+            crearVehiculo(vbNuevoVehiculo, vbACCIDENTES, vbSERVICIOS);
             App.STAGE.setScene(CREAR);        
         });
         
@@ -220,14 +245,15 @@ public class Escenas extends Stage {
         Button salirCREAR = new Button("Salir"); 
         salirCREAR.setStyle("-fx-background-color: #c2484e; -fx-text-fill: #ffffff; -fx-font-size: 20px;");
         salirCREAR.setOnMouseClicked(e -> {
-            App.menu();
+            App.menu(); ACCIDENTES.close(); SERVICIOS.close();
         });
         VBox vbSalirCREAR = new VBox(); vbSalirCREAR.setAlignment(Pos.CENTER); vbSalirCREAR.getChildren().add(salirCREAR);
         
         BorderPane rootCREAR = new BorderPane();
         rootCREAR.setTop(vbTtCREAR);
+        rootCREAR.setCenter(vbNuevoVehiculo);
         rootCREAR.setBottom(vbSalirCREAR);
-        CREAR = new Scene(rootCREAR, 800, 600);
+        CREAR = new Scene(rootCREAR, 1100, 700);
         
         //MISVEHICULOS  
         BorderPane rootMISV = new BorderPane();
@@ -251,7 +277,10 @@ public class Escenas extends Stage {
         MISVEHICULOS = new Scene(rootMISV, 800, 600);
     }
     private static void mostrarVehiculo(VBox vbVehiculo, Vehiculo v){
+        
         vbVehiculo.getChildren().clear();
+        
+        System.out.println(v.getModelo());
         
         Label lblMarca = new Label("Marca: " + v.getMarca()); lblMarca.setStyle("-fx-text-fill: #000000; -fx-font-size: 40;");
         Label lblModelo = new Label("Modelo: " + v.getModelo()); lblModelo.setStyle("-fx-text-fill: #000000; -fx-font-size: 40;");
@@ -335,5 +364,179 @@ public class Escenas extends Stage {
         while ( !pqOrden.isEmpty() ){
             vehiculosMostrados.add(pqOrden.poll());
         }
+    }
+     
+    public void crearVehiculo(VBox vbNuevoVehiculo, VBox vbACCIDENTES, VBox vbSERVICIOS){
+        //Vaciamos los contenedores
+        vbNuevoVehiculo.getChildren().clear(); vbACCIDENTES.getChildren().clear(); vbSERVICIOS.getChildren().clear();
+        //Creamos los textfields
+        int ancho = 300;
+        TextField tfMarca = new TextField(); tfMarca.setPromptText("Marca"); tfMarca.setMaxWidth(ancho);
+        tfMarca.setStyle("-fx-background-color: #ffffff; -fx-text-fill: #000000; -fx-font-size: 30px;");
+        
+        TextField tfModelo = new TextField(); tfModelo.setPromptText("Modelo"); tfModelo.setMaxWidth(ancho);
+        tfModelo.setStyle("-fx-background-color: #ffffff; -fx-text-fill: #000000; -fx-font-size: 30px;");
+        
+        TextField tfAnio = new TextField(); tfAnio.setPromptText("Año"); tfAnio.setMaxWidth(200);
+        tfAnio.setStyle("-fx-background-color: #ffffff; -fx-text-fill: #000000; -fx-font-size: 30px;");
+        
+        TextField tfKilometraje = new TextField(); tfKilometraje.setPromptText("Kilometraje (entero)"); //tfKilometraje.setMaxWidth(ancho);
+        tfKilometraje.setStyle("-fx-background-color: #ffffff; -fx-text-fill: #000000; -fx-font-size: 30px;");
+        
+        TextField tfPrecio = new TextField(); tfPrecio.setPromptText("Precio (ej: 12.34) [$]"); tfPrecio.setMaxWidth(500);
+        tfPrecio.setStyle("-fx-background-color: #c1ffbd; -fx-text-fill: #000000; -fx-font-size: 30px;");
+        
+        TextField tfMotor = new TextField(); tfMotor.setPromptText("Motor"); tfMotor.setMaxWidth(ancho);
+        tfMotor.setStyle("-fx-background-color: #ffffff; -fx-text-fill: #000000; -fx-font-size: 30px;");
+        
+        Label lblTransmision = new Label("Transmision: "); lblTransmision.setStyle("-fx-text-fill: #000000; -fx-font-size: 25px;");
+        
+        ComboBox<String> cbTransmision = new ComboBox(); cbTransmision.setStyle("-fx-background-color: #ffffff; -fx-text-fill: #000000; -fx-font-size: 20px;");
+        ObservableList<String> itemsTransmision = FXCollections.observableArrayList(
+            "manual", "automática"
+        );
+        cbTransmision.setItems(itemsTransmision);
+        cbTransmision.setValue("automática");
+        
+        TextField tfPeso = new TextField(); tfPeso.setPromptText("Peso (entero) [kg]"); tfPeso.setMaxWidth(ancho);
+        tfPeso.setStyle("-fx-background-color: #ffffff; -fx-text-fill: #000000; -fx-font-size: 30px;");
+        
+        TextField tfUbicacion = new TextField(); tfUbicacion.setPromptText("Ubicacion"); tfUbicacion.setMaxWidth(ancho);
+        tfUbicacion.setStyle("-fx-background-color: #ffffff; -fx-text-fill: #000000; -fx-font-size: 30px;");
+        
+        Label lblTipo = new Label("Transmision: "); lblTipo.setStyle("-fx-text-fill: #000000; -fx-font-size: 25px;");
+        
+        ComboBox<String> cbTipo = new ComboBox(); cbTipo.setStyle("-fx-background-color: #ffffff; -fx-text-fill: #000000; -fx-font-size: 20px;");
+        ObservableList<String> itemsTipo = FXCollections.observableArrayList(
+            "CARRO", "CAMION", "MOTO"
+        );
+        cbTipo.setItems(itemsTipo);
+        cbTipo.setValue("CARRO");
+        
+        //Creamos los contenedores y agregamos los controladores
+        HBox hb1 = new HBox(); hb1.setAlignment(Pos.CENTER);
+        HBox hb2 = new HBox(); hb2.setAlignment(Pos.CENTER);
+        HBox hb3 = new HBox(); hb3.setAlignment(Pos.CENTER); hb3.setSpacing(10);
+        HBox hb4= new HBox(); hb4.setAlignment(Pos.CENTER); hb4.setSpacing(40);
+        
+        hb1.getChildren().addAll(tfMarca, tfModelo, tfAnio, tfKilometraje);
+        hb2.getChildren().addAll(tfMotor, tfPeso, tfUbicacion);
+        hb3.getChildren().addAll(lblTransmision, cbTransmision, lblTipo, cbTipo);
+        
+        vbNuevoVehiculo.getChildren().addAll(hb1, hb2, tfPrecio, hb3);
+        
+        //Creamos dos botones que abriran las ventanas para agregar los historiales de accidentes y servicios
+        Button btnACCIDENTES = new Button("Agregar Historial de Accidentes");
+        btnACCIDENTES.setStyle("-fx-background-color: #91fffb; -fx-text-fill: #000000; -fx-font-size: 20px;");
+        btnACCIDENTES.setOnAction( e -> {
+            ACCIDENTES.show();
+        });
+        
+        Button btnSERVICIOS = new Button("Agregar Historial de Servicios");
+        btnSERVICIOS.setStyle("-fx-background-color: #91fffb; -fx-text-fill: #000000; -fx-font-size: 20px;");
+        btnSERVICIOS.setOnAction( e -> {
+            SERVICIOS.show();
+        });
+        
+        hb4.getChildren().addAll(btnACCIDENTES, btnSERVICIOS);
+        
+        //Creamos una lista de historiales de servicios y otra de accidentes para el nuevo vehiculo
+        ArrayList<Accident> accidentes = new ArrayList<>(); ArrayList<Servicio> servicios = new ArrayList<>();
+       
+        //Creamos los controladores para las nuevas ventanas
+        
+        //Servicios
+        DatePicker dtServicio = new DatePicker(); dtServicio.setValue(LocalDate.now()); dtServicio.setPrefSize(300, 80);
+        dtServicio.setStyle("-fx-background-color: #ffffff; -fx-text-fill: #000000; -fx-font-size: 20px;");
+        
+        TextField tfTipoServicio = new TextField(); tfTipoServicio.setPromptText("Tipo"); tfTipoServicio.setMaxWidth(ancho);
+        tfTipoServicio.setStyle("-fx-background-color: #ffffff; -fx-text-fill: #000000; -fx-font-size: 30px;");
+        
+        TextField tfCostoServicio = new TextField(); tfCostoServicio.setPromptText("Costo (ej: 12.34) [$]"); tfCostoServicio.setMaxWidth(ancho);
+        tfCostoServicio.setStyle("-fx-background-color: #ffffff; -fx-text-fill: #000000; -fx-font-size: 30px;");
+        
+        TextField tfDetallesServicio = new TextField(); tfDetallesServicio.setPromptText("Detalles"); tfDetallesServicio.setMaxWidth(ancho);
+        tfDetallesServicio.setStyle("-fx-background-color: #ffffff; -fx-text-fill: #000000; -fx-font-size: 30px;");
+        
+        //Accidentes
+        DatePicker dtAccidente = new DatePicker(); dtAccidente.setValue(LocalDate.now()); dtAccidente.setPrefSize(300, 80);
+        dtAccidente.setStyle("-fx-background-color: #ffffff; -fx-text-fill: #000000; -fx-font-size: 20px;");
+        
+        TextField tfDescripcion = new TextField(); tfDescripcion.setPromptText("Tipo"); tfDescripcion.setMaxWidth(ancho);
+        tfDescripcion.setStyle("-fx-background-color: #ffffff; -fx-text-fill: #000000; -fx-font-size: 30px;");
+        
+        TextField tfCostoAccidente = new TextField(); tfCostoAccidente.setPromptText("Costo (ej: 12.34) [$]"); tfCostoAccidente.setMaxWidth(ancho);
+        tfCostoAccidente.setStyle("-fx-background-color: #ffffff; -fx-text-fill: #000000; -fx-font-size: 30px;");
+        
+        //Creamos un boton para agregar el servicio y el accidente
+        Button btnAgregarServicio = new Button("Agregar"); btnAgregarServicio.setStyle("-fx-background-color: #f6ff91; -fx-text-fill: #000000; -fx-font-size: 20px;");
+        btnAgregarServicio.setOnAction( e -> {
+            if( !tfTipoServicio.getText().equals("") && !tfCostoServicio.getText().equals("") ){ //El detalle es opcional y la fecha siempre tiene valor
+                servicios.add(new Servicio(
+                        dtServicio.getValue(), tfTipoServicio.getText(), Double.parseDouble( tfCostoServicio.getText() ), tfDetallesServicio.getText() 
+                ));
+                
+                dtServicio.setValue(LocalDate.now()); tfTipoServicio.clear(); tfCostoServicio.clear(); tfDetallesServicio.clear();
+                Label lblEx = new Label("Agregado con exito!\nServicios: " + servicios.size());
+                lblEx.setStyle("-fx-text-fill: #00ff00; -fx-font-size: 20px;");
+                vbSERVICIOS.getChildren().clear();
+                vbSERVICIOS.getChildren().addAll(dtServicio, tfTipoServicio, tfCostoServicio, tfDetallesServicio, btnAgregarServicio, lblEx);
+            }else{
+                Label lblErr = new Label("Todos los campos deben llenarse");
+                lblErr.setStyle("-fx-text-fill: #ff0000; -fx-font-size: 20px;");
+                vbSERVICIOS.getChildren().clear();
+                vbSERVICIOS.getChildren().addAll(dtServicio, tfTipoServicio, tfCostoServicio, tfDetallesServicio, btnAgregarServicio, lblErr);
+            }
+        });
+        
+        vbSERVICIOS.getChildren().addAll(dtServicio, tfTipoServicio, tfCostoServicio, tfDetallesServicio, btnAgregarServicio);
+        
+        Button btnAgregarAccidente = new Button("Agregar"); btnAgregarAccidente.setStyle("-fx-background-color: #f6ff91; -fx-text-fill: #000000; -fx-font-size: 20px;");
+        btnAgregarAccidente.setOnAction( e -> {
+            if( !tfCostoAccidente.getText().equals("") ){ //La descripcion es opcional
+                accidentes.add(new Accident(
+                        dtAccidente.getValue(), tfDescripcion.getText(), Double.valueOf( tfCostoAccidente.getText() ) 
+                ));
+                
+                dtAccidente.setValue(LocalDate.now()); tfDescripcion.clear(); tfCostoAccidente.clear();
+                Label lblEx = new Label("Agregado con exito!\nAccidentes: " + accidentes.size());
+                lblEx.setStyle("-fx-text-fill: #00ff00; -fx-font-size: 20px;");
+                vbACCIDENTES.getChildren().clear();
+                vbACCIDENTES.getChildren().addAll(dtAccidente, tfDescripcion, tfCostoAccidente, btnAgregarAccidente, lblEx);
+            }else{
+                Label lblErr = new Label("Todos los campos deben llenarse");
+                lblErr.setStyle("-fx-text-fill: #ff0000; -fx-font-size: 20px;");
+                vbACCIDENTES.getChildren().clear();
+                vbACCIDENTES.getChildren().addAll(dtAccidente, tfDescripcion, tfCostoAccidente, btnAgregarAccidente, lblErr);
+            }
+        });
+        
+        vbACCIDENTES.getChildren().addAll(dtAccidente, tfDescripcion, tfCostoAccidente, btnAgregarAccidente);
+        
+        //Creamos el boton para crear el vehiculos
+        Button btnCrear = new Button("Poner en Venta el Vehiculo!");
+        btnCrear.setStyle("-fx-background-color: #f6ff91; -fx-text-fill: #000000; -fx-font-size: 30px;");
+        btnCrear.setOnAction( e -> {
+            if (
+                !tfMarca.getText().equals("") && !tfModelo.getText().equals("") && !tfAnio.getText().equals("") && !tfKilometraje.getText().equals("")
+                && !tfMotor.getText().equals("") && !tfPrecio.getText().equals("") && !tfUbicacion.getText().equals("") && !tfPeso.getText().equals("")                
+                    ){
+                double precio = Double.parseDouble(tfPrecio.getText());
+                int anio = Integer.parseInt(tfAnio.getText());
+                int kilometraje = Integer.parseInt(tfKilometraje.getText());
+                int peso = Integer.parseInt(tfPeso.getText());
+                TipoVehiculo tipo = TipoVehiculo.valueOf(cbTipo.getValue());
+                String id = String.valueOf(App.VEHICULOS.size());
+                Vehiculo nuevo;
+                nuevo = new Vehiculo(id, precio, tfMarca.getText(), tfModelo.getText(), "foto", anio, kilometraje, tfMotor.getText(), cbTransmision.getValue(), peso, tfUbicacion.getText(), accidentes, servicios, tipo, App.USUARIOACTUAL);
+                App.VEHICULOS.add(nuevo);
+                App.USUARIOACTUAL.getVehiculos().add(nuevo);
+                
+                Vehiculo.actualizarVehiculos();
+                App.menu();
+            }
+        });
+        
+        vbNuevoVehiculo.getChildren().addAll(hb4, btnCrear);
     }
 }

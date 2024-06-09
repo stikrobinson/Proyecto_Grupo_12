@@ -170,7 +170,7 @@ public class Vehiculo implements Comparable<Vehiculo>{
                 }
                 contador2++;
             }
-            bw.write(v.getId()+","+v.getPrecio()+","+v.getMarca()+","+v.getModelo()+","+v.getFoto()+","+v.getAnio()+","+v.getKilometraje()+","+v.getMotor()+","+v.getTrasmision()+","+v.getPeso()+","+v.getUbiActual()+","+histAccident+","+histService+","+v.getTipoVehiculo()+","+v.getDuenio().getNombre());
+            bw.write(v.getId()+","+v.getPrecio()+","+v.getMarca()+","+v.getModelo()+","+v.getFoto()+","+v.getAnio()+","+v.getKilometraje()+","+v.getMotor()+","+v.getTrasmision()+","+v.getPeso()+","+v.getUbiActual()+","+histAccident+","+histService+","+v.getTipoVehiculo()+","+v.getDuenio().getUsuario());
             bw.newLine();
             }
             bw.close();
