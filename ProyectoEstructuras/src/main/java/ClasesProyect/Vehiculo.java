@@ -163,6 +163,10 @@ public class Vehiculo implements Comparable<Vehiculo>{
                 }
             }
             int contador2 = 0;
+            if(v.getHistService().isEmpty()){
+                histService = histService + "null";
+            }
+            else{
             for(Servicio s: v.getHistService()){
                 histService = histService + s.getFecha().getDayOfMonth()+"-"+s.getFecha().getMonthValue()+"-"+s.getFecha().getYear()+";"+s.getTipo()+";"+s.getCosto()+";"+s.getDetalles();
                 if(contador2<v.getHistService().size()-1){
@@ -172,6 +176,7 @@ public class Vehiculo implements Comparable<Vehiculo>{
             }
             bw.write(v.getId()+","+v.getPrecio()+","+v.getMarca()+","+v.getModelo()+","+v.getFoto()+","+v.getAnio()+","+v.getKilometraje()+","+v.getMotor()+","+v.getTrasmision()+","+v.getPeso()+","+v.getUbiActual()+","+histAccident+","+histService+","+v.getTipoVehiculo()+","+v.getDuenio().getUsuario());
             bw.newLine();
+            }
             }
             bw.close();
             writer.close();
