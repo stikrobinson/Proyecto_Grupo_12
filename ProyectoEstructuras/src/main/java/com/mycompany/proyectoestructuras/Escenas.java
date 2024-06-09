@@ -24,6 +24,12 @@ import java.util.PriorityQueue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+import javafx.stage.FileChooser;
+
+
 public class Escenas extends Stage {
     public Scene INICIOSESION, MENU, VER, CREAR, MISVEHICULOS;
     private Stage ACCIDENTES, SERVICIOS;
@@ -263,7 +269,18 @@ public class Escenas extends Stage {
         lblTtMISV.setAlignment(Pos.CENTER);
         VBox vbTtMISV = new VBox(); vbTtMISV.setAlignment(Pos.CENTER);
         vbTtMISV.getChildren().add(lblTtMISV);
+        HBox hbFiltrosOwn = new HBox(); hbFiltros.setSpacing(40); hbFiltros.setAlignment(Pos.CENTER);
         
+        Button btnAplicarFiltroOwn = new Button("Aplicar"); 
+        btnAplicarFiltro.setOnAction( e -> {
+            ordenarVehiculos(vehiculosMostrados, filtrarVehiculos(App.VEHICULOS, filtros), ordenamientos);
+            vehiculosMostrados.setListIterator();
+            mostrarVehiculo(vbVehiculoActualVER, vehiculosMostrados.getListIterator().next());
+        }); 
+        btnAplicarFiltro.fire();
+        
+        hbFiltrosOwn.getChildren().addAll(lblFiltro, filtros, lblOrdenamiento, ordenamientos, btnAplicarFiltroOwn);
+        vbTtMISV.getChildren().add(hbFiltrosOwn);
         rootMISV.setTop(vbTtMISV);
         
         Button salirMISV = new Button("Salir"); 
@@ -513,6 +530,14 @@ public class Escenas extends Stage {
         
         vbACCIDENTES.getChildren().addAll(dtAccidente, tfDescripcion, tfCostoAccidente, btnAgregarAccidente);
         
+        Button btnAdjuntarFoto = new Button("Agregar Foto"); btnAdjuntarFoto.setStyle("-fx-background-color: #f6ff91; -fx-text-fill: #000000; -fx-font-size: 20px;");
+        btnAdjuntarFoto.setOnAction( e -> {
+            Scanner entrada = null;
+            FileChooser fileChooser = new FileChooser();
+            File selectedFile = fileChooser.showOpenDialog(this);
+            
+        });
+        
         //Creamos el boton para crear el vehiculos
         Button btnCrear = new Button("Poner en Venta el Vehiculo!");
         btnCrear.setStyle("-fx-background-color: #f6ff91; -fx-text-fill: #000000; -fx-font-size: 30px;");
@@ -537,6 +562,6 @@ public class Escenas extends Stage {
             }
         });
         
-        vbNuevoVehiculo.getChildren().addAll(hb4, btnCrear);
+        vbNuevoVehiculo.getChildren().addAll(hb4, btnAdjuntarFoto,btnCrear);
     }
 }
