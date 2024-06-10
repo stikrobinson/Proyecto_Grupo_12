@@ -1,8 +1,11 @@
 package ClasesProyect;
 
 import Estructuras.ArrayList;
+import com.mycompany.proyectoestructuras.App;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -71,4 +74,29 @@ public class User {
         
     }
     
+    public static void actualizarUsuarios(){
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter("src/main/resources/com/mycompany/proyectoestructuras/usuarios.csv"))){
+            bw.write("usuario, contrasena, nombre, telefonos(;)");
+            bw.newLine();
+            for(String u: App.USUARIOS.keySet()){
+                String line = "";
+                User usuario = App.USUARIOS.get(u);
+                line = line + u+","+usuario.getContrasena()+","+usuario.getNombre()+",";
+                int contador = 0;
+                for(String s: usuario.getTelefonos()){
+                    if(contador!=usuario.getTelefonos().size()-1){
+                        line = line + s + ";";
+                    }else{
+                        line = line + s;
+                    }
+                    contador++;
+                }
+                bw.write(line);
+                bw.newLine();
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    
+}
 }

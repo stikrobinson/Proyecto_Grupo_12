@@ -33,6 +33,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.Scanner;
+import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 
@@ -40,6 +43,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 public class Escenas extends Stage {
     public Scene INICIOSESION, MENU, VER, CREAR, MISVEHICULOS, REGISTRO;
     private Stage ACCIDENTES, SERVICIOS;
+    private ArrayList<String> telefonos = new ArrayList<>();
     
     public Escenas(){
         //INICIOSESION
@@ -59,6 +63,14 @@ public class Escenas extends Stage {
         TextField tfContrasena = new TextField(); tfContrasena.setPromptText("Contrasena"); tfContrasena.setMaxWidth(600);
         tfContrasena.setStyle("-fx-background-color: #b0faff; -fx-text-fill: #000000; -fx-font-size: 40px;");
         
+        Button btnRegistro = new Button("Crear Cuenta");
+        btnRegistro.setStyle("-fx-background-color: #5353ec; -fx-text-fill: #ffffff; -fx-font-size: 30;");
+        btnRegistro.setOnMouseClicked(e -> {
+            App.STAGE.setScene(REGISTRO);
+            telefonos.clear();
+        });
+        
+        
         HBox vbRegistro = new HBox(); vbRegistro.setAlignment(Pos.CENTER); vbRegistro.setSpacing(20);
         Button btnINICIAR = new Button("Iniciar Sesion");
         btnINICIAR.setStyle("-fx-background-color: #c2484e; -fx-text-fill: #ffffff; -fx-font-size: 30;");
@@ -72,24 +84,18 @@ public class Escenas extends Stage {
                     tfUsuario.clear(); tfContrasena.clear();
                     Label lblErr = new Label("Contraseña Incorrecta >:(");
                     lblErr.setStyle("-fx-text-fill: #ff0000; -fx-font-size: 20;");
-                    vbCampos.getChildren().addAll(tfUsuario, tfContrasena, btnINICIAR, lblErr);
+                    vbCampos.getChildren().addAll(tfUsuario, tfContrasena, vbRegistro, lblErr);
                 }               
             }else{
                 vbCampos.getChildren().clear();
                 tfUsuario.clear(); tfContrasena.clear();
                 Label lblErr = new Label("No hay registro de ese usuario :(");
                 lblErr.setStyle("-fx-text-fill: #ff0000; -fx-font-size: 20;");
-                vbCampos.getChildren().addAll(tfUsuario, tfContrasena, btnINICIAR, lblErr);
+                vbCampos.getChildren().addAll(tfUsuario, tfContrasena, vbRegistro, lblErr);
             }
-        });
-        Button btnRegistro = new Button("Crear Cuenta");
-        btnRegistro.setStyle("-fx-background-color: #5353ec; -fx-text-fill: #ffffff; -fx-font-size: 30;");
-        btnRegistro.setOnMouseClicked(e -> {
-            App.STAGE.setScene(REGISTRO);
         });
         
         vbRegistro.getChildren().addAll(btnINICIAR,btnRegistro);
-        
         vbCampos.getChildren().addAll(tfUsuario, tfContrasena, vbRegistro);
         rootSESION.setCenter(vbCampos);
         
@@ -162,7 +168,7 @@ public class Escenas extends Stage {
         btnCerrar.setOnMouseClicked(e -> {
             tfUsuario.clear(); tfContrasena.clear();
             vbCampos.getChildren().clear();
-            vbCampos.getChildren().addAll(tfUsuario, tfContrasena, btnINICIAR);
+            vbCampos.getChildren().addAll(tfUsuario, tfContrasena,vbRegistro);
             App.STAGE.setScene(INICIOSESION);
         });
         VBox vbCerrar = new VBox(); vbCerrar.setAlignment(Pos.CENTER); vbCerrar.getChildren().addAll(lblUsuarioActual, btnCerrar);
@@ -278,22 +284,22 @@ public class Escenas extends Stage {
         
         //MISVEHICULOS  
         BorderPane rootVEROwn = new BorderPane();
-        
+
         Label lblTtMISV = new Label("Mis Vehiculos");
         lblTtMISV.setStyle("-fx-text-fill: #000000; -fx-font-size: 60;");
         lblTtMISV.setAlignment(Pos.CENTER);
         VBox vbTtMISV = new VBox(); vbTtMISV.setAlignment(Pos.CENTER);
         vbTtMISV.getChildren().add(lblTtMISV);
-        
+
         Label lblTituloOwn = new Label("Vehiculos Disponibles");
         lblTituloOwn.setStyle("-fx-text-fill: #000000; -fx-font-size: 60;");
         lblTituloOwn.setAlignment(Pos.CENTER);
         VBox vbTtVEROwn = new VBox(); vbTtVEROwn.setAlignment(Pos.CENTER);
-        
+
         HBox hbFiltrosOwn = new HBox(); hbFiltrosOwn.setSpacing(40); hbFiltrosOwn.setAlignment(Pos.CENTER);
-        
+
         vbTtVEROwn.getChildren().add(lblTituloOwn);        
-        
+
         //Creamos los ComboBox de los filtros y los ordenamientos
         ComboBox filtrosOwn = new ComboBox();
         ObservableList<String> itemsFiltroOwn = FXCollections.observableArrayList(
@@ -301,20 +307,20 @@ public class Escenas extends Stage {
         );
         filtrosOwn.setItems(itemsFiltroOwn);
         filtrosOwn.setValue("Todos");
-        
+
         ComboBox ordenamientosOwn = new ComboBox();
         ObservableList<String> itemsOrdenamientoOwn = FXCollections.observableArrayList(
             "Año (por defecto)", "Marca y modelo(alfabetico)", "Precio", "Kilometraje", "Peso"
         );
         ordenamientosOwn.setItems(itemsOrdenamientoOwn);
         ordenamientosOwn.setValue("Año");
-        
+
         //Ahora creamos una lista circular doblemente enlazada para mostrar los vehículos
         CircularLinkedList<Vehiculo> vehiculosMostradosOwn = new CircularLinkedList<>();
-        
+
         //Creamos un contenedor para mostrar la informacion
         VBox vbVehiculoActualVEROwn = new VBox(); vbVehiculoActualVEROwn.setAlignment(Pos.CENTER);
-        
+
         //Creamos un Boton que aplique los ordenamientos y filtros y llene la lista
         Button btnAplicarFiltroOwn = new Button("Aplicar"); 
         btnAplicarFiltroOwn.setOnAction( e -> {
@@ -323,17 +329,17 @@ public class Escenas extends Stage {
             mostrarVehiculo(vbVehiculoActualVEROwn, vehiculosMostradosOwn.getListIterator().next());
         }); 
         btnAplicarFiltroOwn.fire();
-        
+
         //Agregamos los ComboBox y el boton
         Label lblFiltroOwn = new Label("Filtro: ");
         lblFiltroOwn.setStyle("-fx-text-fill: #000000; -fx-font-size: 20px;");
         Label lblOrdenamientoOwn = new Label("Ordenamiento: ");
         lblOrdenamientoOwn.setStyle("-fx-text-fill: #000000; -fx-font-size: 20px;");
-        
+
         hbFiltrosOwn.getChildren().addAll(lblFiltroOwn, filtrosOwn, lblOrdenamientoOwn, ordenamientosOwn, btnAplicarFiltroOwn);
-        
+
         vbTtVEROwn.getChildren().add(hbFiltrosOwn);
-                
+
         //Colocamos los botones siguiente y anterior
         Button btnSiguienteVEROwn = new Button("->"); btnSiguienteVEROwn.setStyle("-fx-background-color: #abffa8; -fx-text-fill: #000000; -fx-font-size: 50px;");       
         btnSiguienteVEROwn.setOnAction( e -> {
@@ -342,19 +348,19 @@ public class Escenas extends Stage {
         VBox vbSiguienteOwn = new VBox(); vbSiguienteOwn.setAlignment(Pos.CENTER);
         vbSiguienteOwn.getChildren().add(btnSiguienteVEROwn);
         btnSiguienteVEROwn.fire();
-        
+
         Button btnAnteriorVEROwn = new Button("<-"); btnAnteriorVEROwn.setStyle("-fx-background-color: #ffa8b5; -fx-text-fill: #000000; -fx-font-size: 50px;");       
         btnAnteriorVEROwn.setOnAction( e -> {
             mostrarVehiculo(vbVehiculoActualVEROwn, vehiculosMostradosOwn.getListIterator().previous() );
         });
         VBox vbAnteriorOwn = new VBox(); vbAnteriorOwn.setAlignment(Pos.CENTER);
         vbAnteriorOwn.getChildren().add(btnAnteriorVEROwn);
-        
+
         rootVEROwn.setTop(vbTtVEROwn);
         rootVEROwn.setCenter(vbVehiculoActualVEROwn); 
         rootVEROwn.setLeft(vbAnteriorOwn);
         rootVEROwn.setRight(vbSiguienteOwn);
-        
+
 
         Button salirMISV = new Button("Salir"); 
         salirMISV.setStyle("-fx-background-color: #c2484e; -fx-text-fill: #ffffff; -fx-font-size: 20px;");
@@ -362,10 +368,9 @@ public class Escenas extends Stage {
             App.menu();
         });
         VBox vbSalirMISV = new VBox(); vbSalirMISV.setAlignment(Pos.CENTER); vbSalirMISV.getChildren().add(salirMISV);
-<<<<<<< HEAD
-        rootMISV.setBottom(vbSalirMISV);
-        
-        MISVEHICULOS = new Scene(rootMISV, 800, 600);
+        rootVEROwn.setBottom(vbSalirMISV);
+
+        MISVEHICULOS = new Scene(rootVEROwn, 800, 600);
         
         //REGISTRO
         BorderPane rootRegistro = new BorderPane();
@@ -388,26 +393,70 @@ public class Escenas extends Stage {
         tfContrasenaRegistro.setStyle("-fx-background-color: #b0faff; -fx-text-fill: #000000; -fx-font-size: 30px;");
         
         HBox hbTelefonosRegistros = new HBox(); hbTelefonosRegistros.setAlignment(Pos.CENTER); hbTelefonosRegistros.setSpacing(20);
-        TextField tfTelefonosRegistros = new TextField(); tfTelefonosRegistros.setPromptText("Usuario"); hbTelefonosRegistros.setMaxWidth(400);
+        TextField tfTelefonosRegistros = new TextField(); tfTelefonosRegistros.setPromptText("Ingresa un teléfono"); hbTelefonosRegistros.setMaxWidth(550);
         tfTelefonosRegistros.setStyle("-fx-background-color: #b0faff; -fx-text-fill: #000000; -fx-font-size: 30px;");
         Button btnAgregarTelefonos = new Button("Agregar");
         btnAgregarTelefonos.setStyle("-fx-background-color: #72b083; -fx-text-fill: #ffffff; -fx-font-size: 30px;");
+        btnAgregarTelefonos.setMinSize(Button.USE_PREF_SIZE, Button.USE_PREF_SIZE);
+        Label contadorTelefonos = new Label("0");
+        contadorTelefonos.setStyle("-fx-text-fill: #00ff00; -fx-font-size: 40px;");
         btnAgregarTelefonos.setOnMouseClicked(e -> {
-            //App.STAGE.setScene(MISVEHICULOS);        
+            if(!tfTelefonosRegistros.getText().equals("")){
+                telefonos.add(tfTelefonosRegistros.getText());
+                contadorTelefonos.setText(""+(Integer.valueOf(contadorTelefonos.getText())+1));
+                tfTelefonosRegistros.setText("");
+            }else{                    
+                showMessage(AlertType.ERROR,"Error","Error","Ingrese correctamente un número");
+            }
         });
-        hbTelefonosRegistros.getChildren().addAll(tfTelefonosRegistros,btnAgregarTelefonos);
+        hbTelefonosRegistros.getChildren().addAll(tfTelefonosRegistros,btnAgregarTelefonos, contadorTelefonos);
         
         vbCamposRegistros.getChildren().addAll(tfUsuarioRegistro,tfNombreRegistro, tfContrasenaRegistro,hbTelefonosRegistros);
         
+        HBox hbFinRegistro = new HBox(); hbFinRegistro.setSpacing(20); hbFinRegistro.setAlignment(Pos.CENTER); hbFinRegistro.setPadding(new Insets(10, 10, 10, 10)); 
+        Button salidaRegistro = new Button("Salir");
+        salidaRegistro.setStyle("-fx-background-color: #c2484e; -fx-text-fill: #ffffff; -fx-font-size: 30;");
+        salidaRegistro.setOnMouseClicked(e -> {
+            telefonos.clear();
+            tfUsuarioRegistro.clear(); tfTelefonosRegistros.clear(); tfNombreRegistro.clear(); tfContrasenaRegistro.clear(); contadorTelefonos.setText("0");
+            tfUsuario.clear(); tfContrasena.clear();
+            vbCampos.getChildren().clear();
+            vbCampos.getChildren().addAll(tfUsuario, tfContrasena,vbRegistro);
+            App.STAGE.setScene(INICIOSESION);        
+        });
+ 
+        Button crearCuenta = new Button("Crear Cuenta");
+        crearCuenta.setStyle("-fx-background-color: #72b083; -fx-text-fill: #ffffff; -fx-font-size: 30;");
+        crearCuenta.setOnMouseClicked(e -> {
+            if(App.USUARIOS.keySet().contains(tfUsuarioRegistro.getText())){
+                showMessage(AlertType.ERROR,"Usuario Registrado","Usuario Registrado","El usuario que ingresó ya existe, ingrese otro");
+            }
+            else if(!tfUsuarioRegistro.getText().equals("")&&!tfContrasenaRegistro.getText().equals("")&&!tfNombreRegistro.getText().equals("")&&!telefonos.isEmpty()){
+                ArrayList<String> telefonosUsuario = new ArrayList<>();
+                for(String s: telefonos){
+                    telefonosUsuario.add(s);
+                }
+                User nuevoUsuario = new User(tfUsuarioRegistro.getText(),tfContrasenaRegistro.getText(),tfNombreRegistro.getText(),telefonosUsuario);
+                App.USUARIOS.put(nuevoUsuario.getUsuario(),nuevoUsuario);
+                User.actualizarUsuarios();
+                tfUsuarioRegistro.clear(); tfTelefonosRegistros.clear(); tfNombreRegistro.clear(); tfContrasenaRegistro.clear(); contadorTelefonos.setText("0");
+                tfUsuario.clear(); tfContrasena.clear();
+                vbCampos.getChildren().clear();
+                vbCampos.getChildren().addAll(tfUsuario, tfContrasena,vbRegistro);
+                telefonos.clear();
+                App.STAGE.setScene(INICIOSESION);
+            }else{
+                showMessage(AlertType.ERROR,"Error","Error","Ingrese los datos correctamente");
+            }
+        });
+   
+        hbFinRegistro.getChildren().addAll(crearCuenta,salidaRegistro);
+        
         rootRegistro.setCenter(vbCamposRegistros);
+        rootRegistro.setBottom(hbFinRegistro);
         
         REGISTRO = new Scene(rootRegistro,800,600);
-        
-=======
-        rootVEROwn.setBottom(vbSalirMISV);
 
-        MISVEHICULOS = new Scene(rootVEROwn, 800, 600);
->>>>>>> 713fd4b512cec2b41f1a977249de0415b6b88465
     }
     private static void mostrarVehiculo(VBox vbVehiculo, Vehiculo v){
         
@@ -660,10 +709,10 @@ public class Escenas extends Stage {
             
             File selectedFile = fileChooser.showOpenDialog(this);
             if(selectedFile!=null){
-                Path destino = Path.of("ProyectoEstructuras\\src\\main\\resources\\Images");  //Referencia relativa
+                Path destino = Path.of("src\\main\\resources\\Images\\"+selectedFile.getName()+".jpg");  //Referencia relativa
                 Path origen = Path.of(selectedFile.getPath()); //Referencia absoluta
                 try {
-                    Files.move(origen, destino);
+                    Files.copy(origen, destino.toAbsolutePath(),StandardCopyOption.REPLACE_EXISTING);
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
@@ -696,4 +745,12 @@ public class Escenas extends Stage {
         
         vbNuevoVehiculo.getChildren().addAll(hb4, btnAdjuntarFoto,btnCrear);
     }
+    
+    public void showMessage(AlertType tipo, String titulo, String encabezado, String mensaje) {
+        Alert alerta = new Alert(tipo);             //constructor de la alerta
+        alerta.setHeaderText(encabezado);   //establecer encabezado de la alerta
+        alerta.setTitle(titulo);                           //establecer el título de la ventana que muestra la alerta
+        alerta.setContentText(mensaje);        //establecer el contenido de la alerta
+        alerta.showAndWait();     
+}
 }
