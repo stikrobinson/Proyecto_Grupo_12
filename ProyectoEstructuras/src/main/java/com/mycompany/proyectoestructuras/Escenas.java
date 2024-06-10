@@ -36,6 +36,8 @@ import java.util.Scanner;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 
@@ -466,13 +468,16 @@ public class Escenas extends Stage {
         
         Label lblMarca = new Label("Marca: " + v.getMarca()); lblMarca.setStyle("-fx-text-fill: #000000; -fx-font-size: 40;");
         Label lblModelo = new Label("Modelo: " + v.getModelo()); lblModelo.setStyle("-fx-text-fill: #000000; -fx-font-size: 40;");
+        ImageView ivImage = new ImageView(new Image("Images\\"+v.getFoto()+".jpg"));
+        ivImage.setFitHeight(100);
+        ivImage.setFitWidth(100);
         Label lblAnio = new Label("Año: " + v.getAnio()); lblAnio.setStyle("-fx-text-fill: #000000; -fx-font-size: 20;");
         Label lblKm = new Label("Kilometraje: " + v.getKilometraje() + "km"); lblKm.setStyle("-fx-text-fill: #000000; -fx-font-size: 20;");
         Label lblPrecio = new Label("Precio: $" + v.getPrecio()); lblPrecio.setStyle("-fx-text-fill: #73ad71; -fx-font-size: 40;");
         Label lblDuenio = new Label("Dueño: " + v.getDuenio().getNombre()); lblDuenio.setStyle("-fx-text-fill: #000000; -fx-font-size: 20;");
         Label lblTelefonos = new Label("Teléfonos: "); lblTelefonos.setStyle("-fx-text-fill: #000000; -fx-font-size: 20;");
         
-        vbVehiculo.getChildren().addAll(lblMarca, lblModelo, lblAnio, lblKm, lblPrecio, lblDuenio, lblTelefonos);
+        vbVehiculo.getChildren().addAll(lblMarca, lblModelo, ivImage, lblAnio, lblKm, lblPrecio, lblDuenio, lblTelefonos);
         
         for ( String numero : v.getDuenio().getTelefonos() ){
             Label lblNumero = new Label(numero); lblNumero.setStyle("-fx-text-fill: #4287f5; -fx-font-size: 20; -fx-underline: true");
@@ -696,11 +701,9 @@ public class Escenas extends Stage {
         vbACCIDENTES.getChildren().addAll(dtAccidente, tfDescripcion, tfCostoAccidente, btnAgregarAccidente);
         
 
-        
-        
+
         Button btnAdjuntarFoto = new Button("Agregar Foto"); btnAdjuntarFoto.setStyle("-fx-background-color: #f6ff91; -fx-text-fill: #000000; -fx-font-size: 20px;");
         btnAdjuntarFoto.setOnAction( e -> {
-            Scanner entrada = null;
             ExtensionFilter ext1 = new ExtensionFilter("Image Files", "*.jpg");
             FileChooser fileChooser = new FileChooser();
             fileChooser.getExtensionFilters().add(ext1);
@@ -709,7 +712,9 @@ public class Escenas extends Stage {
             
             File selectedFile = fileChooser.showOpenDialog(this);
             if(selectedFile!=null){
-                Path destino = Path.of("src\\main\\resources\\Images\\"+selectedFile.getName()+".jpg");  //Referencia relativa
+                String imagen=selectedFile.getName().split("\\.")[0];
+                btnAdjuntarFoto.setText(imagen);
+                Path destino = Path.of("src\\main\\resources\\Images\\"+ imagen +".jpg");  //Referencia relativa
                 Path origen = Path.of(selectedFile.getPath()); //Referencia absoluta
                 try {
                     Files.copy(origen, destino.toAbsolutePath(),StandardCopyOption.REPLACE_EXISTING);
@@ -717,6 +722,7 @@ public class Escenas extends Stage {
                     ex.printStackTrace();
                 }
             }
+            
         });
         
         //Creamos el boton para crear el vehiculos
@@ -725,22 +731,23 @@ public class Escenas extends Stage {
         btnCrear.setOnAction( e -> {
             if (
                 !tfMarca.getText().equals("") && !tfModelo.getText().equals("") && !tfAnio.getText().equals("") && !tfKilometraje.getText().equals("")
-                && !tfMotor.getText().equals("") && !tfPrecio.getText().equals("") && !tfUbicacion.getText().equals("") && !tfPeso.getText().equals("")                
+                && !tfMotor.getText().equals("") && !tfPrecio.getText().equals("") && !tfUbicacion.getText().equals("") && !tfPeso.getText().equals("")
+                && !(false)    
                     ){
-                double precio = Double.parseDouble(tfPrecio.getText());
-                int anio = Integer.parseInt(tfAnio.getText());
-                int kilometraje = Integer.parseInt(tfKilometraje.getText());
-                int peso = Integer.parseInt(tfPeso.getText());
-                TipoVehiculo tipo = TipoVehiculo.valueOf(cbTipo.getValue());
-                String id = String.valueOf(Integer.valueOf(App.VEHICULOS.get((App.VEHICULOS.size()-1)).getId())+1);
-                Vehiculo nuevo;
-                nuevo = new Vehiculo(id, precio, tfMarca.getText(), tfModelo.getText(), "foto", anio, kilometraje, tfMotor.getText(), cbTransmision.getValue(), peso, tfUbicacion.getText(), accidentes, servicios, tipo, App.USUARIOACTUAL);
-                App.VEHICULOS.add(nuevo);
-                App.USUARIOACTUAL.getVehiculos().add(nuevo);
-                
-                Vehiculo.actualizarVehiculos();
-                App.menu();
-            }
+                    double precio = Double.parseDouble(tfPrecio.getText());
+                    int anio = Integer.parseInt(tfAnio.getText());
+                    int kilometraje = Integer.parseInt(tfKilometraje.getText());
+                    int peso = Integer.parseInt(tfPeso.getText());
+                    TipoVehiculo tipo = TipoVehiculo.valueOf(cbTipo.getValue());
+                    String id = String.valueOf(Integer.valueOf(App.VEHICULOS.get((App.VEHICULOS.size()-1)).getId())+1);
+                    Vehiculo nuevo;
+                    nuevo = new Vehiculo(id, precio, tfMarca.getText(), tfModelo.getText(), btnAdjuntarFoto.getText(), anio, kilometraje, tfMotor.getText(), cbTransmision.getValue(), peso, tfUbicacion.getText(), accidentes, servicios, tipo, App.USUARIOACTUAL);
+                    App.VEHICULOS.add(nuevo);
+                    App.USUARIOACTUAL.getVehiculos().add(nuevo);
+
+                    Vehiculo.actualizarVehiculos();
+                    App.menu();
+                }
         });
         
         vbNuevoVehiculo.getChildren().addAll(hb4, btnAdjuntarFoto,btnCrear);
