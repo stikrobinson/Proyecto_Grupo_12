@@ -31,7 +31,7 @@ import javafx.stage.FileChooser;
 
 
 public class Escenas extends Stage {
-    public Scene INICIOSESION, MENU, VER, CREAR, MISVEHICULOS;
+    public Scene INICIOSESION, MENU, VER, CREAR, MISVEHICULOS, REGISTRO;
     private Stage ACCIDENTES, SERVICIOS;
     
     public Escenas(){
@@ -52,6 +52,7 @@ public class Escenas extends Stage {
         TextField tfContrasena = new TextField(); tfContrasena.setPromptText("Contrasena"); tfContrasena.setMaxWidth(600);
         tfContrasena.setStyle("-fx-background-color: #b0faff; -fx-text-fill: #000000; -fx-font-size: 40px;");
         
+        HBox vbRegistro = new HBox(); vbRegistro.setAlignment(Pos.CENTER); vbRegistro.setSpacing(20);
         Button btnINICIAR = new Button("Iniciar Sesion");
         btnINICIAR.setStyle("-fx-background-color: #c2484e; -fx-text-fill: #ffffff; -fx-font-size: 30;");
         btnINICIAR.setOnMouseClicked(e -> {
@@ -74,8 +75,15 @@ public class Escenas extends Stage {
                 vbCampos.getChildren().addAll(tfUsuario, tfContrasena, btnINICIAR, lblErr);
             }
         });
+        Button btnRegistro = new Button("Crear Cuenta");
+        btnRegistro.setStyle("-fx-background-color: #5353ec; -fx-text-fill: #ffffff; -fx-font-size: 30;");
+        btnRegistro.setOnMouseClicked(e -> {
+            App.STAGE.setScene(REGISTRO);
+        });
         
-        vbCampos.getChildren().addAll(tfUsuario, tfContrasena, btnINICIAR);
+        vbRegistro.getChildren().addAll(btnINICIAR,btnRegistro);
+        
+        vbCampos.getChildren().addAll(tfUsuario, tfContrasena, vbRegistro);
         rootSESION.setCenter(vbCampos);
         
         Label usuarioEjemplo = new Label("""
@@ -292,6 +300,43 @@ public class Escenas extends Stage {
         rootMISV.setBottom(vbSalirMISV);
         
         MISVEHICULOS = new Scene(rootMISV, 800, 600);
+        
+        //REGISTRO
+        BorderPane rootRegistro = new BorderPane();
+        
+        Label tituloRegistro = new Label("Crea tu cuenta");
+        tituloRegistro.setStyle("-fx-text-fill: #000000; -fx-font-size: 60;");
+        tituloRegistro.setAlignment(Pos.CENTER);
+        
+        VBox vbTituloRegistro = new VBox(); vbTituloRegistro.setAlignment(Pos.CENTER);
+        vbTituloRegistro.getChildren().add(tituloRegistro);
+        
+        rootRegistro.setTop(vbTituloRegistro);
+        
+        VBox vbCamposRegistros = new VBox(); vbCamposRegistros.setAlignment(Pos.CENTER); vbCamposRegistros.setSpacing(20);
+        TextField tfUsuarioRegistro = new TextField(); tfUsuarioRegistro.setPromptText("Usuario"); tfUsuarioRegistro.setMaxWidth(600);
+        tfUsuarioRegistro.setStyle("-fx-background-color: #b0faff; -fx-text-fill: #000000; -fx-font-size: 30px;");
+        TextField tfNombreRegistro = new TextField(); tfNombreRegistro.setPromptText("Nombre"); tfNombreRegistro.setMaxWidth(600);
+        tfNombreRegistro.setStyle("-fx-background-color: #b0faff; -fx-text-fill: #000000; -fx-font-size: 30px;");
+        TextField tfContrasenaRegistro = new TextField(); tfContrasenaRegistro.setPromptText("Contraseña"); tfContrasenaRegistro.setMaxWidth(600);
+        tfContrasenaRegistro.setStyle("-fx-background-color: #b0faff; -fx-text-fill: #000000; -fx-font-size: 30px;");
+        
+        HBox hbTelefonosRegistros = new HBox(); hbTelefonosRegistros.setAlignment(Pos.CENTER); hbTelefonosRegistros.setSpacing(20);
+        TextField tfTelefonosRegistros = new TextField(); tfTelefonosRegistros.setPromptText("Usuario"); hbTelefonosRegistros.setMaxWidth(400);
+        tfTelefonosRegistros.setStyle("-fx-background-color: #b0faff; -fx-text-fill: #000000; -fx-font-size: 30px;");
+        Button btnAgregarTelefonos = new Button("Agregar");
+        btnAgregarTelefonos.setStyle("-fx-background-color: #72b083; -fx-text-fill: #ffffff; -fx-font-size: 30px;");
+        btnAgregarTelefonos.setOnMouseClicked(e -> {
+            //App.STAGE.setScene(MISVEHICULOS);        
+        });
+        hbTelefonosRegistros.getChildren().addAll(tfTelefonosRegistros,btnAgregarTelefonos);
+        
+        vbCamposRegistros.getChildren().addAll(tfUsuarioRegistro,tfNombreRegistro, tfContrasenaRegistro,hbTelefonosRegistros);
+        
+        rootRegistro.setCenter(vbCamposRegistros);
+        
+        REGISTRO = new Scene(rootRegistro,800,600);
+        
     }
     private static void mostrarVehiculo(VBox vbVehiculo, Vehiculo v){
         
