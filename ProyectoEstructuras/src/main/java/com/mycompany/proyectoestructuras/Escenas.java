@@ -321,28 +321,9 @@ public class Escenas extends Stage {
         //Creamos un contenedor para mostrar la informacion
         VBox vbVehiculoActualVEROwn = new VBox(); vbVehiculoActualVEROwn.setAlignment(Pos.CENTER);
 
-        //Colocamos los botones siguiente y anterior
-        Button btnSiguienteVEROwn = new Button("->"); btnSiguienteVEROwn.setStyle("-fx-background-color: #abffa8; -fx-text-fill: #000000; -fx-font-size: 50px;");       
-        btnSiguienteVEROwn.setOnAction( e -> {
-            mostrarVehiculo(vbVehiculoActualVEROwn, vehiculosMostradosOwn.getListIterator().next() );
-        });
-        VBox vbSiguienteOwn = new VBox(); vbSiguienteOwn.setAlignment(Pos.CENTER);
-        vbSiguienteOwn.getChildren().add(btnSiguienteVEROwn);
-        btnSiguienteVEROwn.fire();
-
-        Button btnAnteriorVEROwn = new Button("<-"); btnAnteriorVEROwn.setStyle("-fx-background-color: #ffa8b5; -fx-text-fill: #000000; -fx-font-size: 50px;");       
-        btnAnteriorVEROwn.setOnAction( e -> {
-            mostrarVehiculo(vbVehiculoActualVEROwn, vehiculosMostradosOwn.getListIterator().previous() );
-        });
-        VBox vbAnteriorOwn = new VBox(); vbAnteriorOwn.setAlignment(Pos.CENTER);
-        vbAnteriorOwn.getChildren().add(btnAnteriorVEROwn);
-
         rootVEROwn.setTop(vbTtVEROwn);
         rootVEROwn.setCenter(vbVehiculoActualVEROwn); 
-        rootVEROwn.setLeft(vbAnteriorOwn);
-        rootVEROwn.setRight(vbSiguienteOwn);
-
-
+        
         Button salirMISV = new Button("Salir"); 
         salirMISV.setStyle("-fx-background-color: #c2484e; -fx-text-fill: #ffffff; -fx-font-size: 20px;");
         salirMISV.setOnMouseClicked(e -> {
