@@ -1,6 +1,4 @@
-<<<<<<< HEAD
 id,precio,marca,modelo,foto,anio,kilometraje,motor,transmision,peso,ubiActual,histAccident,histService,tipoVehiculo,duenio
-1,15890.0,Hyundai,Santa Fe,Hundai-SantaFe-2022,2022,30000,1.2L,manual,935,Quito,null,15-1-2023;Cambio de aceite;30.0;Aceite sintético/10-4-2023;Rotación de neumáticos;20.0;Rotación estándar,CARRO,evaluador
 2,18110.0,Hyundai,Sonata Hybrid,Hundai-SonataHybrid-2017,2017,15000,1.6L,manual,1097,Guayaquil,10-3-2023;Colisión trasera;1200.0/25-2-2023;Colisión múltiple;7000.0,20-2-2023;Cambio de filtro de aire;15.0;Filtro nuevo/10-5-2023;Alineación;40.0;Alineación completa,CARRO,sebsm1234
 3,20000.0,Hyundai,SonataHybrid,Hundai-SonataHybrid-2022,2022,20000,1.5L,manual,1065,Cuenca,15-8-2022;Colisión lateral;1500.0,12-3-2023;Cambio de bujías;25.0;Bujías nuevas/22-6-2023;Inspección de frenos;35.0;Inspección completa,CARRO,sebsm1234
 4,20440.0,Hyundai,Tucson,Hundai-Tucson-2017,2017,25000,1.6L,automática,982,Loja,null,18-1-2023;Cambio de batería;80.0;Batería nueva/8-4-2023;Limpieza de inyectores;50.0;Limpieza completa,CARRO,evaluador
@@ -21,7 +19,6 @@ id,precio,marca,modelo,foto,anio,kilometraje,motor,transmision,peso,ubiActual,hi
 19,52467.0,Toyota,Rav 4,Toyota-Rav4-2023,2023,30000,2.4 L 4 cilindros,automática,1544,La Libertad,3-6-2021;Golpe en guardabarros;800.0/13-10-2023;Colisión con ciclista;900.0,20-2-2023;Revisión de suspensión;70.0;Suspensión ajustada/10-5-2023;Mantenimiento de sistema eléctrico;60.0;Revisión y ajuste,CARRO,sebsm1234
 20,38500.0,Toyota,Yaris,Toyota-Yaris-2016,2019,40000,2.0 L 4 cilindros,automática,2426,Salinas,11-9-2022;Colisión lateral;2200.0,15-1-2023;Cambio de aceite;30.0;Aceite sintético/10-4-2023;Alineación;40.0;Alineación completa,CARRO,sebsm1234
 21,5645.0,Toyota,Yaris,Toyota-Yaris-2020,2020,50000,1.5L,manual,2300,Babahoyo,null,15-2-2021;Inspección de frenos;30.0;Inspección completa/10-8-2023;Cambio de aceite;36.0;Aceite sintético,CARRO,sebsm1234
-22,9526.0,Toyota,Yaris,Toyota-Yaris-2022,2022,6200,1.6L,automática,1065,Ambato,null,10-7-2023;Cambio de aceite;29.0;Aceite estándar/5-5-2024;Inspección general;40.0;Revisión completa,CARRO,evaluador
 23,1523.0,Suzuki,Bandit,Suzuki-Bandit-2008,2008,7840,125cc,manual,131,Guayaquil,null,22-1-2023;Cambio de aceite;20.0;Aceite sintético/15-8-2023;Rotación de neumáticos;25.0;Rotación estándar,MOTO,evaluador
 24,1026.0,Suzuki,GSX750,Suzuki-GSX750-2020,2020,9000,1.6L,manual,362,Portoviejo,1-4-2023;Deslizamiento;200.0,18-1-2018;Cambio de batería;80.0;Batería nueva/8-4-2022;Limpieza de inyectores;60.0;Limpieza completa,MOTO,sebsm1234
 25,1263.0,BMW,F700GS,Bmw-F700GS-2016,2016,95000,125cc,manual,254,Guayaquil,null,10-2-2023;Cambio de aceite;20.0;Aceite estándar/5-5-2023;Inspección general;50.0;Revisión completa,MOTO,sebsm1234
@@ -46,8 +43,8 @@ id,precio,marca,modelo,foto,anio,kilometraje,motor,transmision,peso,ubiActual,hi
 44,15000.0,Ford,Escape,Ford-Escape-2015,2015,6200,4.3L V6,manual,2000,Manta,null,20-3-2023;Revisión de suspensión;40.0;Suspensión ajustada/15-6-2023;Cambio de filtro de aire;15.0;Filtro nuevo,CARRO,sebsm1234
 45,12588.0,Ford,Escape,Ford-Escape-2022,2022,20000,4.3L V6,manual,1950,Quito,null,30-1-2023;Revisión de suspensión;70.0;Suspensión ajustada/20-4-2023;Alineación;40.0;Alineación completa,CARRO,sebsm1234
 46,38500.0,Ford,F150XLTC,Ford-F150XLTCD-2020,2020,25000,4.3L V6,manual,1800,Guayaquil,22-5-2023;Daño en puerta;500.0,20-3-2023;Revisión de suspensión;40.0;Suspensión ajustada/15-6-2023;Cambio de filtro de aire;15.0;Filtro nuevo,CARRO,sebsm1234
-47,6.98E7,DXDRXD,XDXZDDXXZ,foto,6846,3867645,5FDBFD,automática,54315,554654GFFBCVBX,null,null,CAMION,evaluador
 48,90000.0,Hyundai,XClientGT,foto,2022,9111,No sé,manual,9800,Guayaquil,5-6-2023;Choque;900.0,null,CAMION,Alex
 49,93545.0,MercedesBenz,41538x6,MercedesBenz-41538x6-2021,2021,654354,VFDS,manual,9965,Quito,10-6-2024;Choque;5845.0,null,CAMION,Alex
 50,87000.0,MercedesBenz,41538x6,MercedesBenz-41538x6-2021,2021,65455,vfd25,automática,9604,Quito,null,null,CAMION,Alex
-51,1.0,1,11,Screenshot_20200413-170618_Google Play services,1,1,1,automática,1,1,null,null,CARRO,evaluador
+56,88.0,aaaaaaaa,aaaaaaaaa,selfie,888,88,aaaaaaa,automática,88,aaaaaa,null,null,CARRO,evaluador
+57,4.0,d,d,Prototipos,4,4,d,automática,4,d,null,null,CARRO,evaluador

@@ -43,6 +43,8 @@ public class Escenas extends Stage {
     public Scene INICIOSESION, MENU, VER, CREAR, MISVEHICULOS, REGISTRO;
     private static Stage ACCIDENTES, SERVICIOS, ACCIDENTES_EDIT, SERVICIOS_EDIT;
     private ArrayList<String> telefonos = new ArrayList<>();
+    private ImageView ivImage = new ImageView();
+    private ImageView ivImageOwn = new ImageView();
     
     public Escenas(){
         //INICIOSESION
@@ -387,7 +389,7 @@ public class Escenas extends Stage {
         
         REGISTRO = new Scene(rootRegistro,800,600);
 }
-    private static void mostrarVehiculo(VBox vbVehiculo, Vehiculo v){
+    private void mostrarVehiculo(VBox vbVehiculo, Vehiculo v){
         
         vbVehiculo.getChildren().clear();
         
@@ -395,7 +397,7 @@ public class Escenas extends Stage {
         
         Label lblMarca = new Label("Marca: " + v.getMarca()); lblMarca.setStyle("-fx-text-fill: #000000; -fx-font-size: 40;");
         Label lblModelo = new Label("Modelo: " + v.getModelo()); lblModelo.setStyle("-fx-text-fill: #000000; -fx-font-size: 30;");
-        ImageView ivImage = new ImageView(new Image("Images\\"+v.getFoto()+".jpg"));
+        ivImage.setImage(new Image("Images\\"+v.getFoto()+".jpg"));
         ivImage.setFitHeight(250);
         ivImage.setFitWidth(250);
         Label lblAnio = new Label("Año: " + v.getAnio()); lblAnio.setStyle("-fx-text-fill: #000000; -fx-font-size: 20;");
@@ -508,9 +510,9 @@ public class Escenas extends Stage {
         Label lblMarca = new Label("Marca: " + v.getMarca()); lblMarca.setStyle("-fx-text-fill: #000000; -fx-font-size: 40;");
         Label lblModelo = new Label("Modelo: " + v.getModelo()); lblModelo.setStyle("-fx-text-fill: #000000; -fx-font-size: 30;");
         
-        ImageView ivImage = new ImageView(new Image("Images\\"+v.getFoto()+".jpg"));
-        ivImage.setFitHeight(250);
-        ivImage.setFitWidth(250);
+        ivImageOwn.setImage(new Image("Images\\"+v.getFoto()+".jpg"));
+        ivImageOwn.setFitHeight(250);
+        ivImageOwn.setFitWidth(250);
         Label lblAnio = new Label("Año: " + v.getAnio()); lblAnio.setStyle("-fx-text-fill: #000000; -fx-font-size: 20;");
         Label lblKm = new Label("Kilometraje: " + v.getKilometraje() + "km"); lblKm.setStyle("-fx-text-fill: #000000; -fx-font-size: 20;");
         Label lblPrecio = new Label("Precio: $" + v.getPrecio()); lblPrecio.setStyle("-fx-text-fill: #73ad71; -fx-font-size: 40;");
@@ -630,7 +632,7 @@ public class Escenas extends Stage {
         Vehiculo.actualizarVehiculos();
         App.menu();
         });        
-        hbImgArrows.getChildren().addAll(ivImage);
+        hbImgArrows.getChildren().addAll(ivImageOwn);
         vbImgPrice.getChildren().addAll(hbImgArrows,lblPrecio, editar, borrar);
         vbInfo.getChildren().addAll(lblAnio, lblKm, lblPeso, lblUbi, lblMotor, lblTransmision, lblDuenio, lblTelefonos, btnAccidentes, btnServicios);
         hbDescCar.getChildren().addAll(vbImgPrice,vbInfo);
