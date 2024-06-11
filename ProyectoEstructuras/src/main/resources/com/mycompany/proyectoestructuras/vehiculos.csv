@@ -48,3 +48,4 @@ id,precio,marca,modelo,foto,anio,kilometraje,motor,transmision,peso,ubiActual,hi
 47,6.98E+07,DXDRXD,XDXZDDXXZ,foto,6846,3867645,5FDBFD,automática,54315,554654GFFBCVBX,null,null,CAMION,evaluador
 48,90000,Hyundai,XClientGT,foto,2022,9111,No sé,manual,9800,Guayaquil,5-6-2023;Choque;900.0,null,CAMION,Alex
 49,93545,MercedesBenz,41538x6,MercedesBenz-41538x6-2021,2021,654354,VFDS,manual,9965,Quito,10-6-2024;Choque;5845.0,null,CAMION,Alex
+50,87000.0,MercedesBenz,41538x6,MercedesBenz-41538x6-2021,2021,65455,vfd25,automática,9604,Quito,null,null,CAMION,Alex

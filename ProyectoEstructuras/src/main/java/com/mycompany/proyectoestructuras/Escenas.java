@@ -149,7 +149,7 @@ public class Escenas extends Stage {
         SERVICIOS = new Stage(); SERVICIOS.setScene(new Scene(rootSERVICIOS, 600, 600));  
         
         Button btnCREAR = new Button("Poner en Venta un Vehiculo");
-        btnCREAR.setStyle("-fx-background-color: #5167b0; -fx-text-fill: #ffffff; -fx-font-size: 40px;");
+        btnCREAR.setStyle("-fx-background-color: #5353ec; -fx-text-fill: #ffffff; -fx-font-size: 40px;");
         btnCREAR.setOnMouseClicked(e -> {
             crearVehiculo(vbNuevoVehiculo, vbACCIDENTES, vbSERVICIOS);
             App.STAGE.setScene(CREAR);        
@@ -196,21 +196,21 @@ public class Escenas extends Stage {
         lblTitulo.setAlignment(Pos.CENTER);
         VBox vbTtVER = new VBox(); vbTtVER.setAlignment(Pos.CENTER);
         
-        HBox hbFiltros = new HBox(); hbFiltros.setSpacing(40); hbFiltros.setAlignment(Pos.CENTER);
+        HBox hbFiltros = new HBox(); hbFiltros.setSpacing(20); hbFiltros.setAlignment(Pos.CENTER);
         
         vbTtVER.getChildren().add(lblTitulo);        
         
         //Creamos los ComboBox de los filtros y los ordenamientos
-        ComboBox filtros = new ComboBox();
+        ComboBox filtros = new ComboBox(); filtros.setMaxWidth(200);
         ObservableList<String> itemsFiltro = FXCollections.observableArrayList(
             "Carro", "Moto", "Camion", "Todos"
         );
         filtros.setItems(itemsFiltro);
         filtros.setValue("Todos");
         
-        ComboBox ordenamientos = new ComboBox();
+        ComboBox ordenamientos = new ComboBox(); ordenamientos.setMaxWidth(10);
         ObservableList<String> itemsOrdenamiento = FXCollections.observableArrayList(
-            "Año (por defecto)", "Marca y modelo(alfabetico)", "Precio", "Kilometraje", "Peso"
+            "Año", "Marca y modelo(alfabetico)", "Precio", "Kilometraje", "Peso"
         );
         ordenamientos.setItems(itemsOrdenamiento);
         ordenamientos.setValue("Año");
@@ -218,15 +218,36 @@ public class Escenas extends Stage {
         //Ahora creamos una lista circular doblemente enlazada para mostrar los vehículos
         CircularLinkedList<Vehiculo> vehiculosMostrados = new CircularLinkedList<>();
         
+        //Creamos un ComboBox para el rango y dos TextFields
+        Label lblRango = new Label("Rango: "); lblRango.setStyle("-fx-text-fill: #000000; -fx-font-size: 20;");
+        
+        ComboBox<String> rango = new ComboBox(); rango.setMaxWidth(200);
+        ObservableList<String> itemsRango = FXCollections.observableArrayList(
+            "Precio", "Kilometraje"
+        );
+        rango.setItems(itemsRango);
+        
+        TextField tfMax = new TextField(); tfMax.setPromptText("Max"); tfMax.setMaxWidth(100);
+        tfMax.setStyle("-fx-background-color: #b0faff; -fx-text-fill: #000000; -fx-font-size: 15px;");
+        
+        TextField tfMin = new TextField(); tfMin.setPromptText("Min"); tfMin.setMaxWidth(100);
+        tfMin.setStyle("-fx-background-color: #b0faff; -fx-text-fill: #000000; -fx-font-size: 15px;");
+        
         //Creamos un contenedor para mostrar la informacion
         VBox vbVehiculoActualVER = new VBox(); vbVehiculoActualVER.setAlignment(Pos.CENTER);
         
         //Creamos un Boton que aplique los ordenamientos y filtros y llene la lista
         Button btnAplicarFiltro = new Button("Aplicar"); 
         btnAplicarFiltro.setOnAction( e -> {
-            ordenarVehiculos(vehiculosMostrados, filtrarVehiculos(App.VEHICULOS, filtros), ordenamientos);
+            ordenarVehiculos(vehiculosMostrados, filtrarVehiculos(App.VEHICULOS, filtros, rango, tfMin, tfMax), ordenamientos);
             vehiculosMostrados.setListIterator();
-            mostrarVehiculo(vbVehiculoActualVER, vehiculosMostrados.getListIterator().next());
+            if ( !vehiculosMostrados.isEmpty() ) {
+                System.out.println("si");
+                mostrarVehiculo(vbVehiculoActualVER, vehiculosMostrados.getListIterator().next());
+            }
+            else {
+                System.out.println("no");vbVehiculoActualVER.getChildren().clear();
+            }
         }); 
         btnAplicarFiltro.fire();
         
@@ -236,14 +257,14 @@ public class Escenas extends Stage {
         Label lblOrdenamiento = new Label("Ordenamiento: ");
         lblOrdenamiento.setStyle("-fx-text-fill: #000000; -fx-font-size: 20px;");
         
-        hbFiltros.getChildren().addAll(lblFiltro, filtros, lblOrdenamiento, ordenamientos, btnAplicarFiltro);
+        hbFiltros.getChildren().addAll(lblFiltro, filtros, lblRango, rango, tfMax, tfMin, lblOrdenamiento, ordenamientos, btnAplicarFiltro);
         
         vbTtVER.getChildren().add(hbFiltros);
                 
         //Colocamos los botones siguiente y anterior
         Button btnSiguienteVER = new Button("->"); btnSiguienteVER.setStyle("-fx-background-color: #abffa8; -fx-text-fill: #000000; -fx-font-size: 50px;");       
         btnSiguienteVER.setOnAction( e -> {
-            mostrarVehiculo(vbVehiculoActualVER, vehiculosMostrados.getListIterator().next() );
+            if ( !vehiculosMostrados.isEmpty() ) mostrarVehiculo(vbVehiculoActualVER, vehiculosMostrados.getListIterator().next() );
         });
         VBox vbSiguiente = new VBox(); vbSiguiente.setAlignment(Pos.CENTER);
         vbSiguiente.getChildren().add(btnSiguienteVER);
@@ -251,7 +272,7 @@ public class Escenas extends Stage {
         
         Button btnAnteriorVER = new Button("<-"); btnAnteriorVER.setStyle("-fx-background-color: #ffa8b5; -fx-text-fill: #000000; -fx-font-size: 50px;");       
         btnAnteriorVER.setOnAction( e -> {
-            mostrarVehiculo(vbVehiculoActualVER, vehiculosMostrados.getListIterator().previous() );
+            if ( !vehiculosMostrados.isEmpty() ) mostrarVehiculo(vbVehiculoActualVER, vehiculosMostrados.getListIterator().previous() );
         });
         VBox vbAnterior = new VBox(); vbAnterior.setAlignment(Pos.CENTER);
         vbAnterior.getChildren().add(btnAnteriorVER);
@@ -262,7 +283,7 @@ public class Escenas extends Stage {
         rootVER.setLeft(vbAnterior);
         rootVER.setRight(vbSiguiente);
         rootVER.setBottom(vbSalirVER);
-        VER = new Scene(rootVER, 800, 600);
+        VER = new Scene(rootVER, 1000, 700);
         
         //CREAR
         Label lblTtCREAR = new Label("Vender Vehiculo");
@@ -287,35 +308,12 @@ public class Escenas extends Stage {
         //MISVEHICULOS  
         BorderPane rootVEROwn = new BorderPane();
 
-        Label lblTtMISV = new Label("Mis Vehiculos");
-        lblTtMISV.setStyle("-fx-text-fill: #000000; -fx-font-size: 60;");
-        lblTtMISV.setAlignment(Pos.CENTER);
-        VBox vbTtMISV = new VBox(); vbTtMISV.setAlignment(Pos.CENTER);
-        vbTtMISV.getChildren().add(lblTtMISV);
-
-        Label lblTituloOwn = new Label("Vehiculos Disponibles");
+        Label lblTituloOwn = new Label("Mis Vehiculos");
         lblTituloOwn.setStyle("-fx-text-fill: #000000; -fx-font-size: 60;");
         lblTituloOwn.setAlignment(Pos.CENTER);
         VBox vbTtVEROwn = new VBox(); vbTtVEROwn.setAlignment(Pos.CENTER);
 
-        HBox hbFiltrosOwn = new HBox(); hbFiltrosOwn.setSpacing(40); hbFiltrosOwn.setAlignment(Pos.CENTER);
-
         vbTtVEROwn.getChildren().add(lblTituloOwn);        
-
-        //Creamos los ComboBox de los filtros y los ordenamientos
-        ComboBox filtrosOwn = new ComboBox();
-        ObservableList<String> itemsFiltroOwn = FXCollections.observableArrayList(
-            "Carro", "Moto", "Camion", "Todos"
-        );
-        filtrosOwn.setItems(itemsFiltroOwn);
-        filtrosOwn.setValue("Todos");
-
-        ComboBox ordenamientosOwn = new ComboBox();
-        ObservableList<String> itemsOrdenamientoOwn = FXCollections.observableArrayList(
-            "Año (por defecto)", "Marca y modelo(alfabetico)", "Precio", "Kilometraje", "Peso"
-        );
-        ordenamientosOwn.setItems(itemsOrdenamientoOwn);
-        ordenamientosOwn.setValue("Año");
 
         //Ahora creamos una lista circular doblemente enlazada para mostrar los vehículos
         CircularLinkedList<Vehiculo> vehiculosMostradosOwn = new CircularLinkedList<>();
@@ -323,47 +321,9 @@ public class Escenas extends Stage {
         //Creamos un contenedor para mostrar la informacion
         VBox vbVehiculoActualVEROwn = new VBox(); vbVehiculoActualVEROwn.setAlignment(Pos.CENTER);
 
-        //Creamos un Boton que aplique los ordenamientos y filtros y llene la lista
-        Button btnAplicarFiltroOwn = new Button("Aplicar"); 
-        btnAplicarFiltroOwn.setOnAction( e -> {
-            ordenarVehiculos(vehiculosMostradosOwn, filtrarVehiculos(App.VEHICULOS, filtrosOwn), ordenamientosOwn);
-            vehiculosMostradosOwn.setListIterator();
-            mostrarVehiculo(vbVehiculoActualVEROwn, vehiculosMostradosOwn.getListIterator().next());
-        }); 
-        btnAplicarFiltroOwn.fire();
-
-        //Agregamos los ComboBox y el boton
-        Label lblFiltroOwn = new Label("Filtro: ");
-        lblFiltroOwn.setStyle("-fx-text-fill: #000000; -fx-font-size: 20px;");
-        Label lblOrdenamientoOwn = new Label("Ordenamiento: ");
-        lblOrdenamientoOwn.setStyle("-fx-text-fill: #000000; -fx-font-size: 20px;");
-
-        hbFiltrosOwn.getChildren().addAll(lblFiltroOwn, filtrosOwn, lblOrdenamientoOwn, ordenamientosOwn, btnAplicarFiltroOwn);
-
-        vbTtVEROwn.getChildren().add(hbFiltrosOwn);
-
-        //Colocamos los botones siguiente y anterior
-        Button btnSiguienteVEROwn = new Button("->"); btnSiguienteVEROwn.setStyle("-fx-background-color: #abffa8; -fx-text-fill: #000000; -fx-font-size: 50px;");       
-        btnSiguienteVEROwn.setOnAction( e -> {
-            mostrarVehiculo(vbVehiculoActualVEROwn, vehiculosMostradosOwn.getListIterator().next() );
-        });
-        VBox vbSiguienteOwn = new VBox(); vbSiguienteOwn.setAlignment(Pos.CENTER);
-        vbSiguienteOwn.getChildren().add(btnSiguienteVEROwn);
-        btnSiguienteVEROwn.fire();
-
-        Button btnAnteriorVEROwn = new Button("<-"); btnAnteriorVEROwn.setStyle("-fx-background-color: #ffa8b5; -fx-text-fill: #000000; -fx-font-size: 50px;");       
-        btnAnteriorVEROwn.setOnAction( e -> {
-            mostrarVehiculo(vbVehiculoActualVEROwn, vehiculosMostradosOwn.getListIterator().previous() );
-        });
-        VBox vbAnteriorOwn = new VBox(); vbAnteriorOwn.setAlignment(Pos.CENTER);
-        vbAnteriorOwn.getChildren().add(btnAnteriorVEROwn);
-
         rootVEROwn.setTop(vbTtVEROwn);
         rootVEROwn.setCenter(vbVehiculoActualVEROwn); 
-        rootVEROwn.setLeft(vbAnteriorOwn);
-        rootVEROwn.setRight(vbSiguienteOwn);
-
-
+        
         Button salirMISV = new Button("Salir"); 
         salirMISV.setStyle("-fx-background-color: #c2484e; -fx-text-fill: #ffffff; -fx-font-size: 20px;");
         salirMISV.setOnMouseClicked(e -> {
@@ -405,7 +365,7 @@ public class Escenas extends Stage {
         btnAgregarTelefonos.setOnMouseClicked(e -> {
             if(!tfTelefonosRegistros.getText().equals("")){
                 telefonos.add(tfTelefonosRegistros.getText());
-                contadorTelefonos.setText(""+(Integer.valueOf(contadorTelefonos.getText())+1));
+                contadorTelefonos.setText(""+(Integer.parseInt(contadorTelefonos.getText())+1));
                 tfTelefonosRegistros.setText("");
             }else{                    
                 showMessage(AlertType.ERROR,"Error","Error","Ingrese correctamente un número");
@@ -496,9 +456,20 @@ public class Escenas extends Stage {
             vbInfo.getChildren().add(lblNumero);
         }         
     }
-    private static ArrayList<Vehiculo> filtrarVehiculos(ArrayList<Vehiculo> vehiculos, ComboBox<String> filtro){
+    private static ArrayList<Vehiculo> filtrarVehiculos(ArrayList<Vehiculo> vehiculos, ComboBox<String> filtro, ComboBox<String> rango, TextField min, TextField max){
         ArrayList<Vehiculo> vehiculosFiltrados= new ArrayList<>();
         TipoVehiculo tipo = TipoVehiculo.CARRO;
+        
+        Double minimo = 0.0; Double maximo = 0.0; String parametro = "";
+        
+        if ( !min.getText().equals("") && !max.getText().equals("") ){
+            minimo = Double.valueOf(min.getText());
+            maximo = Double.valueOf(max.getText());
+        }
+        
+        if ( rango.getValue() != null ){
+            parametro = rango.getValue();
+        }
         
         switch (filtro.getValue()){
                 case "Carro":                    
@@ -509,16 +480,38 @@ public class Escenas extends Stage {
                 case "Moto":
                     tipo = TipoVehiculo.MOTO;
                     break;
-                default:                    
-                    vehiculosFiltrados.addAll(vehiculos);                    
+                default:
+                    if ( parametro.equals("") ){
+                        vehiculosFiltrados.addAll(vehiculos);
+                        return vehiculosFiltrados;
+                    }     
+                    for ( Vehiculo v : vehiculos ){
+                        if ( parametro.equals("Precio") ){
+                            if ( minimo <= v.getPrecio() && v.getPrecio() <= maximo ){
+                                vehiculosFiltrados.add(v);
+                            }
+                        }else {
+                            if( minimo <= v.getKilometraje() && v.getKilometraje() <= maximo ){
+                                vehiculosFiltrados.add(v);
+                            }
+                        }
+                    }               
+                    
                     return vehiculosFiltrados;
         }
         for ( Vehiculo v : vehiculos ){
-            if ( v.getTipoVehiculo() == tipo){
-                vehiculosFiltrados.add(v);
+            if ( v.getTipoVehiculo() == tipo ){
+                if ( parametro.equals("Precio") ){
+                    if ( minimo <= v.getPrecio() && v.getPrecio() <= maximo ){
+                        vehiculosFiltrados.add(v);
+                    }
+                }else if ( parametro.equals("Kilometraje") ){
+                    if( minimo <= v.getKilometraje() && v.getKilometraje() <= maximo ){
+                        vehiculosFiltrados.add(v);
+                    }
+                }else vehiculosFiltrados.add(v);
             }
         }
-        
         return vehiculosFiltrados;
     }
     
