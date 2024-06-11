@@ -26,13 +26,10 @@ import javafx.collections.ObservableList;
 
 import java.io.File;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
-import java.util.Scanner;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -44,7 +41,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 
 public class Escenas extends Stage {
     public Scene INICIOSESION, MENU, VER, CREAR, MISVEHICULOS, REGISTRO;
-    private Stage ACCIDENTES, SERVICIOS;
+    private static Stage ACCIDENTES, SERVICIOS, ACCIDENTES_EDIT, SERVICIOS_EDIT;
     private ArrayList<String> telefonos = new ArrayList<>();
     
     public Escenas(){
@@ -151,7 +148,7 @@ public class Escenas extends Stage {
         Button btnCREAR = new Button("Poner en Venta un Vehiculo");
         btnCREAR.setStyle("-fx-background-color: #5353ec; -fx-text-fill: #ffffff; -fx-font-size: 40px;");
         btnCREAR.setOnMouseClicked(e -> {
-            crearVehiculo(vbNuevoVehiculo, vbACCIDENTES, vbSERVICIOS);
+            crearVehiculo(vbNuevoVehiculo, vbACCIDENTES, vbSERVICIOS, null);
             App.STAGE.setScene(CREAR);        
         });
         
@@ -389,18 +386,12 @@ public class Escenas extends Stage {
         rootRegistro.setBottom(hbFinRegistro);
         
         REGISTRO = new Scene(rootRegistro,800,600);
-
-    }
+}
     private static void mostrarVehiculo(VBox vbVehiculo, Vehiculo v){
         
         vbVehiculo.getChildren().clear();
         
         System.out.println(v.getModelo());
-        Button btnNext = new Button("->"); btnNext.setStyle("-fx-background-color: #abffa8; -fx-text-fill: #000000; -fx-font-size: 20px;");
-        
-        
-        Button btnPrev = new Button("<-"); btnPrev.setStyle("-fx-background-color: #ffa8b5; -fx-text-fill: #000000; -fx-font-size: 20px;");       
-
         
         Label lblMarca = new Label("Marca: " + v.getMarca()); lblMarca.setStyle("-fx-text-fill: #000000; -fx-font-size: 40;");
         Label lblModelo = new Label("Modelo: " + v.getModelo()); lblModelo.setStyle("-fx-text-fill: #000000; -fx-font-size: 30;");
@@ -412,13 +403,95 @@ public class Escenas extends Stage {
         Label lblPrecio = new Label("Precio: $" + v.getPrecio()); lblPrecio.setStyle("-fx-text-fill: #73ad71; -fx-font-size: 40;");
         Label lblDuenio = new Label("Dueño: " + v.getDuenio().getNombre()); lblDuenio.setStyle("-fx-text-fill: #000000; -fx-font-size: 20;");
         Label lblTelefonos = new Label("Teléfonos: "); lblTelefonos.setStyle("-fx-text-fill: #000000; -fx-font-size: 20;");
+        Label lblPeso = new Label("Peso: " + v.getPeso() + "kg"); lblPeso.setStyle("-fx-text-fill: #000000; -fx-font-size: 20;");
+        Label lblUbi = new Label("Ubicacion Actual: " + v.getUbiActual()); lblUbi.setStyle("-fx-text-fill: #000000; -fx-font-size: 20;");
+        Label lblMotor = new Label("Motor: " + v.getMotor()); lblMotor.setStyle("-fx-text-fill: #000000; -fx-font-size: 20;");
+        Label lblTransmision = new Label("Transmision: " + v.getTrasmision()); lblTransmision.setStyle("-fx-text-fill: #000000; -fx-font-size: 20;");
         HBox hbDescCar = new HBox();
         VBox vbImgPrice = new VBox();
         HBox hbImgArrows = new HBox();
         VBox vbInfo = new VBox();
-        hbImgArrows.getChildren().addAll(btnPrev,ivImage,btnNext);
+        
+        Button btnAccidentes = new Button("Accidentes");
+        btnAccidentes.setStyle("-fx-background-color: #f5ff9e; -fx-text-fill: #000000; -fx-font-size: 20px;");
+        btnAccidentes.setOnMouseClicked(e -> {
+            BorderPane root = new BorderPane();
+            
+            Label lblTt = new Label("Historial de Accidentes"); lblTt.setStyle("-fx-text-fill: #000000; -fx-font-size: 60px;");
+            
+            VBox vb = new VBox(); vb.setSpacing(20); vb.setAlignment(Pos.CENTER); int numero = 1;
+            
+            for ( Accident accidente : v.getHistAccident() ){
+                HBox hb = new HBox(); hb.setSpacing(20);
+                
+                Label lblNum = new Label(numero + "."); lblNum.setStyle("-fx-text-fill: #0000ff; -fx-font-size: 30px;"); numero++;                
+                Label lblFecha = new Label("Fecha: " + accidente.getFecha().toString()); lblFecha.setStyle("-fx-text-fill: #000000; -fx-font-size: 30px;"); 
+                Label lblCosto = new Label("Costo: " + accidente.getCostoRepa().toString() + "$"); lblCosto.setStyle("-fx-text-fill: #000000; -fx-font-size: 30px;"); 
+                Label lblDesc = new Label("Descripcion: " + accidente.getDescripcion()); lblDesc.setStyle("-fx-text-fill: #000000; -fx-font-size: 30px;"); 
+                
+                hb.getChildren().addAll(lblNum, lblFecha, lblCosto, lblDesc);
+                vb.getChildren().add(hb);
+            }
+            
+            root.setCenter(vb);
+            root.setTop(lblTt);
+            Scene escena = new Scene(root, 500, 600);
+            Stage stage = new Stage();
+            stage.setScene(escena);
+            stage.show();
+            
+            Button salir = new Button("Salir"); 
+            salir.setStyle("-fx-background-color: #c2484e; -fx-text-fill: #ffffff; -fx-font-size: 20px;");
+            salir.setOnMouseClicked(eh -> {
+                stage.close();
+            });
+            root.setBottom(salir);
+            
+            });
+        
+        Button btnServicios = new Button("Servicios");
+        btnServicios.setStyle("-fx-background-color: #f5ff9e; -fx-text-fill: #000000; -fx-font-size: 20px;");
+        btnServicios.setOnMouseClicked(e -> {
+            BorderPane root = new BorderPane();
+            
+            Label lblTt = new Label("Historial de Servicios"); lblTt.setStyle("-fx-text-fill: #000000; -fx-font-size: 60px;");
+            
+            VBox vb = new VBox(); vb.setSpacing(20); vb.setAlignment(Pos.CENTER); int numero = 1;
+            
+            for ( Servicio servicio : v.getHistService() ){
+                HBox hb = new HBox(); hb.setSpacing(20);
+                
+                Label lblNum = new Label(numero + "."); lblNum.setStyle("-fx-text-fill: #0000ff; -fx-font-size: 30px;"); numero++;                
+                Label lblFecha = new Label("Fecha: " + servicio.getFecha().toString()); lblFecha.setStyle("-fx-text-fill: #000000; -fx-font-size: 30px;"); 
+                Label lblCosto = new Label("Costo: " + servicio.getCosto() + "$"); lblCosto.setStyle("-fx-text-fill: #000000; -fx-font-size: 30px;"); 
+                Label lblDesc = new Label("Detalles: " + servicio.getDetalles()); lblDesc.setStyle("-fx-text-fill: #000000; -fx-font-size: 30px;"); 
+                Label lblTipo = new Label("Tipo: " + servicio.getTipo()); lblTipo.setStyle("-fx-text-fill: #000000; -fx-font-size: 30px;"); 
+                
+                hb.getChildren().addAll(lblNum, lblFecha, lblTipo, lblCosto, lblDesc);
+                vb.getChildren().add(hb);
+            }
+            
+            
+            
+            root.setCenter(vb);
+            root.setTop(lblTt);
+            Scene escena = new Scene(root, 500, 600);
+            Stage stage = new Stage();
+            stage.setScene(escena);
+            stage.show();
+            
+            Button salir = new Button("Salir"); 
+            salir.setStyle("-fx-background-color: #c2484e; -fx-text-fill: #ffffff; -fx-font-size: 20px;");
+            salir.setOnMouseClicked(eh -> {
+                stage.close();
+            });
+            root.setBottom(salir);
+            
+            });
+        
+        hbImgArrows.getChildren().add(ivImage);
         vbImgPrice.getChildren().addAll(hbImgArrows,lblPrecio);
-        vbInfo.getChildren().addAll(lblAnio, lblKm, lblDuenio, lblTelefonos);
+        vbInfo.getChildren().addAll(lblAnio, lblKm, lblPeso, lblUbi, lblMotor, lblTransmision, lblDuenio, lblTelefonos, btnAccidentes, btnServicios);
         hbDescCar.getChildren().addAll(vbImgPrice,vbInfo);
         vbVehiculo.getChildren().addAll(lblMarca, lblModelo, hbDescCar);
         
@@ -427,6 +500,148 @@ public class Escenas extends Stage {
             vbInfo.getChildren().add(lblNumero);
         }         
     }
+    
+    private void mostrarVehiculoOwn(VBox vbVehiculo, Vehiculo v, Button salirEditar){
+        
+        vbVehiculo.getChildren().clear();       
+        
+        Label lblMarca = new Label("Marca: " + v.getMarca()); lblMarca.setStyle("-fx-text-fill: #000000; -fx-font-size: 40;");
+        Label lblModelo = new Label("Modelo: " + v.getModelo()); lblModelo.setStyle("-fx-text-fill: #000000; -fx-font-size: 30;");
+        
+        ImageView ivImage = new ImageView(new Image("Images\\"+v.getFoto()+".jpg"));
+        ivImage.setFitHeight(250);
+        ivImage.setFitWidth(250);
+        Label lblAnio = new Label("Año: " + v.getAnio()); lblAnio.setStyle("-fx-text-fill: #000000; -fx-font-size: 20;");
+        Label lblKm = new Label("Kilometraje: " + v.getKilometraje() + "km"); lblKm.setStyle("-fx-text-fill: #000000; -fx-font-size: 20;");
+        Label lblPrecio = new Label("Precio: $" + v.getPrecio()); lblPrecio.setStyle("-fx-text-fill: #73ad71; -fx-font-size: 40;");
+        Label lblDuenio = new Label("Dueño: " + v.getDuenio().getNombre()); lblDuenio.setStyle("-fx-text-fill: #000000; -fx-font-size: 20;");
+        Label lblTelefonos = new Label("Teléfonos: "); lblTelefonos.setStyle("-fx-text-fill: #000000; -fx-font-size: 20;");
+        Label lblPeso = new Label("Peso: " + v.getPeso() + "kg"); lblPeso.setStyle("-fx-text-fill: #000000; -fx-font-size: 20;");
+        Label lblUbi = new Label("Ubicacion Actual: " + v.getUbiActual()); lblUbi.setStyle("-fx-text-fill: #000000; -fx-font-size: 20;");
+        Label lblMotor = new Label("Motor: " + v.getMotor()); lblMotor.setStyle("-fx-text-fill: #000000; -fx-font-size: 20;");
+        Label lblTransmision = new Label("Transmision: " + v.getTrasmision()); lblTransmision.setStyle("-fx-text-fill: #000000; -fx-font-size: 20;");
+        HBox hbDescCar = new HBox();
+        VBox vbImgPrice = new VBox();
+        HBox hbImgArrows = new HBox();
+        VBox vbInfo = new VBox();
+        
+        Button btnAccidentes = new Button("Accidentes");
+        btnAccidentes.setStyle("-fx-background-color: #f5ff9e; -fx-text-fill: #000000; -fx-font-size: 20px;");
+        btnAccidentes.setOnMouseClicked(e -> {
+            BorderPane root = new BorderPane();
+            
+            Label lblTt = new Label("Historial de Accidentes"); lblTt.setStyle("-fx-text-fill: #000000; -fx-font-size: 60px;");
+            
+            VBox vb = new VBox(); vb.setSpacing(20); vb.setAlignment(Pos.CENTER); int numero = 1;
+            
+            for ( Accident accidente : v.getHistAccident() ){
+                HBox hb = new HBox(); hb.setSpacing(20);
+                
+                Label lblNum = new Label(numero + "."); lblNum.setStyle("-fx-text-fill: #0000ff; -fx-font-size: 30px;"); numero++;                
+                Label lblFecha = new Label("Fecha: " + accidente.getFecha().toString()); lblFecha.setStyle("-fx-text-fill: #000000; -fx-font-size: 30px;"); 
+                Label lblCosto = new Label("Costo: " + accidente.getCostoRepa().toString() + "$"); lblCosto.setStyle("-fx-text-fill: #000000; -fx-font-size: 30px;"); 
+                Label lblDesc = new Label("Descripcion: " + accidente.getDescripcion()); lblDesc.setStyle("-fx-text-fill: #000000; -fx-font-size: 30px;"); 
+                
+                hb.getChildren().addAll(lblNum, lblFecha, lblCosto, lblDesc);
+                vb.getChildren().add(hb);
+            }
+            
+            root.setCenter(vb);
+            root.setTop(lblTt);
+            Scene escena = new Scene(root, 500, 600);
+            Stage stage = new Stage();
+            stage.setScene(escena);
+            stage.show();
+            
+            Button salir = new Button("Salir"); 
+            salir.setStyle("-fx-background-color: #c2484e; -fx-text-fill: #ffffff; -fx-font-size: 20px;");
+            salir.setOnMouseClicked(eh -> {
+                stage.close();
+            });
+            root.setBottom(salir);
+            
+            });
+        
+        Button btnServicios = new Button("Servicios");
+        btnServicios.setStyle("-fx-background-color: #f5ff9e; -fx-text-fill: #000000; -fx-font-size: 20px;");
+        btnServicios.setOnMouseClicked(e -> {
+            BorderPane root = new BorderPane();
+            
+            Label lblTt = new Label("Historial de Servicios"); lblTt.setStyle("-fx-text-fill: #000000; -fx-font-size: 60px;");
+            
+            VBox vb = new VBox(); vb.setSpacing(20); vb.setAlignment(Pos.CENTER); int numero = 1;
+            
+            for ( Servicio servicio : v.getHistService() ){
+                HBox hb = new HBox(); hb.setSpacing(20);
+                
+                Label lblNum = new Label(numero + "."); lblNum.setStyle("-fx-text-fill: #0000ff; -fx-font-size: 30px;"); numero++;                
+                Label lblFecha = new Label("Fecha: " + servicio.getFecha().toString()); lblFecha.setStyle("-fx-text-fill: #000000; -fx-font-size: 30px;"); 
+                Label lblCosto = new Label("Costo: " + servicio.getCosto() + "$"); lblCosto.setStyle("-fx-text-fill: #000000; -fx-font-size: 30px;"); 
+                Label lblDesc = new Label("Detalles: " + servicio.getDetalles()); lblDesc.setStyle("-fx-text-fill: #000000; -fx-font-size: 30px;"); 
+                Label lblTipo = new Label("Tipo: " + servicio.getTipo()); lblTipo.setStyle("-fx-text-fill: #000000; -fx-font-size: 30px;"); 
+                
+                hb.getChildren().addAll(lblNum, lblFecha, lblTipo, lblCosto, lblDesc);
+                vb.getChildren().add(hb);
+            }
+            
+            root.setCenter(vb);
+            root.setTop(lblTt);
+            Scene escena = new Scene(root, 500, 600);
+            Stage stage = new Stage();
+            stage.setScene(escena);
+            stage.show();
+            
+            Button salir = new Button("Salir"); 
+            salir.setStyle("-fx-background-color: #c2484e; -fx-text-fill: #ffffff; -fx-font-size: 20px;");
+            salir.setOnMouseClicked(eh -> {
+                stage.close();
+            });
+            root.setBottom(salir);
+            
+            });
+        
+        Button editar = new Button("Editar"); editar.setStyle("-fx-background-color: #5353ec; -fx-text-fill: #ffffff; -fx-font-size: 20px;");
+        editar.setOnAction( e -> {
+            BorderPane root = new BorderPane();
+            Scene escena = new Scene(root, 1100, 700);
+            
+            Label lblTt = new Label("Editar Vehiculo"); lblTt.setStyle("-fx-text-fill: #000000; -fx-font-size: 60px;");
+            VBox vbTt = new VBox(); vbTt.setAlignment(Pos.CENTER);
+            vbTt.getChildren().add(lblTt);
+            
+            VBox vb = new VBox(); vb.setAlignment(Pos.CENTER);
+            VBox vbAccidentes = new VBox(); vbAccidentes.setAlignment(Pos.CENTER);
+            VBox vbServicios = new VBox(); vbServicios.setAlignment(Pos.CENTER);
+            
+            this.crearVehiculo(vb, vbAccidentes, vbServicios, v);
+            
+            VBox vbSalir = new VBox(); vbSalir.setAlignment(Pos.CENTER);
+            vbSalir.getChildren().add(salirEditar);
+            
+            root.setTop(vbTt);
+            root.setCenter(vb);
+            root.setBottom(vbSalir);
+            App.STAGE.setScene(escena);
+        });
+        
+        Button borrar = new Button("Borrar"); borrar.setStyle("-fx-background-color: #ff0000; -fx-text-fill: #ffffff; -fx-font-size: 20px;");
+        borrar.setOnAction( e -> {
+        App.VEHICULOS.remove(v);
+        Vehiculo.actualizarVehiculos();
+        App.menu();
+        });        
+        hbImgArrows.getChildren().addAll(ivImage);
+        vbImgPrice.getChildren().addAll(hbImgArrows,lblPrecio, editar, borrar);
+        vbInfo.getChildren().addAll(lblAnio, lblKm, lblPeso, lblUbi, lblMotor, lblTransmision, lblDuenio, lblTelefonos, btnAccidentes, btnServicios);
+        hbDescCar.getChildren().addAll(vbImgPrice,vbInfo);
+        vbVehiculo.getChildren().addAll(lblMarca, lblModelo, hbDescCar);
+        
+        for ( String numero : v.getDuenio().getTelefonos() ){
+            Label lblNumero = new Label(numero); lblNumero.setStyle("-fx-text-fill: #4287f5; -fx-font-size: 20; -fx-underline: true");
+            vbInfo.getChildren().add(lblNumero);
+        }         
+    }    
+    
     private static ArrayList<Vehiculo> filtrarVehiculos(ArrayList<Vehiculo> vehiculos, ComboBox<String> filtro, ComboBox<String> rango, TextField min, TextField max){
         ArrayList<Vehiculo> vehiculosFiltrados= new ArrayList<>();
         TipoVehiculo tipo = TipoVehiculo.CARRO;
@@ -486,9 +701,7 @@ public class Escenas extends Stage {
         return vehiculosFiltrados;
     }
     
-    
-    
-    public static void ordenarVehiculos
+    private static void ordenarVehiculos
         (CircularLinkedList<Vehiculo> vehiculosMostrados, ArrayList<Vehiculo> vehiculos, ComboBox<String> orden){
                     
         vehiculosMostrados.clear(); 
@@ -531,7 +744,7 @@ public class Escenas extends Stage {
         }
     }
      
-    public void crearVehiculo(VBox vbNuevoVehiculo, VBox vbACCIDENTES, VBox vbSERVICIOS){
+    private void crearVehiculo(VBox vbNuevoVehiculo, VBox vbACCIDENTES, VBox vbSERVICIOS, Vehiculo borrar){
         //Vaciamos los contenedores
         vbNuevoVehiculo.getChildren().clear(); vbACCIDENTES.getChildren().clear(); vbSERVICIOS.getChildren().clear();
         //Creamos los textfields
@@ -678,8 +891,6 @@ public class Escenas extends Stage {
         
         vbACCIDENTES.getChildren().addAll(dtAccidente, tfDescripcion, tfCostoAccidente, btnAgregarAccidente);
         
-
-
         Button btnAdjuntarFoto = new Button("Agregar Foto"); btnAdjuntarFoto.setStyle("-fx-background-color: #f6ff91; -fx-text-fill: #000000; -fx-font-size: 20px;");
         btnAdjuntarFoto.setOnAction( e -> {
             ExtensionFilter ext1 = new ExtensionFilter("Image Files", "*.jpg");
@@ -699,6 +910,7 @@ public class Escenas extends Stage {
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
+                
             }
             
         });
@@ -722,6 +934,10 @@ public class Escenas extends Stage {
                     nuevo = new Vehiculo(id, precio, tfMarca.getText(), tfModelo.getText(), btnAdjuntarFoto.getText(), anio, kilometraje, tfMotor.getText(), cbTransmision.getValue(), peso, tfUbicacion.getText(), accidentes, servicios, tipo, App.USUARIOACTUAL);
                     App.VEHICULOS.add(nuevo);
                     App.USUARIOACTUAL.getVehiculos().add(nuevo);
+                    
+                    if (borrar != null) {
+                        App.VEHICULOS.remove(borrar);
+                    }
 
                     Vehiculo.actualizarVehiculos();
                     App.menu();
@@ -761,9 +977,16 @@ public class Escenas extends Stage {
         return vehiculosFiltrados;
      }
     
-    public static Scene crearMisVehiculos(){
+    public Scene crearMisVehiculos(){
         
         BorderPane rootVEROwn = new BorderPane();
+        Scene escena = new Scene(rootVEROwn, 800, 700);
+        
+        Button btnSalirEditar = new Button("Salir");
+        btnSalirEditar.setStyle("-fx-background-color: #c2484e; -fx-text-fill: #ffffff; -fx-font-size: 20px;");
+        btnSalirEditar.setOnMouseClicked(e -> {
+            App.STAGE.setScene(escena);
+        });
 
         Label lblTtMISV = new Label("Mis Vehiculos");
         lblTtMISV.setStyle("-fx-text-fill: #000000; -fx-font-size: 60;");
@@ -771,7 +994,7 @@ public class Escenas extends Stage {
         VBox vbTtMISV = new VBox(); vbTtMISV.setAlignment(Pos.CENTER);
         vbTtMISV.getChildren().add(lblTtMISV);
 
-        Label lblTituloOwn = new Label("Vehiculos Disponibles");
+        Label lblTituloOwn = new Label("Mis Vehiculos");
         lblTituloOwn.setStyle("-fx-text-fill: #000000; -fx-font-size: 60;");
         lblTituloOwn.setAlignment(Pos.CENTER);
         VBox vbTtVEROwn = new VBox(); vbTtVEROwn.setAlignment(Pos.CENTER);
@@ -806,7 +1029,7 @@ public class Escenas extends Stage {
         btnAplicarFiltroOwn.setOnAction( e -> {
             ordenarVehiculos(vehiculosMostradosOwn, filtrarVehiculosOwn(App.VEHICULOS, filtrosOwn), ordenamientosOwn);
             vehiculosMostradosOwn.setListIterator();
-            mostrarVehiculo(vbVehiculoActualVEROwn, vehiculosMostradosOwn.getListIterator().next());
+            mostrarVehiculoOwn(vbVehiculoActualVEROwn, vehiculosMostradosOwn.getListIterator().next(), btnSalirEditar);
         }); 
         btnAplicarFiltroOwn.fire();
 
@@ -823,7 +1046,7 @@ public class Escenas extends Stage {
         //Colocamos los botones siguiente y anterior
         Button btnSiguienteVEROwn = new Button("->"); btnSiguienteVEROwn.setStyle("-fx-background-color: #abffa8; -fx-text-fill: #000000; -fx-font-size: 50px;");       
         btnSiguienteVEROwn.setOnAction( e -> {
-            mostrarVehiculo(vbVehiculoActualVEROwn, vehiculosMostradosOwn.getListIterator().next() );
+            mostrarVehiculoOwn(vbVehiculoActualVEROwn, vehiculosMostradosOwn.getListIterator().next(), btnSalirEditar );
         });
         VBox vbSiguienteOwn = new VBox(); vbSiguienteOwn.setAlignment(Pos.CENTER);
         vbSiguienteOwn.getChildren().add(btnSiguienteVEROwn);
@@ -831,7 +1054,7 @@ public class Escenas extends Stage {
 
         Button btnAnteriorVEROwn = new Button("<-"); btnAnteriorVEROwn.setStyle("-fx-background-color: #ffa8b5; -fx-text-fill: #000000; -fx-font-size: 50px;");       
         btnAnteriorVEROwn.setOnAction( e -> {
-            mostrarVehiculo(vbVehiculoActualVEROwn, vehiculosMostradosOwn.getListIterator().previous() );
+            mostrarVehiculoOwn(vbVehiculoActualVEROwn, vehiculosMostradosOwn.getListIterator().previous(), btnSalirEditar );
         });
         VBox vbAnteriorOwn = new VBox(); vbAnteriorOwn.setAlignment(Pos.CENTER);
         vbAnteriorOwn.getChildren().add(btnAnteriorVEROwn);
@@ -849,8 +1072,8 @@ public class Escenas extends Stage {
         });
         VBox vbSalirMISV = new VBox(); vbSalirMISV.setAlignment(Pos.CENTER); vbSalirMISV.getChildren().add(salirMISV);
         rootVEROwn.setBottom(vbSalirMISV);
-
-        return new Scene(rootVEROwn, 800, 600);
+        
+        return escena;
     }
     
     public void showMessage(AlertType tipo, String titulo, String encabezado, String mensaje) {
