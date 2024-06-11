@@ -146,6 +146,7 @@ public class Vehiculo implements Comparable<Vehiculo>{
             bw.write("id,precio,marca,modelo,foto,anio,kilometraje,motor,transmision,peso,ubiActual,histAccident,histService,tipoVehiculo,duenio");
             bw.newLine();
             for(Vehiculo v: App.VEHICULOS){
+            String foto = "";
             String histAccident = "";
             String histService = "";
             int contador1 = 0;

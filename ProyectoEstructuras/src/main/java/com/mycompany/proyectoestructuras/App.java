@@ -97,6 +97,7 @@ public class App extends Application {
                 User duenio = USUARIOS.get(division[14]);
                 Vehiculo vehiculo = new Vehiculo(id,precio,marca,modelo,foto,anio,kilometraje,motor,trasmision,peso,ubiActual,histAccident,histService,tipovehiculo,duenio);
                 vehiculos.add(vehiculo);
+                duenio.getVehiculos().add(vehiculo);
             }
             reader.close();
         }

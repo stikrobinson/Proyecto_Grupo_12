@@ -30,6 +30,28 @@ public class User {
         usuario = u; contrasena = p; nombre = n; telefonos = t; 
         vehiculos  = new ArrayList<Vehiculo>();
     }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setTelefonos(ArrayList<String> telefonos) {
+        this.telefonos = telefonos;
+    }
+
+    public void setVehiculos(ArrayList<Vehiculo> vehiculos) {
+        this.vehiculos = vehiculos;
+    }
+    
+    
     
     public ArrayList<Vehiculo> getVehiculos(){
         return vehiculos;
