@@ -72,28 +72,11 @@ public class User {
     public String getContrasena(){
         return contrasena;
     }
-    
-    public void comprarCarro(Vehiculo c){
-        
-    }
+   
     
     public boolean equals(Object o){
         User u = (User) o;
         return u.getUsuario().equals(usuario) && u.getContrasena().equals(contrasena) && u.getNombre().equals(nombre);
-    }
-
-    public Vehiculo obtenerVehiculo(String id){ //id del carro a buscar
-        return null;
-    }
-
-    public void crearCarro(Vehiculo car){
-        
-    }
-    public void editarCarro(Vehiculo car){
-        
-    }
-    public void eliminarCarro(Vehiculo car){
-        
     }
     
     public static void actualizarUsuarios(){
