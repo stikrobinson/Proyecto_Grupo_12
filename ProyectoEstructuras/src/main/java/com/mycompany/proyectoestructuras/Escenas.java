@@ -465,23 +465,35 @@ public class Escenas extends Stage {
         vbVehiculo.getChildren().clear();
         
         System.out.println(v.getModelo());
+        Button btnNext = new Button("->"); btnNext.setStyle("-fx-background-color: #abffa8; -fx-text-fill: #000000; -fx-font-size: 20px;");
+        
+        
+        Button btnPrev = new Button("<-"); btnPrev.setStyle("-fx-background-color: #ffa8b5; -fx-text-fill: #000000; -fx-font-size: 20px;");       
+
         
         Label lblMarca = new Label("Marca: " + v.getMarca()); lblMarca.setStyle("-fx-text-fill: #000000; -fx-font-size: 40;");
-        Label lblModelo = new Label("Modelo: " + v.getModelo()); lblModelo.setStyle("-fx-text-fill: #000000; -fx-font-size: 40;");
+        Label lblModelo = new Label("Modelo: " + v.getModelo()); lblModelo.setStyle("-fx-text-fill: #000000; -fx-font-size: 30;");
         ImageView ivImage = new ImageView(new Image("Images\\"+v.getFoto()+".jpg"));
-        ivImage.setFitHeight(100);
-        ivImage.setFitWidth(100);
+        ivImage.setFitHeight(250);
+        ivImage.setFitWidth(250);
         Label lblAnio = new Label("Año: " + v.getAnio()); lblAnio.setStyle("-fx-text-fill: #000000; -fx-font-size: 20;");
         Label lblKm = new Label("Kilometraje: " + v.getKilometraje() + "km"); lblKm.setStyle("-fx-text-fill: #000000; -fx-font-size: 20;");
         Label lblPrecio = new Label("Precio: $" + v.getPrecio()); lblPrecio.setStyle("-fx-text-fill: #73ad71; -fx-font-size: 40;");
         Label lblDuenio = new Label("Dueño: " + v.getDuenio().getNombre()); lblDuenio.setStyle("-fx-text-fill: #000000; -fx-font-size: 20;");
         Label lblTelefonos = new Label("Teléfonos: "); lblTelefonos.setStyle("-fx-text-fill: #000000; -fx-font-size: 20;");
-        
-        vbVehiculo.getChildren().addAll(lblMarca, lblModelo, ivImage, lblAnio, lblKm, lblPrecio, lblDuenio, lblTelefonos);
+        HBox hbDescCar = new HBox();
+        VBox vbImgPrice = new VBox();
+        HBox hbImgArrows = new HBox();
+        VBox vbInfo = new VBox();
+        hbImgArrows.getChildren().addAll(btnPrev,ivImage,btnNext);
+        vbImgPrice.getChildren().addAll(hbImgArrows,lblPrecio);
+        vbInfo.getChildren().addAll(lblAnio, lblKm, lblDuenio, lblTelefonos);
+        hbDescCar.getChildren().addAll(vbImgPrice,vbInfo);
+        vbVehiculo.getChildren().addAll(lblMarca, lblModelo, hbDescCar);
         
         for ( String numero : v.getDuenio().getTelefonos() ){
             Label lblNumero = new Label(numero); lblNumero.setStyle("-fx-text-fill: #4287f5; -fx-font-size: 20; -fx-underline: true");
-            vbVehiculo.getChildren().add(lblNumero);
+            vbInfo.getChildren().add(lblNumero);
         }         
     }
     private static ArrayList<Vehiculo> filtrarVehiculos(ArrayList<Vehiculo> vehiculos, ComboBox<String> filtro){
