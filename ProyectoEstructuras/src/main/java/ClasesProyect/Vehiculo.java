@@ -24,10 +24,10 @@ public class Vehiculo implements Comparable<Vehiculo>{
     private String foto; //Direccion de la foto del carro, se puede actualizar la foto
     private int anio;
     private int kilometraje; //Atributo que puede cambiar si el duenio sigue usando el coche hasta que sea vendido
-    private String motor;
-    private String trasmision;
-    private int peso;
-    private String ubiActual; //puede ser cambiada
+    private String motor; //////////
+    private String trasmision; //////////////
+    private int peso; ////////////
+    private String ubiActual; //puede ser cambiada ///////////////
     private ArrayList<Accident> histAccident; //Utilizar un TDA de Strings senialando  accidentes (Tipo dato Accident),,,
     private ArrayList<Servicio> histService; //Utilizar un TDA de Strings senialando reparaciones, procesos de mantenimiento, accidentes,,,
     private TipoVehiculo tipoVehiculo; 
@@ -66,9 +66,6 @@ public class Vehiculo implements Comparable<Vehiculo>{
     public void setDuenio(User duenio) {
         this.duenio = duenio;
     }
-    
-    
-    
     public String getId() {
         return id;
     }
