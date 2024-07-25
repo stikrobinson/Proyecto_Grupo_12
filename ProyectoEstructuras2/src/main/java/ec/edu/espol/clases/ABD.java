@@ -14,7 +14,7 @@ import java.io.IOException;
 
 /**
  *
- * @author CltControl
+ * @author sebsm
  */
 public class ABD {
     private Nodo raiz;
@@ -87,8 +87,8 @@ public class ABD {
             }
 
             //Ya tengo las dos listas llenas
-            System.out.println(preguntas);
-            System.out.println(respuestas);
+//            System.out.println(preguntas);
+//            System.out.println(respuestas);
         }
         catch(IOException ioe){System.err.println(ioe);};
 
@@ -134,21 +134,78 @@ public class ABD {
 
         //Elimino la primera respuesta porque ya la use
         if ( respuestas.remove(0).equals("si") ){
-            //Si el arbol actual es hoja, significa que es la ultima pregunta, por lo que añado al animal
-            if( isLeaf() ) {
-                raiz.izq = new ABD(animal); return true;
+            //Si la lista de respuestas esta vacia ya, es porque llegue a la ultima pregunta
+            if ( respuestas.isEmpty() ){
+                //Anado a la izquierda si es que no hay ya un animal ahi
+                if ( raiz.izq == null ) {
+                    raiz.izq = new ABD(animal);
+                    return true;
+                }
+                //Caso contrario, no lo anado
+                return false;
             }
-
-            //Caso contrario, hago una llamada recursiva al siguiente subArbol
-            raiz.izq.anadirAnimal(animal, respuestas);
-            return true;
+            //Si las respuestas no estan vacias, continuo al siguiente subarbol izquierdo
+            return raiz.izq.anadirAnimal(animal, respuestas);
         }
-        //Si la respuesta es distina de "si", hago el mismo proceso pero con la derecha
-        if( isLeaf() ) {
-            raiz.der = new ABD(animal); return true;
+        //Si la respuesta es distinta a "si", hago el mismo proceso pero con la derecha
+        if ( respuestas.isEmpty() ){
+            //Anado a la derecha si es que no hay ya un animal ahi
+            if ( raiz.der == null ) {
+                raiz.der = new ABD(animal);
+                return true;
+            }
+            //Caso contrario, no lo anado
+            return false;
+            }
+            //Si las respuestas no estan vacias, continuo al siguiente subarbol derecho
+            return raiz.der.anadirAnimal(animal, respuestas);
+    }
+    
+    public ArrayList<String> adivinarAnimal( ArrayList<String> respuestas ){
+        //Para este punto, el usuario habra dado n respuestas, donde n es el numero de preguntas
+        //que el usuario quizo responder (n <= numero de preguntas)
+        
+        //Si las respuestas estan vacias, retorno todos los animales que encuentre en este subarbol
+        if ( respuestas.isEmpty() ) return getAnimales();
+        
+        //Caso contrario, evaluo la siguiente respuesta
+        //Si la respuesta es "si", continuo a la izquierda
+        if( respuestas.remove(0).equals("si") ){
+            //Si el subArbol izquierdo es null, es porque no hay un animal que satisfaga las respuestas
+            if ( raiz.izq == null ) return null;
+            //Caso contario, hago la llamada recursiva
+            return raiz.izq.adivinarAnimal(respuestas);
         }
-        raiz.der.anadirAnimal(animal, respuestas);
-        return true;
+        //Caso contrario, continuo a la derecha y hago el mismo proceso
+        //Si el subArbol derecho es null, es porque no hay un animal que satisfaga las respuestas
+        if ( raiz.der == null ) return null;
+        //Caso contario, hago la llamada recursiva
+        return raiz.der.adivinarAnimal(respuestas);
+    }
+    
+    public ArrayList<String> getAnimales(){
+        //Recorrido de anchura, eliminando las preguntas
+        ArrayList<String> lista = new ArrayList<>();
+        ArrayDeque<Nodo> cola = new ArrayDeque<>();
+        cola.offer(raiz);
+        
+        while(!cola.isEmpty()){
+            Nodo n = cola.poll();
+            //Solo se anade contenido si el elemento no es pregunta
+            //Las preguntas son todas aquellas que contengan el signo de interrogacion
+            if ( !n.contenido.contains("?") ) lista.add(n.contenido);
+            
+            if(n.izq!=null && n.der!=null){
+                cola.offer(n.izq.raiz);
+                cola.offer(n.der.raiz);
+            }else if(n.izq!=null){
+                cola.offer(n.izq.raiz);
+            }
+            else if (n.der!=null){
+                cola.offer(n.der.raiz);
+            }
+        }
+        return lista;
     }
 
     public ArrayList<String> enOrden(){
@@ -192,7 +249,7 @@ public class ABD {
         //En orden por defecto
         if ( isEmpty() ) return "[ ]";
         String texto = "[ ";
-        ArrayList<String> contenido = enOrden();
+        ArrayList<String> contenido = recorridoPorAnchura();
 
         for ( int i = 0; i < contenido.size() - 1; i++ ){
             texto += contenido.get(i) + ", ";
