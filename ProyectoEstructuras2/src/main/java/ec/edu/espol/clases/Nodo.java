@@ -18,4 +18,13 @@ public class Nodo {
         contenido = c;
         izq = null; der = null;
     }
+    
+    public Nodo(){
+        contenido = null;
+        izq = null; der = null;
+    }
+    
+    public boolean isLeaf(){
+        return this.izq == null && this.der == null;
+    }
 }

@@ -8,7 +8,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.ArrayDeque;
 
 /**
  * JavaFX App
@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class App extends Application {
 
     private static Scene scene;
+    public static ABD arbolMain;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -45,19 +46,24 @@ public class App extends Application {
         //El arbol está lleno
         
         System.out.println(arbol);
+        System.out.println(arbol.altura());
         
         //Adivinar un animal
         
         //Se pide el numero de preguntas a responder y se consiguen sus respectivas respuestas
         
         //Ejemplo
-        ArrayList<String> respuestas = new ArrayList<>();
-        respuestas.add("si"); respuestas.add("si"); respuestas.add("si");
+        
+        
+        ArrayDeque<String> respuestas = new ArrayDeque<>();
+        respuestas.offer("si"); respuestas.offer("si"); respuestas.offer("si");
         System.out.println(arbol.adivinarAnimal(respuestas)); //Una respuesta
-        respuestas.add("no");
+        respuestas.offer("no");
         System.out.println(arbol.adivinarAnimal(respuestas));//Mas de una respuesta
-        respuestas.add("si"); respuestas.add("si"); respuestas.add("no");
+        respuestas.offer("si"); respuestas.offer("si"); respuestas.offer("no");
         System.out.println(arbol.adivinarAnimal(respuestas));//No hay respuesta
+        
+        arbolMain = arbol;
         
         launch();
     }

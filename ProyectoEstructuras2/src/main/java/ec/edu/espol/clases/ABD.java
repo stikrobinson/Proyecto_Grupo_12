@@ -104,6 +104,7 @@ public class ABD {
         //Y sus ancestros son las preguntas anteriores
 
         //Ahora añadimos a los animales
+        anadirHojas();
         for( String animal : respuestas.keySet() ){
             anadirAnimal( animal,  respuestas.get(animal) );
         }
@@ -125,6 +126,28 @@ public class ABD {
         }
     }
 
+    private void anadirHojas(){
+        ArrayDeque<Nodo> cola = new ArrayDeque<>();
+        cola.offer(raiz);
+        while(!cola.isEmpty()){
+            Nodo n = cola.poll();
+            if(n.izq!=null && n.der!=null){
+                cola.offer(n.izq.raiz);
+                cola.offer(n.der.raiz);
+            }else if(n.izq!=null){
+                cola.offer(n.izq.raiz);
+            }
+            else if (n.der!=null){
+                cola.offer(n.der.raiz);
+            }else if(n.isLeaf()){
+                n.der = new ABD();
+                n.der.raiz = new Nodo();
+                n.izq = new ABD();
+                n.izq.raiz = new Nodo();
+            }
+        }
+    }
+    
     private boolean anadirAnimal( String animal, ArrayList<String> respuestas){
         //Verifico que la lista de respuestas no este vacia
         if( respuestas.isEmpty() ) return false;
@@ -137,8 +160,8 @@ public class ABD {
             //Si la lista de respuestas esta vacia ya, es porque llegue a la ultima pregunta
             if ( respuestas.isEmpty() ){
                 //Anado a la izquierda si es que no hay ya un animal ahi
-                if ( raiz.izq == null ) {
-                    raiz.izq = new ABD(animal);
+                if ( raiz.izq.raiz.contenido == null ) {
+                    raiz.izq.raiz.contenido = animal;
                     return true;
                 }
                 //Caso contrario, no lo anado
@@ -150,8 +173,8 @@ public class ABD {
         //Si la respuesta es distinta a "si", hago el mismo proceso pero con la derecha
         if ( respuestas.isEmpty() ){
             //Anado a la derecha si es que no hay ya un animal ahi
-            if ( raiz.der == null ) {
-                raiz.der = new ABD(animal);
+            if ( raiz.der.raiz.contenido == null) {
+                raiz.der.raiz.contenido = animal;
                 return true;
             }
             //Caso contrario, no lo anado
@@ -161,7 +184,7 @@ public class ABD {
             return raiz.der.anadirAnimal(animal, respuestas);
     }
     
-    public ArrayList<String> adivinarAnimal( ArrayList<String> respuestas ){
+    public ArrayList<String> adivinarAnimal( ArrayDeque<String> respuestas ){
         //Para este punto, el usuario habra dado n respuestas, donde n es el numero de preguntas
         //que el usuario quizo responder (n <= numero de preguntas)
         
@@ -170,15 +193,15 @@ public class ABD {
         
         //Caso contrario, evaluo la siguiente respuesta
         //Si la respuesta es "si", continuo a la izquierda
-        if( respuestas.remove(0).equals("si") ){
+        if( respuestas.poll().equals("si") ){
             //Si el subArbol izquierdo es null, es porque no hay un animal que satisfaga las respuestas
-            if ( raiz.izq == null ) return null;
+            if ( raiz.izq.raiz.contenido == null ) return null;
             //Caso contario, hago la llamada recursiva
             return raiz.izq.adivinarAnimal(respuestas);
         }
         //Caso contrario, continuo a la derecha y hago el mismo proceso
         //Si el subArbol derecho es null, es porque no hay un animal que satisfaga las respuestas
-        if ( raiz.der == null ) return null;
+        if ( raiz.der.raiz.contenido == null ) return null;
         //Caso contario, hago la llamada recursiva
         return raiz.der.adivinarAnimal(respuestas);
     }
@@ -193,7 +216,7 @@ public class ABD {
             Nodo n = cola.poll();
             //Solo se anade contenido si el elemento no es pregunta
             //Las preguntas son todas aquellas que contengan el signo de interrogacion
-            if ( !n.contenido.contains("?") ) lista.add(n.contenido);
+            if ( n.isLeaf() && n.contenido!=null) lista.add(n.contenido);
             
             if(n.izq!=null && n.der!=null){
                 cola.offer(n.izq.raiz);
@@ -242,6 +265,16 @@ public class ABD {
             }
         }
         return lista;
+    }
+    
+    public int altura(){
+        if(isEmpty()) return 0;
+        if(isLeaf()) return 1;
+        int alturaIzq = (raiz.izq!=null) ? raiz.izq.altura() : 0;
+        int alturaDer = 0;
+        if(raiz.der!=null) alturaDer = raiz.der.altura();
+
+        return 1 + Math.max( alturaDer, alturaIzq);
     }
 
     @Override
