@@ -39,8 +39,8 @@ public class App extends Application {
         
         //Consigo los nombres de los txt
         
-        String r = "respuestas.txt";
-        String p = "preguntas.txt";
+        String r = "answers.txt";
+        String p = "questions.txt";
         arbol.cargar(p, r);
         
         //El arbol está lleno

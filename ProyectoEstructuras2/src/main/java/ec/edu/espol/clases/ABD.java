@@ -67,7 +67,7 @@ public class ABD {
 
             while( ( line = br.readLine() ) != null ){
                 //Respuestas
-                String[] datos = line.split(";");
+                String[] datos = line.split(" ");
                 ArrayList<String> sino = new ArrayList<>();
 
                 //Verifico que haya tantas respuestas como preguntas para cada animal
@@ -116,6 +116,7 @@ public class ABD {
         //Las preguntas son todos los nodos menos los ultimos, los cuales son los animales
         //Primero verifico si el arbol actual es hoja, si lo es, la pregunta va a ser ambos nodos de la raiz
         if( isLeaf() ){
+            //System.out.println(p + "fue añadida");
             raiz.izq = new ABD(p);
             raiz.der = new ABD(p);
         }
@@ -149,6 +150,7 @@ public class ABD {
     }
     
     private boolean anadirAnimal( String animal, ArrayList<String> respuestas){
+        System.out.println("a");
         //Verifico que la lista de respuestas no este vacia
         if( respuestas.isEmpty() ) return false;
 

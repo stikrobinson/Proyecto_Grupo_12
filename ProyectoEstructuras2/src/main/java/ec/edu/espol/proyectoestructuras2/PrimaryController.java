@@ -13,10 +13,8 @@ import javafx.scene.layout.VBox;
 
 public class PrimaryController {
     
-    @FXML
     private VBox vBox;
     
-    @FXML
     public void initialize(){
         String ruta = "https://www.infobae.com/new-resizer/aWPzqVhovehmcFmyHjiyMEDimsM=/992x1323/filters:format(webp):quality(85)/cloudfront-us-east-1.images.arcpublishing.com/infobae/5OL72B2YLNDWBKBEOWVCDELLPM.jpg";
         Image skibidi = new Image(ruta, 1000, 0, false, false);
