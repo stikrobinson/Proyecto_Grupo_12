@@ -1,0 +1,9 @@
+¿Es este animal un mamífero?
+¿Es este animal un carnívoro?
+¿Se para este animal sobre cuatro patas?
+¿Es este animal capaz de volar?
+¿Es este animal acuático?
+¿Es este animal domesticable?
+¿Es este animal mayormente nocturno?
+¿Este animal tiene pelo?
+¿Este animal vive en grupos?
