@@ -37,6 +37,7 @@ public class LecturaArchivos {
             while ( ( line = br.readLine() ) != null ){
                 preguntas.add(line);
             }
+            br.close();
         }catch(IOException ioe){System.err.println(ioe);};
     }
     
@@ -60,6 +61,7 @@ public class LecturaArchivos {
                     //Cuando los archivos no tienen concordancia con en número de preguntas y el número de respuestas.
                 }
             }
+            br.close();
         }
         catch(IOException ioe){System.err.println(ioe);};
     }

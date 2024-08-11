@@ -31,7 +31,7 @@ public class SecondaryController extends Stage {
         if(hasTwoInput){
             LecturaArchivos lectAr = new LecturaArchivos(pregBtn.getText(),respBtn.getText());
             App.arbolJuego = lectAr.buildTree();
-            App.setRoot("Juego");
+            App.setRoot("numberSelect");
         }
     }
     

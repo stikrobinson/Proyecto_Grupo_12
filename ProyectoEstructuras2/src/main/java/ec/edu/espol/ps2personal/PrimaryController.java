@@ -5,6 +5,7 @@ import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 
 public class PrimaryController {
 
@@ -22,6 +23,6 @@ public class PrimaryController {
     private void playDefault(ActionEvent event) throws IOException {
         LecturaArchivos lectAr = new LecturaArchivos("defaultQuest","defaultAns");
         App.arbolJuego = lectAr.buildTree();
-        App.setRoot("Juego"); //Cambiar a numberSelect
+        App.setRoot("numberSelect"); //Cambiar a numberSelect
     }
 }

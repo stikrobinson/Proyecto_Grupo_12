@@ -4,9 +4,13 @@
  */
 package ec.edu.espol.ps2personal;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.text.Text;
 
 /**
  * FXML Controller class
@@ -15,12 +19,38 @@ import javafx.fxml.Initializable;
  */
 public class NumberSelectController implements Initializable {
 
-    /**
-     * Initializes the controller class.
-     */
+    @FXML
+    Text amountQuest;
+    @FXML
+    Button plusBtn;
+    @FXML
+    Button minusBTN;
+    @FXML
+    Button btnEmpezar;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+        amountQuest.setText(App.arbolJuego.altura()-1+"");
+    }
+    
+    @FXML
+    private void empezar() throws IOException{
+        JuegoController.setNumPreguntas(Integer.valueOf(amountQuest.getText()));
+        App.setRoot("Juego");
+    }
+    
+    @FXML
+    private void plusClick(){
+        if(Integer.valueOf(amountQuest.getText())<App.arbolJuego.altura()-1){
+            amountQuest.setText(""+(Integer.valueOf(amountQuest.getText())+1));
+        }
+    } 
+    
+    @FXML
+    private void minusClick(){
+        if(Integer.valueOf(amountQuest.getText())>1){
+            amountQuest.setText(""+(Integer.valueOf(amountQuest.getText())-1));
+        }
+    } 
     
 }

@@ -1,17 +1,10 @@
-ec\edu\espol\clases\Juego.class
 classes\LecturaArchivos.class
 ec\edu\espol\ps2personal\FinalScreenController.class
-ec\edu\espol\clases\ABD.class
-ec\edu\espol\clases\Nodo.class
-ec\edu\espol\proyectoestructuras2\App.class
 classes\Node.class
 module-info.class
 ec\edu\espol\ps2personal\PrimaryController.class
 ec\edu\espol\ps2personal\App.class
 ec\edu\espol\ps2personal\JuegoController.class
 ec\edu\espol\ps2personal\SecondaryController.class
-ec\edu\espol\proyectoestructuras2\CargarArchivosController.class
 classes\BTree.class
-ec\edu\espol\proyectoestructuras2\PrimaryController.class
 ec\edu\espol\ps2personal\NumberSelectController.class
-ec\edu\espol\proyectoestructuras2\SecondaryController.class

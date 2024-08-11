@@ -30,13 +30,15 @@ public class JuegoController implements Initializable {
     private Button btnNo;
     
     private BTree animalTree;
-    ArrayList<String> responses;
+    private static int numPreguntas;
+    static ArrayList<String> responses;
     
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        responses = new ArrayList<>();
         animalTree = App.arbolJuego;
         try {
             auxLoad();
@@ -44,12 +46,13 @@ public class JuegoController implements Initializable {
             ex.printStackTrace();
         }
         PreguntaTXT.setText(animalTree.getRaiz());
-        
+        System.out.println(numPreguntas);
     }    
 
     @FXML
     private void yesChoce(ActionEvent event) throws IOException {
         animalTree = animalTree.getIzq();
+        numPreguntas--;
         auxLoad();
         PreguntaTXT.setText(animalTree.getRaiz());
     }
@@ -57,6 +60,7 @@ public class JuegoController implements Initializable {
     @FXML
     private void noChoice(ActionEvent event) throws IOException {
         animalTree = animalTree.getDer();
+        numPreguntas--;
         auxLoad();
         PreguntaTXT.setText(animalTree.getRaiz());
     }
@@ -64,7 +68,12 @@ public class JuegoController implements Initializable {
     
     private void auxLoad() throws IOException{
         responses = animalTree.getLeaves();
-        if(responses.size()==1) App.setRoot("Primary");
+        if(responses.size()==1 || numPreguntas<=0) App.setRoot("finalScreen");
         System.out.println(responses);
     }
+    
+    public static void setNumPreguntas(int n){
+        numPreguntas = n;
+    }
+    
 }
