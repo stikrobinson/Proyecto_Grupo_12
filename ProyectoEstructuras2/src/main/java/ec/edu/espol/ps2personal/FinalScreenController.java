@@ -4,13 +4,17 @@
  */
 package ec.edu.espol.ps2personal;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
@@ -28,6 +32,8 @@ public class FinalScreenController implements Initializable {
     @FXML
     private Label lblResultado;
     private int index = 0;
+    @FXML
+    private ImageView imgAnimal;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -37,27 +43,37 @@ public class FinalScreenController implements Initializable {
         }else if(JuegoController.responses.size()==1){
             lblTitulo.setText("El animal que usted pensó es:");
             lblResultado.setText(JuegoController.responses.get(0));
+            cargarImg();
         }else{
           lblTitulo.setText("Entre los animales que usted pudo haber pensado son:");
           lblResultado.setText(JuegoController.responses.get(0));
           Button btnDer = new Button("->");
           btnDer.setOnAction((e)->{
-          if(index<JuegoController.responses.size()-1){
-              index++;
-          }
-          lblResultado.setText(JuegoController.responses.get(index));
+            if(index<JuegoController.responses.size()-1){
+                index++;
+            }
+            lblResultado.setText(JuegoController.responses.get(index));
           });
           Button btnIzq = new Button("<-");
           btnIzq.setOnAction((e)->{
-          if(index>0){
-              index--;
-          }
-          lblResultado.setText(JuegoController.responses.get(index));
+            if(index>0){
+                index--;
+            }
+            lblResultado.setText(JuegoController.responses.get(index));
           });
           borderPane.setLeft(btnIzq);  
           borderPane.setRight(btnDer);  
-          
+          cargarImg();
         }
     }    
-    
+
+    @FXML
+    private void playAgain(ActionEvent event) throws IOException {
+        App.setRoot("NumberSelect");
+    }
+    private void cargarImg(){
+        imgAnimal.setImage(new Image("Images\\"+lblResultado.getText()+".jpg"));
+        imgAnimal.setFitWidth(800);
+        imgAnimal.setPreserveRatio(true);
+    }
 }

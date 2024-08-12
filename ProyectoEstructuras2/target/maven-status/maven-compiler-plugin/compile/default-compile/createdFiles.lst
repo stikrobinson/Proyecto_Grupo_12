@@ -8,3 +8,4 @@ ec\edu\espol\ps2personal\JuegoController.class
 ec\edu\espol\ps2personal\SecondaryController.class
 classes\BTree.class
 ec\edu\espol\ps2personal\NumberSelectController.class
+classes\CircularLinkedList.class
