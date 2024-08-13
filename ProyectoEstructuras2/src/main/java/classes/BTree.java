@@ -25,6 +25,11 @@ public class BTree {
         raiz = new Node(r);
     }
     
+    public BTree(String r, boolean b){
+        raiz = new Node(r);
+        raiz.animal = b;
+    }
+    
     public void clear(){
         raiz = null;
     }
@@ -47,7 +52,7 @@ public class BTree {
     }
 
 
-private void anadirHojas(){
+private void anadirHojas(String s){
         ArrayDeque<Node> cola = new ArrayDeque<>();
         cola.offer(raiz);
         while(!cola.isEmpty()){
@@ -62,9 +67,9 @@ private void anadirHojas(){
                 cola.offer(n.der.raiz);
             }else if(n.isLeaf()){
                 n.der = new BTree();
-                n.der.raiz = new Node();
+                n.der.raiz = new Node(s);
                 n.izq = new BTree();
-                n.izq.raiz = new Node();
+                n.izq.raiz = new Node(s);
             }
         }
     }
@@ -136,26 +141,11 @@ private void anadirHojas(){
 
     private void construirArbol1(LinkedList<String> questionList) {
         if (questionList.isEmpty()) return;
-        Queue<BTree> queue = new LinkedList<>();
         this.raiz = new Node(questionList.poll()); // Inicializar el nodo raíz con la primera pregunta
-        queue.add(this);
 
-        while (!queue.isEmpty()) {
-            BTree currentTree = queue.poll();
-            Node currentNode = currentTree.raiz;
-            if (!questionList.isEmpty()) {
-                // Añadir hijo izquierdo
-                String leftQuestion = questionList.poll();
-                currentNode.izq = new BTree(leftQuestion);
-                queue.add(currentNode.izq);
-            }
-
-            if (!questionList.isEmpty()) {
-                // Añadir hijo derecho
-                String rightQuestion = questionList.poll();
-                currentNode.der = new BTree(rightQuestion);
-                queue.add(currentNode.der);
-            }
+        while (!questionList.isEmpty()) {
+            String question = questionList.poll();
+            anadirHojas(question);
         }
     }
     
@@ -163,27 +153,29 @@ private void anadirHojas(){
         for (HashMap.Entry<String, LinkedList<String>> entrada : animalMap.entrySet()) {
             String animal = entrada.getKey();
             LinkedList<String> respuestas = entrada.getValue();
-            añadirEnHoja(raiz, respuestas, animal);
+            añadirEnHoja(respuestas, animal);
         }
     }
     
-    private void añadirEnHoja(Node nodoActual, LinkedList<String> respuestas, String animal) {
+    private void añadirEnHoja(LinkedList<String> respuestas, String animal) {
+        Node nodoActual = raiz;
         if (nodoActual == null) {
             // Si el árbol está vacío, crea la raíz
             raiz = new Node(animal);
+            raiz.animal = true;
             return;
         }
         for (String respuesta : respuestas) {
             if (respuesta.equals("sí")) {
                 if (nodoActual.izq == null) {
-                    nodoActual.izq = new BTree(animal);
+                    nodoActual.izq = new BTree(animal, true);
                     return;
                 } else {
                     nodoActual = nodoActual.izq.raiz;
                 }
             } else if (respuesta.equals("no")) {
                 if (nodoActual.der == null) {
-                    nodoActual.der = new BTree(animal);
+                    nodoActual.der = new BTree(animal, true);
                     return;
                 } else {
                     nodoActual = nodoActual.der.raiz;
@@ -193,6 +185,7 @@ private void anadirHojas(){
         // Si llegamos a una hoja y aún hay respuestas, asignamos el animal
         if (nodoActual.izq == null && nodoActual.der == null) {
             nodoActual.contenido = animal;
+            nodoActual.animal = true;
         }
     }
     
@@ -208,7 +201,7 @@ private void anadirHojas(){
     while (!cola.isEmpty()) {
         Node n = cola.poll();
         
-        if (n.isLeaf()) {
+        if (n.isLeaf() && n.animal) {
             hojas.add(n.contenido);
         } else {
             // Añadir los hijos a la cola para continuar el recorrido

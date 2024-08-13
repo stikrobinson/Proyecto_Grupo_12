@@ -11,6 +11,7 @@ package classes;
 public class Node {
     public String contenido;
     public BTree izq, der;
+    public boolean animal;
     
     public Node(String c){
         contenido = c;
