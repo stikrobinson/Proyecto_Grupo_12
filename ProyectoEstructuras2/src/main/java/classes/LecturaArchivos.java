@@ -58,7 +58,8 @@ public class LecturaArchivos {
                         resultados.put(datos[0], respuestas);
                     }
                 }else{
-                    //Cuando los archivos no tienen concordancia con en número de preguntas y el número de respuestas.
+                    br.close();
+                    throw new FilesNotMatchException();
                 }
             }
             br.close();

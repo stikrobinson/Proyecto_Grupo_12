@@ -51,15 +51,21 @@ public class FinalScreenController implements Initializable {
           btnDer.setOnAction((e)->{
             if(index<JuegoController.responses.size()-1){
                 index++;
+            }else if(index==JuegoController.responses.size()-1){
+                index = 0;
             }
             lblResultado.setText(JuegoController.responses.get(index));
+            cargarImg();
           });
           Button btnIzq = new Button("<-");
           btnIzq.setOnAction((e)->{
             if(index>0){
                 index--;
-            }
+            }else if(index==0){
+                index = JuegoController.responses.size()-1;
+            }                    
             lblResultado.setText(JuegoController.responses.get(index));
+            cargarImg();
           });
           borderPane.setLeft(btnIzq);  
           borderPane.setRight(btnDer);  
@@ -72,8 +78,15 @@ public class FinalScreenController implements Initializable {
         App.setRoot("NumberSelect");
     }
     private void cargarImg(){
+        try{
         imgAnimal.setImage(new Image("Images\\"+lblResultado.getText()+".jpg"));
         imgAnimal.setFitWidth(800);
         imgAnimal.setPreserveRatio(true);
+        }catch(Exception e){
+          imgAnimal.setImage(null);
+          imgAnimal.setFitWidth(800);
+          imgAnimal.setPreserveRatio(true);
+        }
     }
+
 }

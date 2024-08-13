@@ -46,7 +46,7 @@ public class JuegoController implements Initializable {
             ex.printStackTrace();
         }
         PreguntaTXT.setText(animalTree.getRaiz());
-        System.out.println(numPreguntas);
+        System.out.println(animalTree.recorridoPorAnchura());
     }    
 
     @FXML

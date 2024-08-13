@@ -1,6 +1,7 @@
 package ec.edu.espol.ps2personal;
 
 import classes.BTree;
+import classes.FilesNotMatchException;
 import classes.LecturaArchivos;
 import java.io.File;
 import java.io.IOException;
@@ -9,6 +10,8 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -29,9 +32,17 @@ public class SecondaryController extends Stage {
     private void switchToGame() throws IOException {
         boolean hasTwoInput = !pregBtn.getText().equals("...") && !respBtn.getText().equals("...");
         if(hasTwoInput){
+            try{
             LecturaArchivos lectAr = new LecturaArchivos(pregBtn.getText(),respBtn.getText());
             App.arbolJuego = lectAr.buildTree();
             App.setRoot("numberSelect");
+            }catch(FilesNotMatchException e){
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("ERROR");
+                alert.setHeaderText("No se puede empezar el juego");
+                alert.setContentText(e.getMessage());
+                alert.showAndWait();
+            }
         }
     }
     

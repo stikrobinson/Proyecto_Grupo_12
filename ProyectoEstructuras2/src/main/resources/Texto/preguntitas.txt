@@ -1,0 +1,14 @@
+¿Es un personaje humano?
+¿Es un personaje que aparece como aliado de Mario?
+¿Es el personaje principal del juego?
+¿Es un enemigo de Mario?
+¿Es un personaje femenino?
+¿Tiene poderes mágicos?
+¿Es un personaje que puede volar?
+¿Es un personaje que tiene un caparazón?
+¿Es un personaje que usa un gorro?
+¿Es un personaje que es un animal?
+¿Es un personaje que aparece en más de un juego?
+¿Es un personaje que puede lanzar fuego?
+¿Es un personaje que habita en un castillo?
+¿Es un personaje pequeño?
