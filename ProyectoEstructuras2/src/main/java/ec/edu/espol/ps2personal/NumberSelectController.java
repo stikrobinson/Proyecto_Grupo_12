@@ -10,6 +10,10 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 /**
@@ -27,10 +31,29 @@ public class NumberSelectController implements Initializable {
     Button minusBTN;
     @FXML
     Button btnEmpezar;
+    @FXML
+    private FlowPane fpOpciones;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         amountQuest.setText(App.arbolJuego.altura()-1+"");
+        for (String str : App.arbolJuego.getLeaves()){
+            VBox bv = new VBox();
+            Text txt = new Text(str);
+            ImageView imv = new ImageView();
+            try{
+                imv.setImage(new Image("Images\\"+str+".jpg"));
+                imv.setFitWidth(50);
+                imv.setPreserveRatio(true);
+            }catch(Exception e){
+              imv.setImage(new Image("Images\\"+"default"+".jpg"));
+              imv.setFitWidth(50);
+              imv.setPreserveRatio(true);
+            }
+            bv.getChildren().addAll(txt,imv);
+            fpOpciones.getChildren().add(bv);
+        }
+            
     }
     
     @FXML

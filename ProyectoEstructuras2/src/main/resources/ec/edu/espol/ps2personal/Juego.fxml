@@ -6,18 +6,18 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.espol.ps2personal.JuegoController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #92AB17;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.espol.ps2personal.JuegoController">
    <children>
-      <VBox prefHeight="200.0" prefWidth="100.0">
+      <VBox alignment="TOP_CENTER" layoutX="9.0" layoutY="29.0" prefHeight="83.0" prefWidth="582.0">
          <children>
-            <Text fx:id="PreguntaTXT" strokeType="OUTSIDE" strokeWidth="0.0" />
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Button fx:id="btnYes" mnemonicParsing="false" onAction="#yesChoce" text="Si" />
-                  <Button fx:id="btnNo" mnemonicParsing="false" onAction="#noChoice" text="No" />
-               </children>
-            </HBox>
+            <Text fx:id="PreguntaTXT" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;Berlin Sans FB&quot;; -fx-font-style: italic; -fx-font-size: 30px; -fx-text-fill: #FFFFFF;" text="DSAFDSFDS" textAlignment="CENTER" />
          </children>
       </VBox>
+      <HBox alignment="CENTER" layoutX="188.0" layoutY="150.0" prefHeight="100.0" prefWidth="223.0">
+         <children>
+            <Button fx:id="btnYes" mnemonicParsing="false" onAction="#yesChoce" style="-fx-background-color: #FFFFFF; -fx-border-color: #000000; -fx-border-width: 2; -fx-text-fill: #92AB17; -fx-font-family: &quot;Comic Sans MS&quot;; -fx-font-style: italic; -fx-font-size: 28px; -fx-background-radius: 10 10 10 10; -fx-border-radius: 10 10 10 10;" text="Si" />
+            <Button fx:id="btnNo" alignment="TOP_LEFT" contentDisplay="TOP" mnemonicParsing="false" onAction="#noChoice" style="-fx-background-color: #FFFFFF; -fx-border-color: #000000; -fx-border-width: 2; -fx-text-fill: EE7F91; -fx-font-family: &quot;Comic Sans MS&quot;; -fx-font-style: italic; -fx-font-size: 28px; -fx-background-radius: 10 10 10 10; -fx-border-radius: 10 10 10 10;" text="No" />
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

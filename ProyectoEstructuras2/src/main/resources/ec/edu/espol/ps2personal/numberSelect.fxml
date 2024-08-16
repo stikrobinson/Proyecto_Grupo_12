@@ -2,23 +2,26 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.espol.ps2personal.NumberSelectController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: D0E69C;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.espol.ps2personal.NumberSelectController">
    <children>
-      <VBox prefHeight="200.0" prefWidth="100.0">
+      <VBox alignment="TOP_CENTER" layoutX="70.0" layoutY="29.0" prefHeight="341.0" prefWidth="322.0">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Escoja Cuántas preguntas va a realizar:" />
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;Times New Roman&quot;; -fx-font-style: italic; -fx-font-size: 30px; -fx-text-fill: FFFFFF;" text="Piense en un animal:" />
+            <FlowPane fx:id="fpOpciones" prefHeight="157.0" prefWidth="481.0" />
+            <Text layoutX="10.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;Times New Roman&quot;; -fx-font-style: italic; -fx-font-size: 30px; -fx-text-fill: FFFFFF;" text="Escoja cuántas preguntas va a realizar:" />
+            <HBox alignment="CENTER" prefHeight="41.0" prefWidth="321.0">
                <children>
-                  <Button fx:id="plusBtn" mnemonicParsing="false" onAction="#plusClick" text="+" />
-                  <Text fx:id="amountQuest" strokeType="OUTSIDE" strokeWidth="0.0" text="2" />
-                  <Button fx:id="minusBTN" mnemonicParsing="false" onAction="#minusClick" text="-" />
+                  <Button fx:id="minusBTN" mnemonicParsing="false" onAction="#minusClick" style="-fx-background-color: #E6FD74; -fx-border-color: #FFFFFF; -fx-border-width: 2; -fx-text-fill: #FF3399; -fx-font-family: &quot;Georgia&quot;; -fx-font-style: italic; -fx-font-size: 28px; -fx-background-radius: 10 10 10 10; -fx-border-radius: 10 10 10 10;" text="-" />
+                  <Text fx:id="amountQuest" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;Times New Roman&quot;; -fx-font-style: italic; -fx-font-size: 36px; -fx-text-fill: #FFFFFF;" text="2" />
+                  <Button fx:id="plusBtn" mnemonicParsing="false" onAction="#plusClick" style="-fx-background-color: #E6FD74; -fx-border-color: #FFFFFF; -fx-border-width: 2; -fx-text-fill: #FF3399; -fx-font-family: &quot;Georgia&quot;; -fx-font-style: italic; -fx-font-size: 28PX; -fx-background-radius: 10 10 10 10; -fx-border-radius: 10 10 10 10;" text="+" />
                </children>
             </HBox>
-            <Button fx:id="btnEmpezar" mnemonicParsing="false" onAction="#empezar" text="Empezar" />
+            <Button fx:id="btnEmpezar" mnemonicParsing="false" onAction="#empezar" style="-fx-background-color: #008287; -fx-border-color: #FFFFFF; -fx-border-width: 2; -fx-text-fill: #FFFFFF; -fx-font-family: &quot;Times New Roman&quot;; -fx-font-style: italic; -fx-font-size: 28px; -fx-background-radius: 10 10 10 10; -fx-border-radius: 10 10 10 10;" text="Empezar" />
          </children>
       </VBox>
    </children>

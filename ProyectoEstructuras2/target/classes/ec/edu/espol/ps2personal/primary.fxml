@@ -6,13 +6,13 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.espol.ps2personal.PrimaryController">
+<VBox alignment="CENTER" prefHeight="224.0" prefWidth="418.0" spacing="20.0" style="-fx-background-color: #660099;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.espol.ps2personal.PrimaryController">
    <children>
-      <Label text="20 Preguntas" />
-      <HBox prefHeight="100.0" prefWidth="200.0">
+      <Label style="-fx-font-family: &quot;Berlin Sans FB&quot;; -fx-font-style: italic; -fx-font-size: 36px; -fx-text-fill: #FFFFFF;" text="20 Preguntas" />
+      <HBox alignment="TOP_CENTER" prefHeight="0.0" prefWidth="200.0">
          <children>
-            <Button fx:id="playDefaultBtn" mnemonicParsing="false" onAction="#playDefault" text="Jugar" />
-            <Button fx:id="primaryButton" onAction="#switchToSecondary" text="Subir archivos" />
+            <Button fx:id="playDefaultBtn" mnemonicParsing="false" onAction="#playDefault" style="-fx-background-color: #02CF08; -fx-border-color: #FFFFFF; -fx-border-width: 2; -fx-text-fill: #FFCC00; -fx-font-family: &quot;Comic Sans MS&quot;; -fx-font-style: italic; -fx-font-size: 28px; -fx-background-radius: 10 10 10 10; -fx-border-radius: 10 10 10 10;" text="Jugar" />
+            <Button fx:id="primaryButton" onAction="#switchToSecondary" style="-fx-background-color: #02CF08; -fx-border-color: #FFFFFF; -fx-border-width: 2; -fx-text-fill: #FFCC00; -fx-font-family: &quot;Comic Sans MS&quot;; -fx-font-style: italic; -fx-font-size: 28px; -fx-background-radius: 10 10 10 10; -fx-border-radius: 10 10 10 10;" text="Subir archivos" />
          </children>
       </HBox>
    </children>

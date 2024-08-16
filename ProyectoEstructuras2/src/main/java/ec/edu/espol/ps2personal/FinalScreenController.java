@@ -79,11 +79,11 @@ public class FinalScreenController implements Initializable {
     }
     private void cargarImg(){
         try{
-        imgAnimal.setImage(new Image("Images\\"+lblResultado.getText()+".jpg"));
-        imgAnimal.setFitWidth(800);
-        imgAnimal.setPreserveRatio(true);
+            imgAnimal.setImage(new Image("Images\\"+lblResultado.getText()+".jpg"));
+            imgAnimal.setFitWidth(800);
+            imgAnimal.setPreserveRatio(true);
         }catch(Exception e){
-          imgAnimal.setImage(null);
+          imgAnimal.setImage(new Image("Images\\"+"default"+".jpg"));
           imgAnimal.setFitWidth(800);
           imgAnimal.setPreserveRatio(true);
         }

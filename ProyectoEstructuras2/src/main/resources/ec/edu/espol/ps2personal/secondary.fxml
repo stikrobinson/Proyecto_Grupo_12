@@ -6,26 +6,32 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.espol.ps2personal.SecondaryController">
+<VBox alignment="CENTER" spacing="20.0" style="-fx-background-color: E0E0E0;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.espol.ps2personal.SecondaryController">
     <children>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Seleccionar archivos" />
-      <HBox prefHeight="100.0" prefWidth="200.0">
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;Hervetica&quot;; -fx-font-style: italic; -fx-font-size: 36px; -fx-text-fill: #FFFFFF;" text="Seleccionar archivos" />
+      <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <VBox prefHeight="200.0" prefWidth="100.0">
+            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Preguntas" />
-                  <Button fx:id="pregBtn" mnemonicParsing="false" onAction="#selectPreg" text="..." />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;Hervetica&quot;; -fx-font-style: italic; -fx-font-size: 24px; -fx-text-fill: #FFFFFF;" text="Preguntas" />
+                  <Button fx:id="pregBtn" mnemonicParsing="false" onAction="#selectPreg" style="-fx-background-color: #008287; -fx-border-color: #FFFFFF; -fx-border-width: 2; -fx-text-fill: #FFFFFF; -fx-font-family: &quot;Times New Roman&quot;; -fx-font-style: italic; -fx-font-size: 15 px; -fx-background-radius: 10 10 10 10; -fx-border-radius: 10 10 10 10;" text="..." />
                </children>
+               <HBox.margin>
+                  <Insets right="25.0" />
+               </HBox.margin>
             </VBox>
-            <VBox prefHeight="200.0" prefWidth="100.0">
+            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Respuestas" />
-                  <Button fx:id="respBtn" mnemonicParsing="false" onAction="#selectAns" text="..." />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;Hervetica&quot;; -fx-font-style: italic; -fx-font-size: 24px; -fx-text-fill: #FFFFFF;" text="Respuestas" />
+                  <Button fx:id="respBtn" mnemonicParsing="false" onAction="#selectAns" style="-fx-background-color: #008287; -fx-border-color: #FFFFFF; -fx-border-width: 2; -fx-text-fill: #FFFFFF; -fx-font-family: &quot;Times New Roman&quot;; -fx-font-style: italic; -fx-font-size: 15px; -fx-background-radius: 10 10 10 10; -fx-border-radius: 10 10 10 10;" text="..." />
                </children>
             </VBox>
          </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
       </HBox>
-        <Button fx:id="secondaryButton" onAction="#switchToGame" text="INICIAR" />
+        <Button fx:id="secondaryButton" onAction="#switchToGame" style="-fx-background-color: CCFFCC; -fx-border-color: #FFFFFF; -fx-border-width: 2; -fx-text-fill: #000000; -fx-font-family: &quot;Georgia&quot;; -fx-font-style: italic; -fx-font-size: 25px; -fx-background-radius: 10 10 10 10; -fx-border-radius: 10 10 10 10;" text="INICIAR" />
     </children>
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
