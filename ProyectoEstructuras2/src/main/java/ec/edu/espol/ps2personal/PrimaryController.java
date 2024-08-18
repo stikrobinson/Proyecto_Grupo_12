@@ -18,6 +18,11 @@ public class PrimaryController {
     private void switchToSecondary() throws IOException {
         App.setRoot("secondary");
     }
+    
+    @FXML
+    private void switchToPreguntas() throws IOException {
+        App.setRoot("crearPreguntas");
+    }
 
     @FXML
     private void playDefault(ActionEvent event) throws IOException {

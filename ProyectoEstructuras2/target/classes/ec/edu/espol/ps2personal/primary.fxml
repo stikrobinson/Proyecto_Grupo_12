@@ -13,6 +13,7 @@
          <children>
             <Button fx:id="playDefaultBtn" mnemonicParsing="false" onAction="#playDefault" style="-fx-background-color: #02CF08; -fx-border-color: #FFFFFF; -fx-border-width: 2; -fx-text-fill: #FFCC00; -fx-font-family: &quot;Comic Sans MS&quot;; -fx-font-style: italic; -fx-font-size: 28px; -fx-background-radius: 10 10 10 10; -fx-border-radius: 10 10 10 10;" text="Jugar" />
             <Button fx:id="primaryButton" onAction="#switchToSecondary" style="-fx-background-color: #02CF08; -fx-border-color: #FFFFFF; -fx-border-width: 2; -fx-text-fill: #FFCC00; -fx-font-family: &quot;Comic Sans MS&quot;; -fx-font-style: italic; -fx-font-size: 28px; -fx-background-radius: 10 10 10 10; -fx-border-radius: 10 10 10 10;" text="Subir archivos" />
+            <Button fx:id="primaryButton1" layoutX="143.0" layoutY="10.0" onAction="#switchToPreguntas" style="-fx-background-color: #02CF08; -fx-border-color: #FFFFFF; -fx-border-width: 2; -fx-text-fill: #FFCC00; -fx-font-family: &quot;Comic Sans MS&quot;; -fx-font-style: italic; -fx-font-size: 28px; -fx-background-radius: 10 10 10 10; -fx-border-radius: 10 10 10 10;" text="Crear juego" />
          </children>
       </HBox>
    </children>

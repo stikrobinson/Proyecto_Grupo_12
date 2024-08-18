@@ -1,5 +1,6 @@
 classes\LecturaArchivos.class
 classes\FilesNotMatchException.class
+ec\edu\espol\ps2personal\CrearRespuestasController.class
 ec\edu\espol\ps2personal\FinalScreenController.class
 classes\Node.class
 module-info.class
@@ -7,5 +8,6 @@ ec\edu\espol\ps2personal\PrimaryController.class
 ec\edu\espol\ps2personal\App.class
 ec\edu\espol\ps2personal\JuegoController.class
 ec\edu\espol\ps2personal\SecondaryController.class
+ec\edu\espol\ps2personal\CrearPreguntasController.class
 classes\BTree.class
 ec\edu\espol\ps2personal\NumberSelectController.class
