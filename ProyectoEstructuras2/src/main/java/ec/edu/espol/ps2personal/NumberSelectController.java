@@ -39,15 +39,15 @@ public class NumberSelectController implements Initializable {
         amountQuest.setText(App.arbolJuego.altura()-1+"");
         for (String str : App.arbolJuego.getLeaves()){
             VBox bv = new VBox();
-            Text txt = new Text(str);
+            Text txt = new Text(str); txt.setStyle("-fx-font-size: 15px; -fx-text-fill: #ffffff;");
             ImageView imv = new ImageView();
             try{
                 imv.setImage(new Image("Images\\"+str+".jpg"));
-                imv.setFitWidth(50);
+                imv.setFitWidth(60);
                 imv.setPreserveRatio(true);
             }catch(Exception e){
               imv.setImage(new Image("Images\\"+"default"+".jpg"));
-              imv.setFitWidth(50);
+              imv.setFitWidth(60);
               imv.setPreserveRatio(true);
             }
             bv.getChildren().addAll(txt,imv);

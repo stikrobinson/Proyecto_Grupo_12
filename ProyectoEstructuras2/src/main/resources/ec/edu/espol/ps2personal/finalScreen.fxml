@@ -6,20 +6,20 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: FFCCE5;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.espol.ps2personal.FinalScreenController">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #b8e0ff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.espol.ps2personal.FinalScreenController">
    <top>
-      <Label style="-fx-font-family: &quot;Berlin Sans FB&quot;; -fx-font-style: italic; -fx-font-size: 36px; -fx-text-fill: #FFFFFF;" text="Resultado" BorderPane.alignment="CENTER" />
+      <Label style="-fx-font-family: &quot;Berlin Sans FB&quot;; -fx-font-size: 36px; -fx-text-fill: #000000;" text="Resultado" BorderPane.alignment="CENTER" />
    </top>
    <center>
       <VBox alignment="TOP_CENTER" prefHeight="166.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="lblTitulo" style="-fx-font-family: &quot;Berlin Sans FB&quot;; -fx-font-style: italic; -fx-font-size: 25px; -fx-text-fill: #FFFFFF;" text="Label" />
-            <Label fx:id="lblResultado" style="-fx-font-family: &quot;Berlin Sans FB&quot;; -fx-font-style: italic; -fx-font-size: 30px; -fx-text-fill: #FFFFFF;" text="Label" />
+            <Label fx:id="lblTitulo" style="-fx-font-family: &quot;Berlin Sans FB&quot;; -fx-font-size: 25px; -fx-text-fill: #000000;" text="Label" />
+            <Label fx:id="lblResultado" style="-fx-font-family: &quot;Berlin Sans FB&quot;; -fx-font-size: 30px; -fx-text-fill: #000000;" text="Label" />
             <ImageView fx:id="imgAnimal" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </VBox>
    </center>
    <bottom>
-      <Button mnemonicParsing="false" onAction="#playAgain" style="-fx-background-color: 99CCFF; -fx-border-color: #FFFFFF; -fx-border-width: 2; -fx-text-fill: #FFCC00; -fx-font-family: &quot;Comic Sans MS&quot;; -fx-font-style: italic; -fx-font-size: 28px; -fx-background-radius: 10 10 10 10; -fx-border-radius: 10 10 10 10;" text="Volver a jugar" BorderPane.alignment="CENTER" />
+      <Button mnemonicParsing="false" onAction="#playAgain" style="-fx-background-color: #c9fbff; -fx-border-color: #c9fbff; -fx-border-width: 2; -fx-text-fill: #000000; -fx-font-family: &quot;Comic Sans MS&quot;; -fx-font-size: 28px; -fx-background-radius: 10 10 10 10; -fx-border-radius: 10 10 10 10;" text="Volver a jugar" BorderPane.alignment="CENTER" />
    </bottom>
 </BorderPane>
