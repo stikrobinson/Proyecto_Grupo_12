@@ -69,7 +69,7 @@ public class JuegoController implements Initializable {
     
     private void auxLoad() throws IOException{
         responses = animalTree.getLeaves();
-        if(responses.size()==1 || numPreguntas<=0) App.setRoot("finalScreen");
+        if(responses.size()<=1 || numPreguntas<=0) App.setRoot("finalScreen");
         System.out.println(responses);
     }
     
