@@ -13,10 +13,18 @@
       <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;Hervetica&quot;; -fx-font-style: italic; -fx-font-size: 36px; -fx-text-fill: #FFFFFF;" text="Escribe tus respuestas" />
       <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <VBox fx:id="vbox" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="600.0">
+            <VBox fx:id="vbox" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="600.0" HBox.hgrow="ALWAYS">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;Hervetica&quot;; -fx-font-style: italic; -fx-font-size: 24px; -fx-text-fill: #FFFFFF;" text="Respuestas" />
-                  <HBox prefHeight="65.0" prefWidth="331.0">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;Hervetica&quot;; -fx-font-style: italic; -fx-font-size: 24px; -fx-text-fill: #FFFFFF;" text="Respuestas" VBox.vgrow="ALWAYS" />
+                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets left="245.0" />
+                     </VBox.margin>
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                  </HBox>
+                  <HBox prefHeight="65.0" prefWidth="331.0" spacing="5.0" VBox.vgrow="ALWAYS">
                      <children>
                         <Label text="1." />
                         <TextField fx:id="firstTextField" prefHeight="25.0" prefWidth="229.0" />
@@ -37,10 +45,10 @@
             <Insets />
          </VBox.margin>
       </HBox>
-      <HBox prefHeight="100.0" prefWidth="200.0">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
          <children>
-              <Button fx:id="secondaryButton" onAction="#anadir" style="-fx-background-color: CCFFCC; -fx-border-color: #FFFFFF; -fx-border-width: 2; -fx-text-fill: #000000; -fx-font-family: &quot;Georgia&quot;; -fx-font-style: italic; -fx-font-size: 25px; -fx-background-radius: 10 10 10 10; -fx-border-radius: 10 10 10 10;" text="AÑADIR RESPUESTA" />
-            <Button fx:id="secondaryButton1" onAction="#empezar" style="-fx-background-color: CCFFCC; -fx-border-color: #FFFFFF; -fx-border-width: 2; -fx-text-fill: #000000; -fx-font-family: &quot;Georgia&quot;; -fx-font-style: italic; -fx-font-size: 25px; -fx-background-radius: 10 10 10 10; -fx-border-radius: 10 10 10 10;" text="LISTO" />
+              <Button fx:id="secondaryButton" alignment="CENTER" onAction="#anadir" style="-fx-background-color: CCFFCC; -fx-border-color: #FFFFFF; -fx-border-width: 2; -fx-text-fill: #000000; -fx-font-family: &quot;Georgia&quot;; -fx-font-style: italic; -fx-font-size: 25px; -fx-background-radius: 10 10 10 10; -fx-border-radius: 10 10 10 10;" text="AÑADIR RESPUESTA" />
+            <Button fx:id="secondaryButton1" alignment="CENTER" onAction="#empezar" style="-fx-background-color: CCFFCC; -fx-border-color: #FFFFFF; -fx-border-width: 2; -fx-text-fill: #000000; -fx-font-family: &quot;Georgia&quot;; -fx-font-style: italic; -fx-font-size: 25px; -fx-background-radius: 10 10 10 10; -fx-border-radius: 10 10 10 10;" text="LISTO" />
          </children>
       </HBox>
     </children>

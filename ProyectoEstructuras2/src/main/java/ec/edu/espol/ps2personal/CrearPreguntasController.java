@@ -12,6 +12,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import static javafx.geometry.Pos.TOP_CENTER;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -39,8 +41,11 @@ public class CrearPreguntasController{
        if(!ultimoTF.getText().equals("")){
         num++;
         HBox hb = new HBox();
+        hb.setPrefHeight(65); hb.setPrefWidth(331); hb.setAlignment(TOP_CENTER); hb.setSpacing(20);
         Label lb = new Label(num+".");
+        lb.setStyle("-fx-font-size: 20px;");
         TextField tf = new TextField();
+        tf.setStyle("-fx-font-size: 30px;"); tf.setPrefWidth(400.0); tf.setPrefHeight(25.0);
         hb.getChildren().addAll(lb,tf);
         vbox.getChildren().add(hb);
        }
