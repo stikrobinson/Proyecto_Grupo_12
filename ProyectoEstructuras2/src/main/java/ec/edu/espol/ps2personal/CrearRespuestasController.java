@@ -100,8 +100,8 @@ public class CrearRespuestasController implements Initializable{
        }
     }
     
-    private boolean checkeo(int num){
-          HBox hb = (HBox) vbox.getChildren().get(num);
+    private boolean checkeo(int index){
+          HBox hb = (HBox) vbox.getChildren().get(index);
           HBox comboBoxes = (HBox) hb.getChildren().get(2);
           for(int i = 1; i<comboBoxes.getChildren().size(); i++){
                 ComboBox cb = (ComboBox) comboBoxes.getChildren().get(1);
@@ -117,7 +117,7 @@ public class CrearRespuestasController implements Initializable{
         for(int i = 2; i<vbox.getChildren().size(); i++){
             HBox hb = (HBox) vbox.getChildren().get(i);
             TextField tf = (TextField) hb.getChildren().get(1);
-            if(tf.getText().equals("") || !checkeo(num)){
+            if(tf.getText().equals("") || !checkeo(num+1)){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("ERROR");
                 alert.setHeaderText("Faltan preguntas u opciones por añadir");

@@ -1,4 +1,3 @@
-Mario sí sí sí
-Bowser no no sí
-Kirby sí no sí
-Crash sí no no
+x sí no no
+y no sí no
+z no no sí
